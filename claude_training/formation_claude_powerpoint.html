@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formation Claude for PowerPoint</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --surface2: #1a1a26;
+  --border: #ffffff12;
+  --border2: #ffffff22;
+  --text: #f0f0f8;
+  --muted: #8888aa;
+  --accent: #7c6af7;
+  --accent2: #a594fa;
+  --green: #22d3a0;
+  --red: #f45b69;
+  --amber: #f5a623;
+  --blue: #4facfe;
+  --debutant: #22d3a0;
+  --intermediaire: #f5a623;
+  --avance: #f45b69;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(124,106,247,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,106,247,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.shell { position: relative; z-index: 1; display: flex; min-height: 100vh; }
+
+.sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebar-logo {
+  padding: 28px 24px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-logo .app-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.02em;
+}
+.sidebar-logo .app-sub {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+  font-family: 'DM Mono', monospace;
+}
+
+.progress-overview {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+}
+.progress-overview .label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.prog-bar-bg {
+  height: 3px;
+  background: var(--border2);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.prog-bar-fill {
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--blue));
+  border-radius: 99px;
+  transition: width 0.5s ease;
+}
+.prog-text {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 6px;
+  font-family: 'DM Mono', monospace;
+}
+
+.nav-section {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.nav-section-label {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  padding: 4px 24px 8px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 24px;
+  cursor: pointer;
+  transition: all 0.15s;
+  border-left: 2px solid transparent;
+  font-size: 13px;
+  color: var(--muted);
+}
+.nav-item:hover { background: rgba(124,106,247,0.06); color: var(--text); }
+.nav-item.active {
+  background: rgba(124,106,247,0.1);
+  border-left-color: var(--accent);
+  color: var(--text);
+}
+.nav-item.completed { color: var(--green); }
+.nav-item.completed .nav-check { opacity: 1; }
+
+.nav-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.nav-item.active .nav-dot { background: var(--accent); border-color: var(--accent); }
+.nav-item.completed .nav-dot { background: var(--green); border-color: var(--green); }
+
+.nav-check {
+  margin-left: auto;
+  font-size: 11px;
+  opacity: 0;
+  color: var(--green);
+}
+
+.level-badge {
+  font-size: 9px;
+  padding: 2px 7px;
+  border-radius: 99px;
+  font-family: 'DM Mono', monospace;
+  margin-left: auto;
+}
+.badge-debutant { background: rgba(34,211,160,0.12); color: var(--debutant); }
+.badge-inter { background: rgba(245,166,35,0.12); color: var(--intermediaire); }
+.badge-avance { background: rgba(244,91,105,0.12); color: var(--avance); }
+
+.main {
+  flex: 1;
+  padding: 40px 48px;
+  max-width: 860px;
+}
+
+.screen { display: none; animation: fadeIn 0.3s ease; }
+.screen.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.home-header { margin-bottom: 48px; }
+.home-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--accent2);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.home-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, #f0f0f8 0%, var(--accent2) 60%, var(--blue) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.home-desc {
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 560px;
+}
+
+.level-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 40px;
+}
+.level-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.level-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+.level-card.debutant::before { background: var(--debutant); }
+.level-card.inter::before { background: var(--intermediaire); }
+.level-card.avance::before { background: var(--avance); }
+.level-card:hover { border-color: var(--border2); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+
+.level-card .lc-icon { font-size: 28px; margin-bottom: 12px; }
+.level-card .lc-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.level-card.debutant .lc-name { color: var(--debutant); }
+.level-card.inter .lc-name { color: var(--intermediaire); }
+.level-card.avance .lc-name { color: var(--avance); }
+.level-card .lc-desc { font-size: 12px; color: var(--muted); line-height: 1.5; margin-bottom: 16px; }
+.level-card .lc-modules {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.start-btn {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--text);
+  font-size: 12px;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-top: 12px;
+}
+.level-card.debutant .start-btn:hover { background: rgba(34,211,160,0.1); border-color: var(--debutant); color: var(--debutant); }
+.level-card.inter .start-btn:hover { background: rgba(245,166,35,0.1); border-color: var(--intermediaire); color: var(--intermediaire); }
+.level-card.avance .start-btn:hover { background: rgba(244,91,105,0.1); border-color: var(--avance); color: var(--avance); }
+
+.module-header { margin-bottom: 32px; }
+.module-breadcrumb {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.module-breadcrumb .sep { color: var(--border2); }
+.module-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.module-meta {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.meta-pill {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  border: 1px solid var(--border2);
+  color: var(--muted);
+}
+
+.lesson-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.lesson-section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 24px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s;
+}
+.lesson-section-header:hover { background: rgba(255,255,255,0.02); }
+
+.section-icon {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.icon-theory { background: rgba(124,106,247,0.15); }
+.icon-prompt { background: rgba(79,172,254,0.15); }
+.icon-exercise { background: rgba(245,166,35,0.15); }
+.icon-corrected { background: rgba(34,211,160,0.15); }
+
+.section-title {
+  font-size: 14px;
+  font-weight: 500;
+  flex: 1;
+}
+.section-toggle {
+  font-size: 11px;
+  color: var(--muted);
+  transition: transform 0.2s;
+}
+.lesson-section.open .section-toggle { transform: rotate(180deg); }
+
+.section-body {
+  display: none;
+  padding: 0 24px 24px;
+  border-top: 1px solid var(--border);
+}
+.lesson-section.open .section-body { display: block; }
+
+.theory-content {
+  padding-top: 18px;
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+.theory-content p { margin-bottom: 12px; }
+.theory-content strong { color: var(--text); font-weight: 500; }
+
+.info-box {
+  background: rgba(124,106,247,0.08);
+  border: 1px solid rgba(124,106,247,0.2);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin: 16px 0;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.6;
+}
+.info-box .info-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  color: var(--accent2);
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+
+.warn-box {
+  background: rgba(244,91,105,0.08);
+  border: 1px solid rgba(244,91,105,0.2);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin: 16px 0;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.6;
+}
+.warn-box .warn-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  color: var(--red);
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+
+.prompt-list { padding-top: 18px; display: flex; flex-direction: column; gap: 10px; }
+.prompt-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+}
+.prompt-card:hover { border-color: rgba(79,172,254,0.3); background: rgba(79,172,254,0.04); }
+.prompt-card .prompt-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+.prompt-card .prompt-text {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--blue);
+  line-height: 1.6;
+  flex: 1;
+}
+.prompt-card .copy-hint {
+  font-size: 10px;
+  color: var(--muted);
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.prompt-card:hover .copy-hint { opacity: 1; }
+.prompt-card.copied { border-color: rgba(34,211,160,0.4); }
+.prompt-card.copied .prompt-text { color: var(--green); }
+
+.exercise-wrapper { padding-top: 18px; }
+.exercise-scenario {
+  background: var(--surface2);
+  border-radius: 10px;
+  padding: 18px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted);
+  border-left: 3px solid var(--amber);
+}
+.exercise-scenario strong { color: var(--text); }
+.exercise-scenario .scenario-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  color: var(--amber);
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+
+.exercise-question {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 14px;
+  color: var(--text);
+}
+
+.choices { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-size: 13px;
+  color: var(--muted);
+  background: var(--surface2);
+}
+.choice:hover { border-color: var(--border2); color: var(--text); }
+.choice.selected-correct {
+  border-color: var(--green);
+  background: rgba(34,211,160,0.08);
+  color: var(--green);
+}
+.choice.selected-wrong {
+  border-color: var(--red);
+  background: rgba(244,91,105,0.08);
+  color: var(--red);
+}
+.choice.reveal-correct {
+  border-color: rgba(34,211,160,0.4);
+  color: var(--green);
+  background: rgba(34,211,160,0.04);
+}
+.choice .choice-letter {
+  width: 22px; height: 22px;
+  border-radius: 6px;
+  border: 1px solid currentColor;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  flex-shrink: 0;
+}
+
+.feedback-box {
+  padding: 14px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.6;
+  margin-bottom: 16px;
+  display: none;
+}
+.feedback-box.correct { background: rgba(34,211,160,0.08); border: 1px solid rgba(34,211,160,0.25); color: var(--green); }
+.feedback-box.wrong { background: rgba(244,91,105,0.08); border: 1px solid rgba(244,91,105,0.25); color: #f8a0a8; }
+.feedback-box.show { display: block; }
+
+.exercise-actions { display: flex; gap: 10px; }
+.btn {
+  padding: 9px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--muted);
+}
+.btn:hover { color: var(--text); border-color: var(--border2); }
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+.btn-primary:hover { background: var(--accent2); border-color: var(--accent2); color: white; }
+.btn:disabled { opacity: 0.35; cursor: default; }
+
+.corrected-wrapper { padding-top: 18px; }
+.corrected-step {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.corrected-num {
+  width: 26px; height: 26px;
+  border-radius: 8px;
+  background: rgba(124,106,247,0.15);
+  color: var(--accent2);
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.corrected-content { flex: 1; }
+.corrected-content .step-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.corrected-content .step-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.corrected-prompt {
+  background: var(--surface2);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-top: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--blue);
+  line-height: 1.6;
+  border-left: 2px solid rgba(79,172,254,0.4);
+}
+
+.result-preview {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--green);
+  font-family: 'DM Mono', monospace;
+  line-height: 1.6;
+}
+.result-preview::before {
+  content: '✓ Résultat attendu';
+  display: block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.module-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.module-complete-btn {
+  padding: 11px 28px;
+  background: linear-gradient(135deg, var(--accent), var(--blue));
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s;
+  box-shadow: 0 4px 20px rgba(124,106,247,0.3);
+}
+.module-complete-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(124,106,247,0.45); }
+
+.completion-screen {
+  text-align: center;
+  padding: 60px 0;
+}
+.completion-icon { font-size: 64px; margin-bottom: 24px; }
+.completion-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, var(--green), var(--blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.completion-desc { font-size: 15px; color: var(--muted); line-height: 1.7; max-width: 480px; margin: 0 auto 32px; }
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="app-name">Claude for PowerPoint</div>
+    <div class="app-sub">// autoformation interactive</div>
+  </div>
+  <div class="progress-overview">
+    <div class="label">Progression globale</div>
+    <div class="prog-bar-bg"><div class="prog-bar-fill" id="globalProg" style="width:0%"></div></div>
+    <div class="prog-text" id="globalProgText">0 / 9 modules</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Accueil</div>
+    <div class="nav-item active" onclick="showScreen('home')" id="nav-home">
+      <span class="nav-dot"></span> Vue d'ensemble
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label" style="color:var(--debutant)">🟢 Débutant · 1h30</div>
+    <div class="nav-item" onclick="showModule(0)" id="nav-m0"><span class="nav-dot"></span> Installation &amp; connexion <span class="nav-check">✓</span></div>
+    <div class="nav-item" onclick="showModule(1)" id="nav-m1"><span class="nav-dot"></span> Générer un deck complet <span class="nav-check">✓</span></div>
+    <div class="nav-item" onclick="showModule(2)" id="nav-m2"><span class="nav-dot"></span> Modifier une slide <span class="nav-check">✓</span></div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label" style="color:var(--intermediaire)">🟡 Intermédiaire · 2h30</div>
+    <div class="nav-item" onclick="showModule(3)" id="nav-m3"><span class="nav-dot"></span> Templates corporate <span class="nav-check">✓</span></div>
+    <div class="nav-item" onclick="showModule(4)" id="nav-m4"><span class="nav-dot"></span> Graphiques natifs <span class="nav-check">✓</span></div>
+    <div class="nav-item" onclick="showModule(5)" id="nav-m5"><span class="nav-dot"></span> Restructurer un deck <span class="nav-check">✓</span></div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label" style="color:var(--avance)">🔴 Avancé · 3h00</div>
+    <div class="nav-item" onclick="showModule(6)" id="nav-m6"><span class="nav-dot"></span> Instructions persistantes <span class="nav-check">✓</span></div>
+    <div class="nav-item" onclick="showModule(7)" id="nav-m7"><span class="nav-dot"></span> Connecteurs &amp; données <span class="nav-check">✓</span></div>
+    <div class="nav-item" onclick="showModule(8)" id="nav-m8"><span class="nav-dot"></span> Sécurité &amp; bonnes pratiques <span class="nav-check">✓</span></div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- HOME -->
+  <div class="screen active" id="screen-home">
+    <div class="home-header">
+      <div class="home-eyebrow">// Formation officielle</div>
+      <h1 class="home-title">Claude for PowerPoint<br>Autoformation</h1>
+      <p class="home-desc">9 modules progressifs basés sur la documentation officielle Anthropic. Théorie, prompts pratiques, exercices interactifs et corrigés détaillés.</p>
+    </div>
+
+    <div class="level-cards">
+      <div class="level-card debutant">
+        <div class="lc-icon">🟢</div>
+        <div class="lc-name">Débutant</div>
+        <div class="lc-desc">Installation, première génération de slides et modifications ciblées.</div>
+        <div class="lc-modules">3 modules · ~1h30</div>
+        <button class="start-btn" onclick="showModule(0)">Commencer →</button>
+      </div>
+      <div class="level-card inter">
+        <div class="lc-icon">🟡</div>
+        <div class="lc-name">Intermédiaire</div>
+        <div class="lc-desc">Templates corporate, graphiques natifs et restructuration de decks.</div>
+        <div class="lc-modules">3 modules · ~2h30</div>
+        <button class="start-btn" onclick="showModule(3)">Commencer →</button>
+      </div>
+      <div class="level-card avance">
+        <div class="lc-icon">🔴</div>
+        <div class="lc-name">Avancé</div>
+        <div class="lc-desc">Instructions persistantes, connecteurs MCP et gestion des risques.</div>
+        <div class="lc-modules">3 modules · ~3h00</div>
+        <button class="start-btn" onclick="showModule(6)">Commencer →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODULE SCREEN -->
+  <div class="screen" id="screen-module">
+    <div id="module-content"></div>
+  </div>
+
+</main>
+</div>
+
+<script>
+const MODULES = [
+
+  // M0 - Installation
+  {
+    id: 0, level: "Débutant", levelColor: "debutant", duration: "30 min",
+    title: "Installation et connexion",
+    theory: `
+      <p>Claude for PowerPoint est un add-in officiel d'Anthropic disponible sur le <strong>Microsoft Marketplace</strong>. Il s'intègre directement dans le ruban <strong>Accueil</strong> de PowerPoint sous forme de panneau latéral interactif.</p>
+      <div class="info-box">
+        <div class="info-label">Versions compatibles</div>
+        PowerPoint Web · PowerPoint Windows (Microsoft 365, build 16.0.13127+) · PowerPoint Mac (v16.46+)
+      </div>
+      <p>Une fois installé, le panneau Claude apparaît dans votre ruban. Chaque utilisateur doit se connecter avec son compte Claude (Pro, Max, Team ou Enterprise). <strong>L'historique de conversation ne se sauvegarde pas entre deux sessions</strong> — chaque ouverture repart d'une conversation vierge.</p>
+      <div class="warn-box">
+        <div class="warn-label">⚠ Limitation importante</div>
+        Claude ne peut lire que la présentation <strong>actuellement ouverte</strong> dans PowerPoint. Les fichiers fermés et les autres documents ne sont pas accessibles. Les versions iPad et Android ne sont pas supportées.
+      </div>
+    `,
+    prompts: [
+      "Décris-moi la structure de cette présentation et l'objectif de chaque section",
+      "Combien de slides contient ce deck et quel est le fil conducteur ?",
+      "Que peux-tu faire avec cette présentation ?"
+    ],
+    exercise: {
+      scenario: "Vous venez d'installer Claude for PowerPoint. Vous ouvrez un deck de 12 slides préparé par un collègue que vous n'avez jamais vu. Vous devez vous l'approprier rapidement avant une réunion.",
+      question: "Quel est le meilleur premier prompt pour comprendre rapidement ce deck ?",
+      choices: [
+        { text: "Génère-moi un résumé exécutif de cette présentation", correct: false },
+        { text: "Décris la structure de ce deck, l'objectif de chaque section et le message principal", correct: true },
+        { text: "Améliore le design de la slide 1", correct: false },
+        { text: "Ajoute 3 nouvelles slides sur les recommandations", correct: false }
+      ],
+      feedbackCorrect: "✓ Parfait ! Commencer par une cartographie structurelle est la bonne approche. Claude va analyser toutes les slides, identifier le fil conducteur et vous donner une vision d'ensemble avant toute action.",
+      feedbackWrong: "Pas tout à fait. Demander directement une action (résumé, design, ajout) avant de comprendre le deck peut mener à des modifications inadaptées. Mieux vaut d'abord cartographier la présentation."
+    },
+    corrected: [
+      { title: "Installer le add-in", desc: "Aller sur marketplace.microsoft.com, rechercher 'Claude by Anthropic in PowerPoint', cliquer sur « Obtenir maintenant ».", prompt: null, result: null },
+      { title: "Activer dans PowerPoint", desc: "Windows : Accueil > Compléments. Mac : Outils > Compléments. Le panneau Claude apparaît à droite de l'écran.", prompt: null, result: null },
+      { title: "Se connecter", desc: "Saisir ses identifiants Claude (Pro/Max/Team/Enterprise requis). La session est liée à votre compte existant.", prompt: null, result: null },
+      { title: "Premier contact avec le deck", desc: "Avant toute action, demander une vue d'ensemble de la présentation.", prompt: "Décris la structure de ce deck, l'objectif de chaque section et le message principal", result: "Claude analyse toutes les slides, cite les éléments clés et vous donne une cartographie complète en quelques secondes." }
+    ]
+  },
+
+  // M1 - Générer un deck
+  {
+    id: 1, level: "Débutant", levelColor: "debutant", duration: "30 min",
+    title: "Générer un deck complet",
+    theory: `
+      <p>Claude peut générer une présentation complète à partir d'une <strong>description en langage naturel</strong>. Il construit automatiquement une structure logique, des titres de slides et du contenu adapté à votre objectif.</p>
+      <p>La qualité du résultat dépend directement de la précision de votre prompt. Plus vous donnez de contexte (audience, nb de slides, objectif, format), plus le deck généré sera adapté.</p>
+      <div class="info-box">
+        <div class="info-label">Éléments clés à préciser dans votre prompt</div>
+        Nombre de slides · Audience cible · Objectif de la présentation · Structure souhaitée · Ton (formel / synthétique / storytelling)
+      </div>
+      <div class="warn-box">
+        <div class="warn-label">⚠ Toujours relire avant de partager</div>
+        Claude peut faire des erreurs de contenu, d'interprétation ou de structure. La génération est un <strong>premier jet</strong>, pas un livrable final.
+      </div>
+    `,
+    prompts: [
+      "Crée une mise à jour projet interne de 10 slides : état d'avancement, jalons atteints, blocages et prochaines étapes Q3",
+      "Construis un deck stratégie d'entrée marché de 12 slides pour un produit B2B SaaS ciblant les DRH",
+      "Crée un résumé exécutif de 6 slides sur notre performance Q2 avec indicateurs clés et recommandations"
+    ],
+    exercise: {
+      scenario: "Vous devez préparer une présentation de 8 slides pour convaincre votre direction d'investir dans un nouveau produit. L'audience est composée de décideurs non-techniques. Vous avez 20 minutes.",
+      question: "Quel prompt va produire le deck le plus adapté à cette situation ?",
+      choices: [
+        { text: "Crée une présentation sur notre nouveau produit", correct: false },
+        { text: "Crée un pitch deck d'investissement de 8 slides pour des dirigeants non-techniques : problème, solution, taille de marché, ROI, risques et prochaines étapes. Ton : synthétique et orienté business.", correct: true },
+        { text: "Fais des slides sur l'investissement produit pour le management", correct: false },
+        { text: "Génère un deck avec toutes les informations sur le produit", correct: false }
+      ],
+      feedbackCorrect: "✓ Excellent ! Ce prompt donne à Claude tous les éléments nécessaires : nombre de slides, audience, structure attendue, et ton. Le résultat sera beaucoup plus précis et réutilisable qu'un prompt vague.",
+      feedbackWrong: "Ce prompt est trop vague. Claude va générer quelque chose, mais sans contrainte de nombre de slides, d'audience ni de structure, le résultat sera générique et nécessitera beaucoup de retravail."
+    },
+    corrected: [
+      { title: "Ouvrir un deck vierge", desc: "Créer une nouvelle présentation PowerPoint vide AVANT de demander la génération. Claude travaille sur le fichier ouvert.", prompt: null, result: null },
+      { title: "Rédiger un prompt précis", desc: "Inclure : nb de slides, audience, objectif, sections souhaitées, ton.", prompt: "Crée un pitch deck d'investissement de 8 slides pour des dirigeants non-techniques : problème, solution, taille de marché, ROI, risques, prochaines étapes. Ton synthétique et orienté business.", result: "Claude génère un deck structuré avec titres, sous-titres et contenu adapté à l'audience décisionnelle." },
+      { title: "Évaluer la structure", desc: "Vérifier : logique narrative, découpage des sections, densité du texte par slide.", prompt: null, result: null },
+      { title: "Itérer si nécessaire", desc: "Utiliser Ctrl+Z / Cmd+Z pour annuler et reformuler avec plus de précisions si le résultat ne convient pas.", prompt: null, result: null }
+    ]
+  },
+
+  // M2 - Modifier une slide
+  {
+    id: 2, level: "Débutant", levelColor: "debutant", duration: "30 min",
+    title: "Modifier une slide existante",
+    theory: `
+      <p>Claude peut effectuer des <strong>modifications ciblées</strong> sur une ou plusieurs slides sans régénérer tout le deck. Il suffit de sélectionner la slide et de formuler une instruction précise.</p>
+      <p>Plus l'instruction est <strong>spécifique</strong> (quantifiée, délimitée), plus la modification sera fidèle à votre intention. Évitez les formulations vagues comme "améliore cette slide".</p>
+      <div class="info-box">
+        <div class="info-label">Bonne formulation d'une modification</div>
+        Verbe d'action + objet précis + contrainte mesurable. Exemple : "Simplifie le texte de cette slide — max 3 bullet points de moins de 10 mots chacun"
+      </div>
+      <p>Claude dispose d'une <strong>protection contre les écrasements accidentels</strong> : il vous avertit avant d'écraser des données existantes. Lisez toujours cet avertissement avant de confirmer.</p>
+    `,
+    prompts: [
+      "Simplifie le texte de cette slide — maximum 3 bullet points, chacun de moins de 10 mots",
+      "Ajoute un graphique montrant la tendance trimestrielle : T1=120, T2=145, T3=132, T4=178",
+      "Réécris le titre de cette slide de façon plus orientée action, en moins de 6 mots"
+    ],
+    exercise: {
+      scenario: "Vous avez une slide avec 8 bullet points très denses sur la stratégie produit. Votre manager vous dit : 'Trop de texte, on perd l'audience'. Vous devez simplifier sans perdre les 3 messages clés.",
+      question: "Quel prompt donne à Claude les meilleures instructions pour simplifier cette slide ?",
+      choices: [
+        { text: "Améliore cette slide", correct: false },
+        { text: "Simplifie cette slide", correct: false },
+        { text: "Réduis cette slide à 3 bullet points maximum en conservant les 3 messages stratégiques les plus importants. Chaque bullet doit faire moins de 12 mots.", correct: true },
+        { text: "Améliore l'apparence de cette slide pour les dirigeants", correct: false }
+      ],
+      feedbackCorrect: "✓ Parfait ! Ce prompt est précis sur 3 dimensions : le nombre de bullets (max 3), le critère de sélection (messages les plus importants) et la contrainte de longueur (12 mots). Claude peut exécuter avec précision.",
+      feedbackWrong: "Ce prompt est trop vague. Claude va simplifier d'une façon ou d'une autre, mais sans contrainte précise, le résultat peut ne pas correspondre à votre attente. Quantifiez toujours vos demandes."
+    },
+    corrected: [
+      { title: "Sélectionner la slide cible", desc: "Cliquer sur la slide à modifier dans le panneau de gauche AVANT d'envoyer le prompt. Claude agit sur la slide active.", prompt: null, result: null },
+      { title: "Formuler une instruction précise", desc: "Inclure : action, objet, contrainte mesurable.", prompt: "Réduis cette slide à 3 bullet points maximum en conservant les 3 messages stratégiques les plus importants. Chaque bullet de moins de 12 mots.", result: "Claude simplifie en conservant les 3 messages prioritaires et formate selon la contrainte de longueur." },
+      { title: "Vérifier l'overwrite protection", desc: "Si Claude vous avertit avant d'écraser du contenu, lire attentivement avant de confirmer. En cas de doute, annuler.", prompt: null, result: null },
+      { title: "Ctrl+Z si nécessaire", desc: "PowerPoint conserve tout l'historique d'annulation. Ctrl+Z (Windows) ou Cmd+Z (Mac) pour revenir en arrière à tout moment.", prompt: null, result: null }
+    ]
+  },
+
+  // M3 - Templates
+  {
+    id: 3, level: "Intermédiaire", levelColor: "intermediaire", duration: "50 min",
+    title: "Travailler avec les templates corporate",
+    theory: `
+      <p>Claude lit automatiquement le <strong>slide master</strong> de votre présentation : polices, couleurs, layouts disponibles, schéma de couleurs. Il utilise ces éléments lors de toute génération ou modification.</p>
+      <p>Pour obtenir des slides conformes à votre charte graphique, la règle d'or est simple : <strong>appliquer le template AVANT de demander une génération</strong>. Claude ne peut pas appliquer un template après coup sur des slides déjà générées.</p>
+      <div class="info-box">
+        <div class="info-label">Comment Claude lit votre template</div>
+        Il analyse : les noms de layouts (ex. "Two Content", "Title Only"), les polices du slide master, la palette de couleurs thème, et les styles de titres et de corps de texte.
+      </div>
+      <div class="warn-box">
+        <div class="warn-label">⚠ Points de vigilance template</div>
+        Les templates complexes (dégradés custom, icônes SVG, effets 3D) peuvent ne pas être parfaitement respectés. Toujours vérifier la conformité charte après génération.
+      </div>
+    `,
+    prompts: [
+      "Ajoute une slide de résumé exécutif en utilisant le layout 'Une colonne' de ce template",
+      "Crée une section taille de marché — 3 slides couvrant le TAM, SAM, SOM — en utilisant les couleurs et polices de ce deck",
+      "Génère une slide de paysage concurrentiel pour 4 acteurs, en respectant le layout deux colonnes de ce template"
+    ],
+    exercise: {
+      scenario: "Vous devez créer un deck client avec votre template corporate déjà chargé. Vous voulez une section 'Recommandations' de 3 slides. Le template a un layout nommé 'Two Content' que vous souhaitez utiliser.",
+      question: "Quel prompt garantit le meilleur respect du template ?",
+      choices: [
+        { text: "Crée 3 slides de recommandations", correct: false },
+        { text: "Crée 3 slides de recommandations avec le layout 'Deux contenus' de ce template, la couleur d'accent pour les titres et des bullets d'une seule ligne", correct: true },
+        { text: "Ajoute 3 slides de recommandations professionnelles avec un bon design", correct: false },
+        { text: "Génère une section recommandations en respectant notre charte", correct: false }
+      ],
+      feedbackCorrect: "✓ Très bien ! Nommer explicitement le layout ('Two Content'), la couleur (accent) et le format (one-line bullets) donne à Claude des instructions précises et vérifiables. Le résultat sera fidèle au template.",
+      feedbackWrong: "Ce prompt laisse trop de liberté à Claude. Sans nommer le layout, la couleur ou le format des bullets, Claude va interpréter selon ses propres standards — pas forcément les vôtres."
+    },
+    corrected: [
+      { title: "Charger le template en premier", desc: "Ouvrir PowerPoint avec votre template corporate déjà appliqué. Ne pas demander à Claude d'appliquer le template après génération.", prompt: null, result: null },
+      { title: "Identifier les noms de layouts", desc: "Dans PowerPoint : clic droit sur une slide > Layout. Notez les noms exacts (ex. 'Two Content', 'Title Only') pour les citer dans vos prompts.", prompt: null, result: null },
+      { title: "Générer avec le layout nommé", desc: "Mentionner explicitement le nom du layout dans le prompt.", prompt: "Crée 3 slides de recommandations avec le layout 'Deux contenus', couleur d'accent pour les titres, bullets d'une seule ligne.", result: "Claude génère 3 slides conformes avec le bon layout et les contraintes de formatage." },
+      { title: "Vérifier la conformité", desc: "Comparer les slides générées avec votre template sur 3 critères : police, couleur dominante, style des titres. Corriger via un prompt de raffinement si nécessaire.", prompt: null, result: null }
+    ]
+  },
+
+  // M4 - Graphiques natifs
+  {
+    id: 4, level: "Intermédiaire", levelColor: "intermediaire", duration: "50 min",
+    title: "Créer des graphiques et diagrammes natifs",
+    theory: `
+      <p>Claude peut convertir du contenu textuel en <strong>visuels PowerPoint natifs</strong> : diagrammes SmartArt, graphiques de données (barres, courbes, camemberts), et flows de processus. Ces objets sont entièrement <strong>éditables</strong> — ce ne sont pas des images.</p>
+      <p>Pour les graphiques de données, il est indispensable de <strong>fournir les valeurs exactes</strong> dans le prompt. Claude ne devine pas les chiffres et ne les invente pas (ou ne devrait pas).</p>
+      <div class="info-box">
+        <div class="info-label">Règle de choix visuel</div>
+        Processus / flux → diagramme SmartArt · Comparaison → barres · Répartition → camembert · Évolution dans le temps → courbe · Hiérarchie → organigramme
+      </div>
+      <div class="warn-box">
+        <div class="warn-label">⚠ Vérifier l'éditabilité</div>
+        Après génération, double-cliquer sur l'objet. Si un éditeur s'ouvre (graphique Excel ou SmartArt), il est natif. Si rien ne se passe, c'est une image statique — reformuler avec "native PowerPoint chart".
+      </div>
+    `,
+    prompts: [
+      "Transforme ces bullets en diagramme de flux de processus : Collecte → Nettoyage → Analyse → Rapport",
+      "Crée un histogramme comparant la performance T1-T4 : T1=120, T2=145, T3=132, T4=178",
+      "Ajoute un camembert montrant les parts de marché : Entreprise A 45%, B 30%, C 15%, Autres 10%"
+    ],
+    exercise: {
+      scenario: "Votre slide 'Performance 2024' contient 4 bullet points : 'Q1 : +12%', 'Q2 : +18%', 'Q3 : -4%', 'Q4 : +22%'. Votre manager veut un visuel immédiatement lisible pour montrer la tendance annuelle.",
+      question: "Quel type de visuel et quel prompt choisir ?",
+      choices: [
+        { text: "Transforme ces bullets en diagramme pour visualiser les données", correct: false },
+        { text: "Crée un graphique en courbe PowerPoint natif montrant la croissance trimestrielle : T1=+12%, T2=+18%, T3=-4%, T4=+22%. Met en évidence T3 en rouge comme trimestre négatif.", correct: true },
+        { text: "Fais un graphique avec les données trimestrielles", correct: false },
+        { text: "Crée un camembert montrant la performance trimestrielle 2024", correct: false }
+      ],
+      feedbackCorrect: "✓ Excellent ! Une courbe (line chart) est le bon choix pour une évolution temporelle. Le prompt est précis : type de graphique, format natif, valeurs exactes et instruction de mise en évidence pour Q3. Le camembert aurait été incorrect — il montre des parts, pas une tendance.",
+      feedbackWrong: "Ce prompt a un problème. Soit il est trop vague (Claude ne sait pas quel type de graphique), soit le type choisi (camembert) est inadapté à une évolution temporelle. Pour des données dans le temps, la courbe est le bon choix."
+    },
+    corrected: [
+      { title: "Choisir le bon type de visuel", desc: "Évolution temporelle → line chart. Ne pas utiliser un camembert pour des données chronologiques.", prompt: null, result: null },
+      { title: "Fournir les valeurs exactes", desc: "Toujours inclure les valeurs numériques dans le prompt. Claude ne doit pas inventer de données.", prompt: "Crée un graphique en courbe PowerPoint natif : T1=+12%, T2=+18%, T3=-4%, T4=+22%. Met T3 en évidence en rouge.", result: "Claude génère un graphique en courbe éditable avec la mise en évidence de Q3." },
+      { title: "Vérifier l'éditabilité", desc: "Double-cliquer sur le graphique généré. L'éditeur Excel intégré doit s'ouvrir — modifier une valeur pour confirmer.", prompt: null, result: null },
+      { title: "Si image statique : reformuler", desc: "Si le double-clic ne réagit pas, ajouter 'native PowerPoint chart, not an image' dans le prompt suivant.", prompt: "Crée un graphique en courbe PowerPoint natif (pas une image, doit être modifiable) : T1=+12%, T2=+18%, T3=-4%, T4=+22%", result: null }
+    ]
+  },
+
+  // M5 - Restructurer
+  {
+    id: 5, level: "Intermédiaire", levelColor: "intermediaire", duration: "50 min",
+    title: "Restructurer un deck complet",
+    theory: `
+      <p>Claude peut agir sur <strong>plusieurs slides à la fois</strong> : réorganiser l'ordre, fusionner deux slides, ajouter des slides de liaison, ou réécrire la logique narrative d'une section entière.</p>
+      <p>La <strong>logique Pyramid Principle</strong> (recommandations en premier, contexte ensuite, données en support) est particulièrement adaptée aux audiences décisionnaires. Claude peut l'appliquer automatiquement sur demande.</p>
+      <div class="info-box">
+        <div class="info-label">Précision sur les plages de slides</div>
+        Citez toujours les numéros de slides précis : "slides 4-7" plutôt que "les slides du milieu". Claude compte les slides dans l'ordre du panneau de navigation.
+      </div>
+      <div class="warn-box">
+        <div class="warn-label">⚠ Auto-compaction sur les longs decks</div>
+        Sur les decks de 30+ slides avec une longue session, Claude peut démarrer automatiquement une nouvelle conversation pour éviter les dépassements de contexte. Le contenu du deck reste intact.
+      </div>
+    `,
+    prompts: [
+      "Réorganise les slides : recommandations en premier, puis contexte, puis données de support",
+      "Restructure le fil narratif des slides 4 à 7 pour créer une logique plus claire",
+      "Ajoute des slides de transition entre chaque section principale et mets à jour la slide d'agenda pour refléter la nouvelle structure"
+    ],
+    exercise: {
+      scenario: "Votre deck de 15 slides présente les données d'abord, puis l'analyse, puis les recommandations. Votre directeur veut voir les recommandations en 30 secondes. Vous devez restructurer sans perdre de contenu.",
+      question: "Quelle séquence de prompts est la plus efficace ?",
+      choices: [
+        { text: "Restructure complètement cette présentation", correct: false },
+        { text: "1) Réorganise les slides : recommandations en premier (slides 12-15), puis analyse (6-11), puis données (1-5). 2) Mets à jour la slide d'agenda. 3) Ajoute un résumé exécutif d'1 slide au début.", correct: true },
+        { text: "Déplace les recommandations au début du deck", correct: false },
+        { text: "Réorganise ce deck de façon plus logique", correct: false }
+      ],
+      feedbackCorrect: "✓ Parfait ! Cette séquence est efficace pour 3 raisons : elle cite les plages de slides exactes, elle demande la mise à jour de l'agenda (souvent oublié), et elle ajoute un résumé exécutif — tout en une seule session structurée.",
+      feedbackWrong: "Ce prompt est trop vague. Sans numéros de slides précis ni logique définie, Claude va interpréter 'restructure' à sa façon — ce qui peut ne pas correspondre à l'ordre Pyramid Principle attendu."
+    },
+    corrected: [
+      { title: "Noter l'ordre actuel des slides", desc: "Avant toute restructuration, noter les numéros de slides par section pour pouvoir comparer et valider le résultat.", prompt: null, result: null },
+      { title: "Appliquer la logique Pyramid", desc: "Réorganiser en mettant les recommandations en premier.", prompt: "Réorganise les slides : recommandations en premier (slides 12-15), puis analyse (6-11), puis données (1-5).", result: "Claude réorganise le deck en déplaçant les sections dans l'ordre demandé." },
+      { title: "Mettre à jour l'agenda", desc: "Toujours mettre à jour la slide d'agenda après une restructuration — souvent oubliée.", prompt: "Mets à jour la slide d'agenda pour refléter le nouvel ordre : Recommandations / Analyse / Données de support.", result: null },
+      { title: "Ajouter un résumé exécutif", desc: "Pour les audiences pressées, ajouter une slide de synthèse en début de deck.", prompt: "Ajoute un résumé exécutif d'1 slide au début avec les 3 recommandations clés sous forme de bullets.", result: "Deck restructuré avec logique Pyramid Principle complète et résumé exécutif." }
+    ]
+  },
+
+  // M6 - Instructions persistantes
+  {
+    id: 6, level: "Avancé", levelColor: "avance", duration: "60 min",
+    title: "Instructions persistantes et personnalisation",
+    theory: `
+      <p>Le champ <strong>Instructions</strong> dans le panneau Claude permet de définir des préférences qui s'appliquent à <strong>toutes les conversations PowerPoint</strong>, sans avoir à les répéter dans chaque prompt.</p>
+      <p>Les instructions les plus efficaces sont <strong>mesurables et spécifiques</strong> : "max 6 words per title" est meilleur que "keep titles short". "Use #0070C0 for accent" est meilleur que "use our brand blue".</p>
+      <div class="info-box">
+        <div class="info-label">Exemples d'instructions efficaces</div>
+        Utilise uniquement des bullets d'une ligne · Titres de slides : max 6 mots, orientés action · Couleur accent #0070C0 pour les données clés · Audience : dirigeants seniors, pas de jargon technique · Toujours inclure un "Et alors ?" sur les slides de recommandations
+      </div>
+      <div class="warn-box">
+        <div class="warn-label">⚠ Instructions PowerPoint ≠ Instructions Excel</div>
+        Les instructions définies dans PowerPoint n'affectent PAS Excel, et vice versa. Chaque add-in a son propre champ d'instructions indépendant.
+      </div>
+      <p>Les <strong>Skills</strong> peuvent être invoqués via la commande <code>/</code> dans le panneau. Ils s'appliquent automatiquement quand pertinents, ou manuellement sur demande (ex. <code>/deck-check</code>).</p>
+    `,
+    prompts: [
+      "Crée une analyse concurrentielle de 5 slides couvrant 4 concurrents",
+      "Ajoute un résumé exécutif en utilisant notre format standard",
+      "/deck-check — vérifie que ce deck respecte nos directives de marque"
+    ],
+    exercise: {
+      scenario: "Vous êtes consultant et produisez en moyenne 3 decks clients par semaine. Chaque deck doit respecter : bullets d'une ligne max, titres de 6 mots max orientés action, couleur accent #C8102E, audience décisionnaires non-techniques.",
+      question: "Quelles instructions persistantes configurer pour automatiser ces contraintes ?",
+      choices: [
+        { text: "Utilise un design professionnel et reste concis pour les dirigeants", correct: false },
+        { text: "Utilise uniquement des bullets d'une ligne. Titres : max 6 mots, orientés action. Couleur accent #C8102E pour les données clés. Audience : décideurs seniors, pas de jargon. Ajoute 'Et alors ?' sur toutes les slides de recommandations.", correct: true },
+        { text: "Garde les slides simples et respecte nos directives de marque", correct: false },
+        { text: "Génère des slides professionnelles pour une audience dirigeante", correct: false }
+      ],
+      feedbackCorrect: "✓ Parfait ! Ces instructions couvrent 5 dimensions mesurables : format des bullets, longueur des titres, code couleur exact, audience et structure des slides de recommandation. Claude pourra les appliquer systématiquement sans que vous ayez à les répéter.",
+      feedbackWrong: "Ces instructions sont trop vagues pour être appliquées de façon cohérente. 'Concise', 'professional', 'simple' sont des termes subjectifs. Préférez des contraintes mesurables : nombre de mots, code couleur hex, format de bullets."
+    },
+    corrected: [
+      { title: "Ouvrir le champ Instructions", desc: "Dans le panneau Claude for PowerPoint, cliquer sur l'icône engrenage ou sur 'Instructions' en bas du panneau.", prompt: null, result: null },
+      { title: "Saisir les instructions mesurables", desc: "Écrire des contraintes précises et quantifiées.", prompt: null, result: "Utiliser uniquement des bullets d'une ligne. Titres : max 6 mots, orientés action. Couleur accent #C8102E pour les données clés. Audience : décideurs seniors, pas de jargon. Ajouter 'Et alors ?' sur les slides de recommandations." },
+      { title: "Tester l'effet", desc: "Générer un deck test et vérifier que chaque instruction a bien été respectée. Reformuler les instructions ignorées.", prompt: "Crée une analyse concurrentielle de 5 slides couvrant 4 concurrents", result: "Claude génère les slides en respectant toutes les instructions sans qu'elles soient mentionnées dans le prompt." },
+      { title: "Explorer les Skills avec /", desc: "Taper / dans le panneau pour voir les Skills disponibles. Invoquer /deck-check pour vérifier la conformité charte.", prompt: null, result: null }
+    ]
+  },
+
+  // M7 - Connecteurs
+  {
+    id: 7, level: "Avancé", levelColor: "avance", duration: "60 min",
+    title: "Connecteurs et données externes",
+    theory: `
+      <p>Les <strong>connecteurs</strong> permettent à Claude d'accéder à des données depuis vos outils externes (Google Drive, Gmail, etc.) pour enrichir le contenu de vos slides sans copier-coller manuel.</p>
+      <p>Pour utiliser un connecteur, cliquer sur l'icône connecteurs dans la sidebar Claude et activer le service souhaité. Claude peut ensuite accéder aux documents que vous lui indiquez <strong>explicitement dans le prompt</strong>.</p>
+      <div class="info-box">
+        <div class="info-label">Bonne pratique : nommer le document source</div>
+        Claude ne browse pas tout votre Drive automatiquement. Nommez toujours le document source dans le prompt : "En me basant sur le fichier nommé 'Bilan Concurrentiel Q2' dans mon Drive..."
+      </div>
+      <div class="warn-box">
+        <div class="warn-label">⚠ Connecteurs custom (MCP) : lire la doc sécurité</div>
+        Les connecteurs custom peuvent introduire des risques de prompt injection. Avant d'activer un connecteur non officiel, consulter la documentation de sécurité Anthropic sur les MCP remotes.
+      </div>
+      <p>Cross-checking impératif : toujours vérifier que les chiffres dans les slides correspondent aux données sources — Claude peut paraphraser ou arrondir.</p>
+    `,
+    prompts: [
+      "En me basant sur le fichier 'Veille Concurrentielle Q2' dans mon Google Drive, crée un deck de 6 slides sur le paysage concurrentiel avec une slide par concurrent",
+      "À partir du rapport commercial dans mon Drive, génère un résumé performance de 3 slides avec les indicateurs clés et les tendances",
+      "Mets à jour la slide 3 avec les données tarifaires du même document Drive"
+    ],
+    exercise: {
+      scenario: "Vous avez un rapport de veille de 20 pages dans votre Google Drive nommé 'Veille Marché Q3 2025'. Vous devez créer un deck de 8 slides pour votre CODIR à partir de ce rapport.",
+      question: "Quel prompt utiliser pour générer le deck depuis ce document ?",
+      choices: [
+        { text: "Crée un deck CODIR de 8 slides à partir de mon rapport Drive", correct: false },
+        { text: "En me basant sur le document 'Veille Marché Q3 2025' dans mon Google Drive, crée un deck CODIR de 8 slides : 1 slide par insight clé, 1 slide de synthèse concurrentielle, 1 slide de recommandations. Utilise uniquement les données explicitement mentionnées dans le document.", correct: true },
+        { text: "Lis mon Google Drive et fais une présentation sur les tendances marché", correct: false },
+        { text: "Crée un deck de vue d'ensemble marché à partir de mes fichiers Drive", correct: false }
+      ],
+      feedbackCorrect: "✓ Excellent ! Ce prompt nomme le document source exact, précise le nombre de slides, la structure souhaitée et — crucial — demande à Claude d'utiliser uniquement les données du document. Cette dernière instruction évite que Claude complète avec des informations inventées.",
+      feedbackWrong: "Ce prompt est insuffisant. Sans nom de fichier exact, Claude ne sait pas quel document utiliser. Sans structure précise, le deck sera générique. Et sans l'instruction 'data from the document only', Claude risque d'inventer des informations."
+    },
+    corrected: [
+      { title: "Activer le connecteur Google Drive", desc: "Dans le panneau Claude, cliquer sur l'icône connecteurs et activer Google Drive. Autoriser l'accès lors de la première utilisation.", prompt: null, result: null },
+      { title: "Nommer le document source explicitement", desc: "Toujours citer le nom exact du fichier dans le prompt.", prompt: "En me basant sur le document 'Veille Marché Q3 2025' dans mon Google Drive, crée un deck CODIR de 8 slides avec les insights clés, une synthèse concurrentielle et des recommandations. Utilise uniquement les données du document.", result: "Claude lit le rapport Drive et génère un deck basé sur les données réelles du document." },
+      { title: "Cross-checker les chiffres", desc: "Après génération, vérifier chaque donnée chiffrée dans les slides contre le document source. Claude peut arrondir ou paraphraser.", prompt: null, result: null },
+      { title: "Itérer sur une section spécifique", desc: "Après validation, enrichir une slide avec des données supplémentaires du même document.", prompt: "Mets à jour la slide de synthèse concurrentielle avec le tableau comparatif des prix du même document Drive", result: null }
+    ]
+  },
+
+  // M8 - Sécurité
+  {
+    id: 8, level: "Avancé", levelColor: "avance", duration: "60 min",
+    title: "Sécurité et bonnes pratiques professionnelles",
+    theory: `
+      <p>Claude for PowerPoint présente des <strong>risques spécifiques</strong> liés à son accès en lecture/écriture sur vos présentations. La documentation officielle Anthropic identifie plusieurs scénarios à risque.</p>
+      <p>Le risque principal est le <strong>prompt injection</strong> : des instructions malveillantes cachées dans un fichier externe (template téléchargé, fichier fournisseur) peuvent amener Claude à exécuter des actions non souhaitées sur votre deck.</p>
+      <div class="warn-box">
+        <div class="warn-label">⚠ Fichiers externes non vérifiés = risque élevé</div>
+        Ne jamais utiliser Claude for PowerPoint avec des templates téléchargés sur internet, des fichiers reçus de tiers non vérifiés, ou des documents partagés collaboratifs dont vous ne contrôlez pas l'intégralité du contenu.
+      </div>
+      <div class="info-box">
+        <div class="info-label">Rétention des données</div>
+        Les inputs et outputs sont supprimés par Anthropic dans les 30 jours. Aucun historique n'est sauvegardé entre sessions. Les logs d'audit Enterprise ne couvrent pas encore Claude for PowerPoint.
+      </div>
+      <p>Claude for PowerPoint est <strong>déconseillé</strong> pour : livrables clients finaux sans relecture humaine, présentations avec données réglementées sans contrôles adaptés, remplacement du jugement humain sur la narration et le design.</p>
+    `,
+    prompts: [
+      "Vérifie l'exactitude de ce deck avant que je le partage avec le client",
+      "Vérifie la conformité charte de cette présentation et signale tout élément hors template",
+      "Résume les risques ou lacunes dans le contenu de ce deck"
+    ],
+    exercise: {
+      scenario: "Votre équipe envisage 4 usages de Claude for PowerPoint. En tant qu'utilisateur avancé, vous devez évaluer le niveau de risque de chaque scénario.",
+      question: "Quel scénario est le PLUS risqué selon la documentation officielle Anthropic ?",
+      choices: [
+        { text: "Générer un premier jet de deck interne à partir d'un template corporate validé, puis relire manuellement avant partage", correct: false },
+        { text: "Utiliser un template téléchargé sur un site externe pour générer automatiquement un deck client livré sans relecture", correct: true },
+        { text: "Utiliser Google Drive pour enrichir un deck avec des données agrégées anonymisées", correct: false },
+        { text: "Configurer des instructions persistantes pour automatiser le formatage des slides", correct: false }
+      ],
+      feedbackCorrect: "✓ Correct ! Ce scénario cumule 3 risques identifiés par Anthropic : (1) template externe non vérifié = risque de prompt injection, (2) livraison directe sans relecture humaine = explicitement déconseillé, (3) usage sur des livrables clients = nécessite validation humaine obligatoire.",
+      feedbackWrong: "Ce n'est pas le scénario le plus risqué. Les scénarios à feu vert ou feu orange comportent des précautions suffisantes (template interne validé, relecture humaine, données agrégées). Le risque maximal cumule fichier externe non vérifié ET livraison sans relecture."
+    },
+    corrected: [
+      { title: "Règle 1 : fichiers de confiance uniquement", desc: "N'utiliser Claude for PowerPoint qu'avec des fichiers internes validés ou des templates dont vous contrôlez l'intégralité du contenu.", prompt: null, result: null },
+      { title: "Règle 2 : relecture humaine systématique", desc: "Tout livrable client ou livrable réglementé doit passer par une validation humaine avant partage. Claude génère un premier jet — pas un livrable final.", prompt: null, result: null },
+      { title: "Règle 3 : cross-checker les données sensibles", desc: "Vérifier tous les chiffres, noms, dates et citations dans les slides générées. Claude peut halluciner des détails.", prompt: "Vérifie l'exactitude de ce deck et signale toute affirmation qui semble incertaine ou devrait être confirmée", result: "Claude identifie les sections à vérifier et signale les affirmations nécessitant confirmation." },
+      { title: "Règle 4 : politique data de l'organisation", desc: "Avant d'utiliser des données confidentielles (financières, RH, clients), vérifier que la politique data de votre organisation autorise l'usage de Claude for PowerPoint.", prompt: null, result: "Données supprimées à 30 jours côté Anthropic · Pas d'historique inter-sessions · Logs d'audit non disponibles pour l'instant" }
+    ]
+  }
+
+];
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+const completed = new Set();
+let currentModule = null;
+let exerciseAnswered = false;
+
+// ─── NAVIGATION ──────────────────────────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (id === 'home') document.getElementById('nav-home').classList.add('active');
+}
+
+function showModule(idx) {
+  currentModule = idx;
+  exerciseAnswered = false;
+  const m = MODULES[idx];
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-module').classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('nav-m' + idx).classList.add('active');
+  renderModule(m);
+  window.scrollTo(0, 0);
+}
+
+// ─── RENDER ───────────────────────────────────────────────────────────────────
+function renderModule(m) {
+  const levelLabel = { debutant: '🟢 Débutant', intermediaire: '🟡 Intermédiaire', avance: '🔴 Avancé' };
+  const levelDot = { debutant: 'var(--debutant)', intermediaire: 'var(--intermediaire)', avance: 'var(--avance)' };
+
+  const html = `
+    <div class="module-header">
+      <div class="module-breadcrumb">
+        <span onclick="showScreen('home')" style="cursor:pointer;color:var(--accent2)">Formation</span>
+        <span class="sep">›</span>
+        <span style="color:${levelDot[m.levelColor]}">${levelLabel[m.levelColor]}</span>
+        <span class="sep">›</span>
+        <span>Module ${m.id + 1}</span>
+      </div>
+      <h2 class="module-title">${m.title}</h2>
+      <div class="module-meta">
+        <span class="meta-pill">⏱ ${m.duration}</span>
+        <span class="meta-pill level-badge badge-${m.levelColor === 'debutant' ? 'debutant' : m.levelColor === 'intermediaire' ? 'inter' : 'avance'}">${levelLabel[m.levelColor].replace('🟢 ','').replace('🟡 ','').replace('🔴 ','')}</span>
+      </div>
+    </div>
+
+    <div class="lesson-section open" id="sec-theory">
+      <div class="lesson-section-header" onclick="toggleSection('sec-theory')">
+        <div class="section-icon icon-theory">📖</div>
+        <div class="section-title">Théorie &amp; concepts clés</div>
+        <div class="section-toggle">▼</div>
+      </div>
+      <div class="section-body">
+        <div class="theory-content">${m.theory}</div>
+      </div>
+    </div>
+
+    <div class="lesson-section" id="sec-prompts">
+      <div class="lesson-section-header" onclick="toggleSection('sec-prompts')">
+        <div class="section-icon icon-prompt">💬</div>
+        <div class="section-title">Prompts à pratiquer</div>
+        <div class="section-toggle">▼</div>
+      </div>
+      <div class="section-body">
+        <div class="prompt-list">
+          ${m.prompts.map((p, i) => `
+            <div class="prompt-card" onclick="copyPrompt(this, '${p.replace(/'/g, "\\'")}')" id="pc-${m.id}-${i}">
+              <span class="prompt-icon">›</span>
+              <span class="prompt-text">"${p}"</span>
+              <span class="copy-hint">Copier</span>
+            </div>
+          `).join('')}
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin-top:14px;">Cliquer sur un prompt pour le copier, puis collez-le dans le panneau Claude for PowerPoint.</p>
+      </div>
+    </div>
+
+    <div class="lesson-section" id="sec-exercise">
+      <div class="lesson-section-header" onclick="toggleSection('sec-exercise')">
+        <div class="section-icon icon-exercise">🎯</div>
+        <div class="section-title">Exercice interactif</div>
+        <div class="section-toggle">▼</div>
+      </div>
+      <div class="section-body">
+        <div class="exercise-wrapper">
+          <div class="exercise-scenario">
+            <div class="scenario-label">📋 Mise en situation</div>
+            ${m.exercise.scenario}
+          </div>
+          <div class="exercise-question">${m.exercise.question}</div>
+          <div class="choices" id="choices-${m.id}">
+            ${m.exercise.choices.map((c, i) => `
+              <div class="choice" onclick="selectChoice(${m.id}, ${i}, ${c.correct})" id="choice-${m.id}-${i}">
+                <span class="choice-letter">${String.fromCharCode(65+i)}</span>
+                ${c.text}
+              </div>
+            `).join('')}
+          </div>
+          <div class="feedback-box correct" id="fb-correct-${m.id}">${m.exercise.feedbackCorrect}</div>
+          <div class="feedback-box wrong" id="fb-wrong-${m.id}">${m.exercise.feedbackWrong}</div>
+          <div class="exercise-actions">
+            <button class="btn btn-primary" id="btn-validate-${m.id}" onclick="validateExercise(${m.id})" disabled>Valider</button>
+            <button class="btn" id="btn-reset-${m.id}" onclick="resetExercise(${m.id})" style="display:none">Réessayer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson-section" id="sec-corrected">
+      <div class="lesson-section-header" onclick="toggleSection('sec-corrected')">
+        <div class="section-icon icon-corrected">✅</div>
+        <div class="section-title">Corrigé détaillé</div>
+        <div class="section-toggle">▼</div>
+      </div>
+      <div class="section-body">
+        <div class="corrected-wrapper">
+          ${m.corrected.map((s, i) => `
+            <div class="corrected-step">
+              <div class="corrected-num">${i+1}</div>
+              <div class="corrected-content">
+                <div class="step-title">${s.title}</div>
+                <div class="step-desc">${s.desc}</div>
+                ${s.prompt ? `<div class="corrected-prompt">"${s.prompt}"</div>` : ''}
+                ${s.result ? `<div class="result-preview">${s.result}</div>` : ''}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+
+    <div class="module-nav">
+      <button class="btn" onclick="${m.id > 0 ? 'showModule(' + (m.id-1) + ')' : "showScreen('home')"}" >
+        ← ${m.id > 0 ? 'Module précédent' : 'Accueil'}
+      </button>
+      <button class="module-complete-btn" onclick="completeModule(${m.id})">
+        ${completed.has(m.id) ? '✓ Module terminé' : 'Marquer comme terminé →'}
+      </button>
+    </div>
+  `;
+
+  document.getElementById('module-content').innerHTML = html;
+  if (completed.has(m.id)) {
+    document.querySelector('.module-complete-btn').style.background = 'linear-gradient(135deg, var(--green), #0ea572)';
+  }
+}
+
+// ─── INTERACTIONS ─────────────────────────────────────────────────────────────
+function toggleSection(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+function copyPrompt(el, text) {
+  navigator.clipboard.writeText(text).catch(() => {});
+  el.classList.add('copied');
+  el.querySelector('.copy-hint').textContent = '✓ Copié';
+  setTimeout(() => {
+    el.classList.remove('copied');
+    el.querySelector('.copy-hint').textContent = 'Copier';
+  }, 2000);
+}
+
+let selectedChoice = null;
+function selectChoice(moduleId, idx, correct) {
+  if (exerciseAnswered) return;
+  selectedChoice = { idx, correct };
+  document.querySelectorAll(`#choices-${moduleId} .choice`).forEach(c => {
+    c.classList.remove('selected-correct', 'selected-wrong');
+  });
+  const el = document.getElementById(`choice-${moduleId}-${idx}`);
+  el.classList.add(correct ? 'selected-correct' : 'selected-wrong');
+  document.getElementById(`btn-validate-${moduleId}`).disabled = false;
+}
+
+function validateExercise(moduleId) {
+  if (!selectedChoice) return;
+  exerciseAnswered = true;
+  const { idx, correct } = selectedChoice;
+  const m = MODULES[moduleId];
+  m.exercise.choices.forEach((c, i) => {
+    if (c.correct) document.getElementById(`choice-${moduleId}-${i}`).classList.add('reveal-correct');
+  });
+  document.getElementById(`fb-${correct ? 'correct' : 'wrong'}-${moduleId}`).classList.add('show');
+  document.getElementById(`btn-validate-${moduleId}`).disabled = true;
+  document.getElementById(`btn-reset-${moduleId}`).style.display = 'inline-block';
+  if (correct) {
+    completed.add(moduleId);
+    updateProgress();
+    markNavComplete(moduleId);
+  }
+}
+
+function resetExercise(moduleId) {
+  exerciseAnswered = false;
+  selectedChoice = null;
+  document.querySelectorAll(`#choices-${moduleId} .choice`).forEach(c => {
+    c.classList.remove('selected-correct', 'selected-wrong', 'reveal-correct');
+  });
+  document.getElementById(`fb-correct-${moduleId}`).classList.remove('show');
+  document.getElementById(`fb-wrong-${moduleId}`).classList.remove('show');
+  document.getElementById(`btn-validate-${moduleId}`).disabled = true;
+  document.getElementById(`btn-reset-${moduleId}`).style.display = 'none';
+}
+
+function completeModule(id) {
+  completed.add(id);
+  updateProgress();
+  markNavComplete(id);
+  const btn = document.querySelector('.module-complete-btn');
+  btn.textContent = '✓ Module terminé';
+  btn.style.background = 'linear-gradient(135deg, var(--green), #0ea572)';
+  if (id < MODULES.length - 1) {
+    setTimeout(() => showModule(id + 1), 800);
+  }
+}
+
+function markNavComplete(id) {
+  const nav = document.getElementById(`nav-m${id}`);
+  if (nav) nav.classList.add('completed');
+}
+
+function updateProgress() {
+  const pct = Math.round((completed.size / MODULES.length) * 100);
+  document.getElementById('globalProg').style.width = pct + '%';
+  document.getElementById('globalProgText').textContent = completed.size + ' / ' + MODULES.length + ' modules';
+}
+</script>
+</body>
+</html>

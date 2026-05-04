@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formation Claude for Excel</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --surface2: #1a1a26;
+  --border: #ffffff12;
+  --border2: #ffffff22;
+  --text: #f0f0f8;
+  --muted: #8888aa;
+  --accent: #7c6af7;
+  --accent2: #a594fa;
+  --green: #22d3a0;
+  --red: #f45b69;
+  --amber: #f5a623;
+  --blue: #4facfe;
+  --debutant: #22d3a0;
+  --intermediaire: #f5a623;
+  --avance: #f45b69;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* GRID BG */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(124,106,247,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,106,247,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* LAYOUT */
+.shell { position: relative; z-index: 1; display: flex; min-height: 100vh; }
+
+/* SIDEBAR */
+.sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebar-logo {
+  padding: 28px 24px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-logo .app-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.02em;
+}
+.sidebar-logo .app-sub {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+  font-family: 'DM Mono', monospace;
+}
+
+.progress-overview {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+}
+.progress-overview .label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.prog-bar-bg {
+  height: 3px;
+  background: var(--border2);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.prog-bar-fill {
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--blue));
+  border-radius: 99px;
+  transition: width 0.5s ease;
+}
+.prog-text {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 6px;
+  font-family: 'DM Mono', monospace;
+}
+
+.nav-section {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.nav-section-label {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  padding: 4px 24px 8px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 24px;
+  cursor: pointer;
+  transition: all 0.15s;
+  border-left: 2px solid transparent;
+  font-size: 13px;
+  color: var(--muted);
+}
+.nav-item:hover { background: rgba(124,106,247,0.06); color: var(--text); }
+.nav-item.active {
+  background: rgba(124,106,247,0.1);
+  border-left-color: var(--accent);
+  color: var(--text);
+}
+.nav-item.completed { color: var(--green); }
+.nav-item.completed .nav-check { opacity: 1; }
+
+.nav-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.nav-item.active .nav-dot { background: var(--accent); border-color: var(--accent); }
+.nav-item.completed .nav-dot { background: var(--green); border-color: var(--green); }
+
+.nav-check {
+  margin-left: auto;
+  font-size: 11px;
+  opacity: 0;
+  color: var(--green);
+}
+
+.level-badge {
+  font-size: 9px;
+  padding: 2px 7px;
+  border-radius: 99px;
+  font-family: 'DM Mono', monospace;
+  margin-left: auto;
+}
+.badge-debutant { background: rgba(34,211,160,0.12); color: var(--debutant); }
+.badge-inter { background: rgba(245,166,35,0.12); color: var(--intermediaire); }
+.badge-avance { background: rgba(244,91,105,0.12); color: var(--avance); }
+
+/* MAIN */
+.main {
+  flex: 1;
+  padding: 40px 48px;
+  max-width: 860px;
+}
+
+/* SCREENS */
+.screen { display: none; animation: fadeIn 0.3s ease; }
+.screen.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* HOME SCREEN */
+.home-header {
+  margin-bottom: 48px;
+}
+.home-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--accent2);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.home-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, #f0f0f8 0%, var(--accent2) 60%, var(--blue) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.home-desc {
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 560px;
+}
+
+.level-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 40px;
+}
+.level-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.level-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+.level-card.debutant::before { background: var(--debutant); }
+.level-card.inter::before { background: var(--intermediaire); }
+.level-card.avance::before { background: var(--avance); }
+.level-card:hover { border-color: var(--border2); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+
+.level-card .lc-icon { font-size: 28px; margin-bottom: 12px; }
+.level-card .lc-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.level-card.debutant .lc-name { color: var(--debutant); }
+.level-card.inter .lc-name { color: var(--intermediaire); }
+.level-card.avance .lc-name { color: var(--avance); }
+.level-card .lc-desc { font-size: 12px; color: var(--muted); line-height: 1.5; margin-bottom: 16px; }
+.level-card .lc-modules {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.start-btn {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--text);
+  font-size: 12px;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-top: 12px;
+}
+.level-card.debutant .start-btn:hover { background: rgba(34,211,160,0.1); border-color: var(--debutant); color: var(--debutant); }
+.level-card.inter .start-btn:hover { background: rgba(245,166,35,0.1); border-color: var(--intermediaire); color: var(--intermediaire); }
+.level-card.avance .start-btn:hover { background: rgba(244,91,105,0.1); border-color: var(--avance); color: var(--avance); }
+
+/* MODULE SCREEN */
+.module-header { margin-bottom: 32px; }
+.module-breadcrumb {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.module-breadcrumb .sep { color: var(--border2); }
+.module-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.module-meta {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.meta-pill {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  border: 1px solid var(--border2);
+  color: var(--muted);
+}
+
+/* LESSON SECTIONS */
+.lesson-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.lesson-section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 24px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s;
+}
+.lesson-section-header:hover { background: rgba(255,255,255,0.02); }
+
+.section-icon {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.icon-theory { background: rgba(124,106,247,0.15); }
+.icon-prompt { background: rgba(79,172,254,0.15); }
+.icon-exercise { background: rgba(245,166,35,0.15); }
+.icon-corrected { background: rgba(34,211,160,0.15); }
+
+.section-title {
+  font-size: 14px;
+  font-weight: 500;
+  flex: 1;
+}
+.section-toggle {
+  font-size: 11px;
+  color: var(--muted);
+  transition: transform 0.2s;
+}
+.lesson-section.open .section-toggle { transform: rotate(180deg); }
+
+.section-body {
+  display: none;
+  padding: 0 24px 24px;
+  border-top: 1px solid var(--border);
+}
+.lesson-section.open .section-body { display: block; }
+
+/* THEORY */
+.theory-content {
+  padding-top: 18px;
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+.theory-content p { margin-bottom: 12px; }
+.theory-content strong { color: var(--text); font-weight: 500; }
+
+.info-box {
+  background: rgba(124,106,247,0.08);
+  border: 1px solid rgba(124,106,247,0.2);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin: 16px 0;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.6;
+}
+.info-box .info-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  color: var(--accent2);
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+
+.warn-box {
+  background: rgba(244,91,105,0.08);
+  border: 1px solid rgba(244,91,105,0.2);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin: 16px 0;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.6;
+}
+.warn-box .warn-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  color: var(--red);
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+
+/* PROMPTS */
+.prompt-list { padding-top: 18px; display: flex; flex-direction: column; gap: 10px; }
+.prompt-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+}
+.prompt-card:hover { border-color: rgba(79,172,254,0.3); background: rgba(79,172,254,0.04); }
+.prompt-card .prompt-icon {
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.prompt-card .prompt-text {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--blue);
+  line-height: 1.6;
+  flex: 1;
+}
+.prompt-card .copy-hint {
+  font-size: 10px;
+  color: var(--muted);
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.prompt-card:hover .copy-hint { opacity: 1; }
+.prompt-card.copied { border-color: rgba(34,211,160,0.4); }
+.prompt-card.copied .prompt-text { color: var(--green); }
+
+/* EXERCISE */
+.exercise-wrapper { padding-top: 18px; }
+.exercise-scenario {
+  background: var(--surface2);
+  border-radius: 10px;
+  padding: 18px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted);
+  border-left: 3px solid var(--amber);
+}
+.exercise-scenario strong { color: var(--text); }
+.exercise-scenario .scenario-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  color: var(--amber);
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+
+.exercise-question {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 14px;
+  color: var(--text);
+}
+
+.choices { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-size: 13px;
+  color: var(--muted);
+  background: var(--surface2);
+}
+.choice:hover { border-color: var(--border2); color: var(--text); }
+.choice.selected-correct {
+  border-color: var(--green);
+  background: rgba(34,211,160,0.08);
+  color: var(--green);
+}
+.choice.selected-wrong {
+  border-color: var(--red);
+  background: rgba(244,91,105,0.08);
+  color: var(--red);
+}
+.choice.reveal-correct {
+  border-color: rgba(34,211,160,0.4);
+  color: var(--green);
+  background: rgba(34,211,160,0.04);
+}
+.choice .choice-letter {
+  width: 22px; height: 22px;
+  border-radius: 6px;
+  border: 1px solid currentColor;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  flex-shrink: 0;
+}
+
+.feedback-box {
+  padding: 14px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.6;
+  margin-bottom: 16px;
+  display: none;
+}
+.feedback-box.correct { background: rgba(34,211,160,0.08); border: 1px solid rgba(34,211,160,0.25); color: var(--green); }
+.feedback-box.wrong { background: rgba(244,91,105,0.08); border: 1px solid rgba(244,91,105,0.25); color: #f8a0a8; }
+.feedback-box.show { display: block; }
+
+.exercise-actions { display: flex; gap: 10px; }
+.btn {
+  padding: 9px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--muted);
+}
+.btn:hover { color: var(--text); border-color: var(--border2); }
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+.btn-primary:hover { background: var(--accent2); border-color: var(--accent2); color: white; }
+.btn:disabled { opacity: 0.35; cursor: default; }
+
+/* CORRECTED */
+.corrected-wrapper { padding-top: 18px; }
+.corrected-step {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.corrected-num {
+  width: 26px; height: 26px;
+  border-radius: 8px;
+  background: rgba(124,106,247,0.15);
+  color: var(--accent2);
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.corrected-content { flex: 1; }
+.corrected-content .step-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.corrected-content .step-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.corrected-prompt {
+  background: var(--surface2);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-top: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--blue);
+  line-height: 1.6;
+  border-left: 2px solid rgba(79,172,254,0.4);
+}
+
+.result-preview {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--green);
+  font-family: 'DM Mono', monospace;
+  line-height: 1.6;
+}
+.result-preview::before {
+  content: '✓ Résultat attendu';
+  display: block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+/* MODULE NAV */
+.module-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.module-complete-btn {
+  padding: 11px 28px;
+  background: linear-gradient(135deg, var(--accent), var(--blue));
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s;
+  box-shadow: 0 4px 20px rgba(124,106,247,0.3);
+}
+.module-complete-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(124,106,247,0.45); }
+
+/* COMPLETION */
+.completion-screen {
+  text-align: center;
+  padding: 60px 0;
+}
+.completion-icon { font-size: 64px; margin-bottom: 24px; }
+.completion-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, var(--green), var(--blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.completion-desc { font-size: 15px; color: var(--muted); line-height: 1.7; max-width: 480px; margin: 0 auto 32px; }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="app-name">Claude for Excel</div>
+    <div class="app-sub">// autoformation interactive</div>
+  </div>
+  <div class="progress-overview">
+    <div class="label">Progression globale</div>
+    <div class="prog-bar-bg"><div class="prog-bar-fill" id="globalProg" style="width:0%"></div></div>
+    <div class="prog-text" id="globalProgText">0 / 14 modules</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label">Accueil</div>
+    <div class="nav-item active" onclick="showScreen('home')" id="nav-home">
+      <span class="nav-dot"></span> Vue d'ensemble
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label" style="color:var(--debutant)">🟢 Débutant</div>
+    <div class="nav-item" onclick="showModule(0)" id="nav-m0"><span class="nav-dot"></span> Installation <span class="nav-check">✓</span></div>
+    <div class="nav-item" onclick="showModule(1)" id="nav-m1"><span class="nav-dot"></span> Poser des questions <span class="nav-check">✓</span></div>
+    <div class="nav-item" onclick="showModule(2)" id="nav-m2"><span class="nav-dot"></span> Corriger des erreurs <span class="nav-check">✓</span></div>
+    <div class="nav-item" onclick="showModule(3)" id="nav-m3"><span class="nav-dot"></span> Nettoyer les données <span class="nav-check">✓</span></div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label" style="color:var(--intermediaire)">🟡 Intermédiaire</div>
+    <div class="nav-item" onclick="showModule(4)" id="nav-m4"><span class="nav-dot"></span> Formules complexes <span class="nav-check">✓</span></div>
+    <div class="nav-item" onclick="showModule(5)" id="nav-m5"><span class="nav-dot"></span> Analyser les données <span class="nav-check">✓</span></div>
+    <div class="nav-item" onclick="showModule(6)" id="nav-m6"><span class="nav-dot"></span> Tableaux de bord <span class="nav-check">✓</span></div>
+    <div class="nav-item" onclick="showModule(7)" id="nav-m7"><span class="nav-dot"></span> Instructions persistantes <span class="nav-check">✓</span></div>
+    <div class="nav-item" onclick="showModule(8)" id="nav-m8"><span class="nav-dot"></span> Contexte & sessions <span class="nav-check">✓</span></div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-label" style="color:var(--avance)">🔴 Avancé</div>
+    <div class="nav-item" onclick="showModule(9)" id="nav-m9"><span class="nav-dot"></span> Modèles financiers <span class="nav-check">✓</span></div>
+    <div class="nav-item" onclick="showModule(10)" id="nav-m10"><span class="nav-dot"></span> Audit de modèle <span class="nav-check">✓</span></div>
+    <div class="nav-item" onclick="showModule(11)" id="nav-m11"><span class="nav-dot"></span> Skills <span class="nav-check">✓</span></div>
+    <div class="nav-item" onclick="showModule(12)" id="nav-m12"><span class="nav-dot"></span> Connecteurs externes <span class="nav-check">✓</span></div>
+    <div class="nav-item" onclick="showModule(13)" id="nav-m13"><span class="nav-dot"></span> Sécurité <span class="nav-check">✓</span></div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- HOME -->
+  <div class="screen active" id="screen-home">
+    <div class="home-header">
+      <div class="home-eyebrow">// Formation officielle</div>
+      <h1 class="home-title">Claude for Excel<br>Autoformation</h1>
+      <p class="home-desc">14 modules progressifs basés sur la documentation officielle Anthropic. Théorie, prompts pratiques, exercices interactifs et corrigés détaillés.</p>
+    </div>
+
+    <div class="level-cards">
+      <div class="level-card debutant">
+        <div class="lc-icon">🟢</div>
+        <div class="lc-name">Débutant</div>
+        <div class="lc-desc">Prise en main, premières interactions, corrections d'erreurs et nettoyage de données.</div>
+        <div class="lc-modules">4 modules · ~2h</div>
+        <button class="start-btn" onclick="showModule(0)">Commencer →</button>
+      </div>
+      <div class="level-card inter">
+        <div class="lc-icon">🟡</div>
+        <div class="lc-name">Intermédiaire</div>
+        <div class="lc-desc">Formules complexes, analyses, dashboards et configuration avancée de l'add-in.</div>
+        <div class="lc-modules">5 modules · ~3h</div>
+        <button class="start-btn" onclick="showModule(4)">Commencer →</button>
+      </div>
+      <div class="level-card avance">
+        <div class="lc-icon">🔴</div>
+        <div class="lc-name">Avancé</div>
+        <div class="lc-desc">Modélisation financière, audit, Skills, connecteurs MCP et sécurité.</div>
+        <div class="lc-modules">5 modules · ~3h</div>
+        <button class="start-btn" onclick="showModule(9)">Commencer →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODULES (generated by JS) -->
+  <div class="screen" id="screen-module">
+    <div id="module-content"></div>
+  </div>
+
+</main>
+</div>
+
+<script>
+// ─── DATA ────────────────────────────────────────────────────────────────────
+const MODULES = [
+  // M0 - Installation
+  {
+    id: 0, level: "Débutant", levelColor: "debutant", duration: "20 min",
+    title: "Installation et connexion",
+    theory: `
+      <p>Claude for Excel est un add-in officiel d'Anthropic disponible sur le Microsoft Marketplace. Il s'intègre directement dans le ruban <strong>Accueil</strong> d'Excel sous forme de panneau latéral interactif.</p>
+      <div class="info-box">
+        <div class="info-label">Versions compatibles</div>
+        Excel Web · Excel Windows (Microsoft 365, build 16.0.13127+) · Excel Mac (v16.46+) · Excel iPad (v2.51+)
+      </div>
+      <p>Une fois installé, l'add-in apparaît dans votre ruban. Chaque utilisateur doit se connecter avec son compte Claude (Pro, Max, Team ou Enterprise). <strong>L'historique de conversation ne se sauvegarde pas entre deux sessions</strong> — chaque ouverture repart d'une conversation vierge.</p>
+      <div class="warn-box">
+        <div class="warn-label">⚠ Limitation importante</div>
+        Claude ne peut lire que le classeur <strong>actuellement ouvert</strong> dans Excel. Les fichiers fermés et les autres onglets du navigateur ne sont pas accessibles.
+      </div>
+    `,
+    prompts: [
+      "Bonjour, que peux-tu faire avec ce fichier ?",
+      "Décris-moi la structure de ce classeur",
+      "Combien d'onglets contient ce fichier et à quoi servent-ils ?"
+    ],
+    exercise: {
+      scenario: "Vous venez d'installer Claude for Excel et vous ouvrez l'add-in pour la première fois. Vous avez un classeur avec 3 onglets : Données, Rapport et Config.",
+      question: "Quel est le meilleur premier prompt pour comprendre rapidement le contenu de votre classeur ?",
+      choices: [
+        { text: "Génère-moi un rapport complet sur ce fichier", correct: false },
+        { text: "Décris la structure de ce classeur et l'utilité de chaque onglet", correct: true },
+        { text: "Quelles formules contient la cellule A1 ?", correct: false },
+        { text: "Crée un nouveau tableau dans l'onglet Données", correct: false }
+      ],
+      feedbackCorrect: "✓ Parfait ! Commencer par une vue d'ensemble structurelle est la bonne approche. Claude va naviguer entre les onglets et vous donner une cartographie complète du fichier avec des citations directes vers les cellules clés.",
+      feedbackWrong: "Pas tout à fait. Demander directement une action (rapport, formule, création) avant de comprendre le fichier peut mener à des résultats inadaptés. Mieux vaut d'abord cartographier le classeur."
+    },
+    corrected: [
+      { title: "Ouvrir le panneau Claude", desc: "Dans le ruban Accueil (Windows) ou Outils > Compléments (Mac), cliquer sur l'icône Claude.", prompt: null, result: null },
+      { title: "Se connecter", desc: "Saisir ses identifiants Claude (Pro/Max/Team/Enterprise requis). La connexion est liée à votre compte existant.", prompt: null, result: null },
+      { title: "Premier contact avec le fichier", desc: "Commencer par demander une vue d'ensemble avant toute action.", prompt: "Décris la structure de ce classeur et l'utilité de chaque onglet", result: "Claude analyse tous les onglets, cite les cellules importantes et vous donne une cartographie complète en quelques secondes." },
+      { title: "Vérifier les limites", desc: "Si Claude indique ne pas voir certaines données, vérifier que le bon classeur est ouvert.", prompt: null, result: null }
+    ]
+  },
+
+  // M1 - Questions
+  {
+    id: 1, level: "Débutant", levelColor: "debutant", duration: "30 min",
+    title: "Poser des questions sur son classeur",
+    theory: `
+      <p>Claude peut répondre à n'importe quelle question sur votre classeur en <strong>langage naturel</strong>. Il navigue entre les onglets, lit les formules, et cite directement les cellules concernées dans ses réponses.</p>
+      <div class="info-box">
+        <div class="info-label">Fonctionnalité clé : Citations cliquables</div>
+        Quand Claude répond, il référence les cellules exactes (ex : "la valeur en B4 est calculée par…"). Ces citations sont cliquables — elles vous emmènent directement vers la cellule dans le classeur.
+      </div>
+      <p>Plus vous êtes <strong>précis dans vos questions</strong>, plus les réponses sont utiles. Mentionner le nom de l'onglet, la colonne ou la ligne concernée améliore la qualité des réponses.</p>
+    `,
+    prompts: [
+      "Qu'est-ce qui drive le calcul de la colonne Marge en onglet Résultats ?",
+      "Explique-moi en langage simple ce que fait la formule en cellule D12",
+      "Quelles hypothèses pilotent la prévision de revenus Q3 ?",
+      "Trace la cellule F5 jusqu'à ses inputs sources"
+    ],
+    exercise: {
+      scenario: "Vous avez un modèle financier avec une formule complexe en cellule G8 qui retourne un résultat inattendu. Vous souhaitez comprendre sa logique avant d'agir.",
+      question: "Parmi ces prompts, lequel vous donnera l'explication la plus utile ?",
+      choices: [
+        { text: "C'est quoi G8 ?", correct: false },
+        { text: "Explique en langage clair ce que calcule la formule en G8 et quels inputs elle utilise", correct: true },
+        { text: "Répare la formule G8", correct: false },
+        { text: "Affiche la formule G8", correct: false }
+      ],
+      feedbackCorrect: "✓ Excellent ! Demander une explication en langage clair avec les inputs associés vous permet de comprendre la logique avant d'agir. Claude citera les cellules sources et détaillera chaque étape du calcul.",
+      feedbackWrong: "Ce prompt manque de précision ou demande une action sans comprendre d'abord le problème. Un prompt trop court (\"C'est quoi G8 ?\") donnera une réponse superficielle. Réparer sans comprendre peut introduire de nouvelles erreurs."
+    },
+    corrected: [
+      { title: "Poser une question générale", desc: "Commencer par une vue d'ensemble pour orienter la conversation.", prompt: "Quels sont les indicateurs clés calculés dans ce classeur ?", result: "Claude liste les KPIs, leur emplacement et leurs formules de calcul avec citations cellules." },
+      { title: "Creuser une formule spécifique", desc: "Cibler une cellule précise pour obtenir une explication détaillée.", prompt: "Explique en langage clair ce que calcule la formule en G8 et quels inputs elle utilise", result: "Claude décompose la formule étape par étape, cite chaque cellule référencée et indique leur valeur actuelle." },
+      { title: "Tracer les dépendances", desc: "Comprendre le flux de calcul complet d'un indicateur.", prompt: "Trace la cellule G8 jusqu'à ses inputs sources les plus en amont", result: "Claude remonte la chaîne de dépendances et vous donne un arbre complet des cellules impliquées." }
+    ]
+  },
+
+  // M2 - Erreurs
+  {
+    id: 2, level: "Débutant", levelColor: "debutant", duration: "30 min",
+    title: "Corriger des erreurs",
+    theory: `
+      <p>Claude peut identifier et corriger les erreurs Excel courantes : <strong>#REF!</strong>, <strong>#VALUE!</strong>, <strong>#DIV/0!</strong>, et les références circulaires. Il propose des corrections concrètes qui maintiennent l'intégrité des formules et des dépendances.</p>
+      <div class="warn-box">
+        <div class="warn-label">⚠ Protection anti-écrasement</div>
+        Claude vous <strong>avertit toujours avant d'écraser</strong> des données existantes. Ne jamais valider sans lire l'explication. Utiliser Ctrl+Z pour annuler si nécessaire.
+      </div>
+      <p>Claude <strong>met en évidence chaque cellule modifiée</strong> et fournit une explication pour chaque changement. Relisez toujours les modifications avant de sauvegarder ou partager le fichier.</p>
+      <div class="info-box">
+        <div class="info-label">Astuce</div>
+        Commencer par "Trouve toutes les erreurs dans ce classeur" pour avoir un panorama complet avant de corriger une par une.
+      </div>
+    `,
+    prompts: [
+      "Trouve toutes les erreurs #REF! et #VALUE! dans ce classeur",
+      "Pourquoi la cellule B4 affiche-t-elle #VALUE! ? Corrige-la",
+      "Il y a une référence circulaire quelque part, aide-moi à la localiser",
+      "Mon calcul de NPV retourne une erreur — qu'est-ce qui ne va pas ?"
+    ],
+    exercise: {
+      scenario: "Votre classeur affiche plusieurs erreurs #REF! dans la colonne C après avoir supprimé un onglet source. Vous voulez corriger rapidement sans casser les autres formules.",
+      question: "Quelle est la meilleure approche pour corriger ces erreurs en toute sécurité ?",
+      choices: [
+        { text: "Demander à Claude de supprimer toutes les cellules en erreur", correct: false },
+        { text: "Demander à Claude d'identifier les sources des erreurs #REF! et proposer des corrections qui maintiennent les dépendances", correct: true },
+        { text: "Corriger manuellement cellule par cellule sans impliquer Claude", correct: false },
+        { text: "Demander à Claude de remplacer toutes les formules par des valeurs fixes", correct: false }
+      ],
+      feedbackCorrect: "✓ Bonne approche ! En demandant d'abord une identification des sources, vous comprenez pourquoi l'erreur existe avant d'agir. Claude proposera des corrections qui maintiennent les relations entre cellules plutôt que des solutions destructrices.",
+      feedbackWrong: "Cette approche comporte des risques. Supprimer des cellules ou remplacer par des valeurs fixes casse les dépendances. Corriger manuellement sans comprendre la cause racine peut reproduire le problème. Claude doit d'abord identifier la source."
+    },
+    corrected: [
+      { title: "Audit global des erreurs", desc: "Commencer par un inventaire complet des erreurs dans le classeur.", prompt: "Trouve et liste toutes les erreurs dans ce classeur avec leur localisation", result: "Claude retourne une liste structurée : cellule | type d'erreur | cause probable" },
+      { title: "Diagnostic ciblé", desc: "Pour chaque erreur, comprendre la cause avant de corriger.", prompt: "Pourquoi la colonne C affiche des #REF! après la suppression de l'onglet Sources ?", result: "Claude explique que les formules référençaient l'onglet supprimé et propose 2 options : recréer la référence ou mettre à jour vers la nouvelle source." },
+      { title: "Correction sécurisée", desc: "Appliquer la correction en conservant les dépendances.", prompt: "Corrige les #REF! de la colonne C en pointant vers l'onglet Données_2024 à la place", result: "Claude met à jour les formules, surligne chaque cellule modifiée et explique le changement. Un popup de confirmation apparaît avant chaque modification." }
+    ]
+  },
+
+  // M3 - Nettoyage
+  {
+    id: 3, level: "Débutant", levelColor: "debutant", duration: "30 min",
+    title: "Nettoyer et standardiser les données",
+    theory: `
+      <p>Claude peut nettoyer, harmoniser et transformer des données brutes directement dans Excel. Il comprend les demandes en langage naturel et applique des transformations précises tout en expliquant chaque étape.</p>
+      <div class="info-box">
+        <div class="info-label">Ce que Claude sait faire</div>
+        Standardiser des formats de dates · Uniformiser des numéros de téléphone · Nettoyer des noms d'entreprise · Supprimer les doublons · Remplir les valeurs manquantes · Extraire des données depuis du texte brut
+      </div>
+      <p>Pour les tâches de nettoyage, <strong>décrire l'état actuel ET l'état souhaité</strong> dans votre prompt donne les meilleurs résultats. Exemple : "Les dates sont au format MM/DD/YYYY, convertis-les en JJ/MM/AAAA".</p>
+    `,
+    prompts: [
+      "Convertis toutes les dates de la colonne B au format JJ/MM/AAAA",
+      "Supprime les doublons de la colonne A en gardant la ligne la plus récente",
+      "Standardise les noms d'entreprise : supprime Inc, LLC, SAS, SARL",
+      "Extrait le nom de domaine depuis les adresses email de la colonne C",
+      "Fractionne la colonne Adresse complète en Rue, Ville, Code postal"
+    ],
+    exercise: {
+      scenario: "Vous recevez un export CRM avec 500 lignes. La colonne Téléphone contient des formats hétérogènes : 0612345678, +33 6 12 34 56 78, 06.12.34.56.78, (06) 12-34-56-78.",
+      question: "Quel prompt permettra d'obtenir un nettoyage homogène et fiable ?",
+      choices: [
+        { text: "Nettoie la colonne téléphone", correct: false },
+        { text: "La colonne D contient des numéros de téléphone dans des formats variés. Standardise-les tous au format +33 X XX XX XX XX", correct: true },
+        { text: "Supprime les caractères spéciaux de la colonne téléphone", correct: false },
+        { text: "Corrige les téléphones mal formatés", correct: false }
+      ],
+      feedbackCorrect: "✓ Parfait ! Ce prompt est efficace car il : (1) cite la colonne exacte (D), (2) décrit le problème (formats variés), (3) spécifie le format cible exact (+33 X XX XX XX XX). Claude sait précisément quoi faire et vers quoi transformer.",
+      feedbackWrong: "Ce prompt manque de précision. Sans le format cible explicite, Claude devra deviner ce que vous entendez par 'nettoyer' ou 'corriger'. Le résultat sera imprévisible. Toujours spécifier la colonne ET le format souhaité."
+    },
+    corrected: [
+      { title: "Audit de la qualité des données", desc: "Demander d'abord un diagnostic avant toute transformation.", prompt: "Analyse la qualité des données dans ce fichier : identifie les colonnes avec des problèmes de format, des valeurs manquantes ou des doublons", result: "Claude produit un rapport de qualité : colonne | problème identifié | nombre de lignes concernées" },
+      { title: "Standardisation des formats", desc: "Appliquer la transformation avec un format cible explicite.", prompt: "La colonne D contient des téléphones en formats variés. Standardise-les tous au format +33 X XX XX XX XX", result: "Claude transforme les 500 lignes, surligne les modifications et signale les cas ambigus ou impossibles à traiter." },
+      { title: "Suppression des doublons", desc: "Nettoyer les entrées redondantes avec un critère explicite.", prompt: "Supprime les lignes dupliquées dans la colonne Email en conservant la ligne avec la date la plus récente", result: "Claude identifie X doublons, supprime les anciennes versions et vous informe du nombre de lignes supprimées." },
+      { title: "Vérification finale", desc: "Valider le résultat avant de partager ou d'utiliser les données.", prompt: "Vérifie que toutes les valeurs de la colonne D respectent maintenant le format +33 X XX XX XX XX", result: "Claude confirme la cohérence ou signale les exceptions restantes à traiter manuellement." }
+    ]
+  },
+
+  // M4 - Formules
+  {
+    id: 4, level: "Intermédiaire", levelColor: "intermediaire", duration: "40 min",
+    title: "Créer et expliquer des formules complexes",
+    theory: `
+      <p>Claude génère des formules Excel à partir de descriptions en langage naturel. Il explique chaque formule créée et peut documenter un modèle entier. Il peut également tracer une cellule jusqu'à ses inputs sources pour comprendre le flux de calcul.</p>
+      <div class="info-box">
+        <div class="info-label">Structure d'un bon prompt "formule"</div>
+        Décrivez (1) ce que vous voulez calculer, (2) où se trouvent les données sources (onglet, colonne), (3) les conditions ou critères, (4) où insérer le résultat.
+      </div>
+      <p>Claude peut aussi <strong>documenter automatiquement</strong> les formules existantes en ajoutant des commentaires sur les cellules — très utile pour les modèles à reprendre ou partager.</p>
+    `,
+    prompts: [
+      "Écris une formule qui calcule le churn mensuel à partir des colonnes Clients actifs (B) et Résiliations (C)",
+      "Crée un SUMIF qui totalise les ventes de la colonne D pour la région 'Nord' en colonne A uniquement",
+      "Construis une formule VLOOKUP qui récupère le prix unitaire depuis l'onglet Tarifs colonne B",
+      "Documente toutes les formules de l'onglet Calculs en ajoutant des commentaires explicatifs",
+      "Explique cette formule en langage simple : =SUMPRODUCT((A2:A100=\"Nord\")*(B2:B100>0)*C2:C100)"
+    ],
+    exercise: {
+      scenario: "Vous gérez un tableau de suivi des commandes. Colonne A : région, Colonne B : date de commande, Colonne C : montant. Vous voulez calculer le total des commandes de la région 'Sud' passées en 2024.",
+      question: "Quel prompt donnera la formule la plus précise et directement utilisable ?",
+      choices: [
+        { text: "Fais un SUMIF pour le Sud", correct: false },
+        { text: "Écris une formule qui calcule la somme de la colonne C (montant) uniquement pour les lignes où A='Sud' ET où l'année en colonne B est 2024", correct: true },
+        { text: "Calcule les ventes Sud 2024", correct: false },
+        { text: "Filtre les données pour le Sud et somme", correct: false }
+      ],
+      feedbackCorrect: "✓ Excellent ! Ce prompt spécifie les deux critères (région ET année), les colonnes sources (A, B, C) et le type de calcul (somme). Claude va générer un SUMPRODUCT ou SUMIFS avec les bons paramètres, prêt à insérer dans votre cellule cible.",
+      feedbackWrong: "Ce prompt est trop vague. Claude devra faire des suppositions sur les colonnes et les critères, ce qui peut mener à une formule inadaptée. Toujours préciser : colonnes sources, valeur du critère et type de calcul souhaité."
+    },
+    corrected: [
+      { title: "Décrire le calcul en langage métier", desc: "Expliquer l'objectif business sans chercher à écrire la formule soi-même.", prompt: "Je veux calculer le taux de churn mensuel : (Résiliations en colonne C) / (Clients actifs début de mois en colonne B) × 100", result: "=C2/B2*100 avec explication et format % recommandé." },
+      { title: "Ajouter des conditions", desc: "Préciser les critères de filtrage pour les formules conditionnelles.", prompt: "Écris une formule qui somme la colonne C uniquement pour A='Sud' ET année de B = 2024", result: "=SUMPRODUCT((A2:A100=\"Sud\")*(YEAR(B2:B100)=2024)*C2:C100) avec explication de chaque composant." },
+      { title: "Documenter les formules existantes", desc: "Ajouter des commentaires pour rendre le modèle lisible par tous.", prompt: "Ajoute un commentaire sur chaque cellule de formule de l'onglet Calculs qui explique ce qu'elle calcule", result: "Claude parcourt l'onglet, identifie les formules et ajoute un commentaire en français sur chaque cellule cible." }
+    ]
+  },
+
+  // M5 - Analyse
+  {
+    id: 5, level: "Intermédiaire", levelColor: "intermediaire", duration: "40 min",
+    title: "Analyser des données et produire des insights",
+    theory: `
+      <p>Claude peut effectuer des analyses comparatives, identifier des tendances, détecter des anomalies et produire des synthèses directement dans Excel. Il peut croiser des données entre plusieurs onglets sans copier-coller.</p>
+      <div class="info-box">
+        <div class="info-label">Conseil : Préciser le périmètre d'analyse</div>
+        Indiquer la période, les colonnes à analyser et le type d'insight souhaité (tendance, variance, classement, anomalie) améliore significativement la qualité des réponses.
+      </div>
+      <p>Pour les analyses multi-onglets, Claude <strong>transfère automatiquement le contexte</strong> entre les feuilles. Vous n'avez pas besoin de réexpliquer la structure à chaque question.</p>
+    `,
+    prompts: [
+      "Quelles tendances ressortent entre 2024 et 2025 dans les colonnes B à F ?",
+      "Identifie les 10 clients avec la plus forte croissance de revenus cette année",
+      "Compare les données réelles de l'onglet Résultats au budget de l'onglet Budget et explique les 3 plus grands écarts",
+      "Y a-t-il des valeurs aberrantes dans la colonne Montant ? Si oui, lesquelles et pourquoi ?",
+      "Catégorise ces transactions par type de dépense et calcule le total par catégorie"
+    ],
+    exercise: {
+      scenario: "Vous avez un fichier de ventes mensuel avec 2 onglets : 'Réalisé' (données réelles) et 'Budget' (objectifs). Votre directeur vous demande un point sur les écarts.",
+      question: "Quel prompt produira l'analyse la plus actionnable pour votre directeur ?",
+      choices: [
+        { text: "Compare le réalisé et le budget", correct: false },
+        { text: "Compare les données de l'onglet Réalisé au budget de l'onglet Budget pour chaque mois, identifie les 3 plus grands écarts positifs et négatifs, et explique les causes probables en te basant sur les données disponibles", correct: true },
+        { text: "Y a-t-il des écarts entre les onglets ?", correct: false },
+        { text: "Analyse le fichier de ventes", correct: false }
+      ],
+      feedbackCorrect: "✓ Parfait ! Ce prompt est actionnable car il : nomme les onglets sources, demande un classement (top 3), différencie positif/négatif, et demande une explication causale. Claude produira un tableau d'écarts avec commentaires, prêt à présenter.",
+      feedbackWrong: "Ce prompt est trop générique. Claude fournira une réponse superficielle sans les détails nécessaires à une présentation. Précisez toujours : les onglets sources, le type d'écart recherché, et ce que vous attendez en sortie."
+    },
+    corrected: [
+      { title: "Analyse comparative budget vs réalisé", desc: "Croiser deux onglets pour identifier les écarts significatifs.", prompt: "Compare l'onglet Réalisé à l'onglet Budget mois par mois. Identifie les 3 plus grands écarts positifs et négatifs.", result: "Claude produit un tableau : Mois | Budget | Réalisé | Écart € | Écart % | Commentaire — avec les causes probables identifiées." },
+      { title: "Détection d'anomalies", desc: "Identifier les valeurs inhabituelles qui méritent investigation.", prompt: "Identifie les valeurs aberrantes dans la colonne Montant : valeurs > 2 écarts-types de la moyenne ou < 0", result: "Claude liste les cellules concernées, leur valeur, et indique si elles sont statistiquement anormales." },
+      { title: "Classement et tendances", desc: "Produire un top/flop pour orienter les décisions.", prompt: "Classifie les 5 produits avec la plus forte croissance et les 5 avec le plus fort déclin entre Q1 et Q2 2024", result: "Claude produit deux tableaux classés avec taux de croissance, valeurs absolues et recommandations." }
+    ]
+  },
+
+  // M6 - Dashboard
+  {
+    id: 6, level: "Intermédiaire", levelColor: "intermediaire", duration: "40 min",
+    title: "Créer des tableaux de bord et graphiques",
+    theory: `
+      <p>Claude peut créer des dashboards, des graphiques, du formatage conditionnel et des tableaux croisés dynamiques directement dans Excel. Il comprend les demandes visuelles en langage naturel et choisit le type de représentation le plus adapté.</p>
+      <div class="info-box">
+        <div class="info-label">Opérations natives supportées</div>
+        Trier et filtrer · Créer/modifier des TCD et graphiques · Formatage conditionnel · Validation de données (listes déroulantes) · Mise en page impression · Graphiques en cascade, combo, heatmap
+      </div>
+      <p>Pour les dashboards, précisez <strong>l'audience et les KPIs prioritaires</strong>. Un dashboard exécutif (3 métriques, vision synthétique) est très différent d'un dashboard opérationnel (détail par ligne, filtres).</p>
+    `,
+    prompts: [
+      "Crée un dashboard exécutif qui résume les KPIs principaux de tous les onglets",
+      "Construis un graphique en cascade montrant le bridge de chiffre d'affaires entre 2023 et 2024",
+      "Ajoute un formatage conditionnel : rouge si valeur < 0, vert si > objectif",
+      "Crée une liste déroulante dans la colonne Statut avec les options : Actif, Suspendu, Clôturé",
+      "Trie ce tableau par chiffre d'affaires décroissant et ajoute des barres de données visuelles"
+    ],
+    exercise: {
+      scenario: "Vous devez préparer un dashboard mensuel pour votre COMEX. Données disponibles : onglet Ventes (revenus par produit), onglet RH (effectifs), onglet Finance (trésorerie).",
+      question: "Quel prompt produira le dashboard le plus adapté à une présentation COMEX ?",
+      choices: [
+        { text: "Fais un dashboard avec mes données", correct: false },
+        { text: "Crée un dashboard exécutif en onglet 'Dashboard' avec : (1) revenus totaux et croissance vs M-1 depuis l'onglet Ventes, (2) effectifs et évolution depuis RH, (3) solde de trésorerie depuis Finance. Format synthétique, une ligne par KPI avec indicateur rouge/vert.", correct: true },
+        { text: "Résume les 3 onglets en un seul tableau", correct: false },
+        { text: "Crée un graphique pour chaque onglet", correct: false }
+      ],
+      feedbackCorrect: "✓ Excellent ! Ce prompt est complet : il nomme l'onglet de destination, liste les 3 KPIs avec leur source exacte, spécifie le format visuel (rouge/vert) et l'audience (COMEX = synthétique). Claude va créer exactement ce dont vous avez besoin.",
+      feedbackWrong: "Ce prompt manque de précision sur l'audience, les KPIs attendus et le format de sortie. Claude va faire des choix arbitraires. Pour un COMEX, toujours spécifier : KPIs prioritaires, sources de données, et format visuel attendu."
+    },
+    corrected: [
+      { title: "Définir le périmètre du dashboard", desc: "Spécifier KPIs, sources et audience avant de lancer la création.", prompt: "Crée un onglet Dashboard avec les 5 KPIs clés : CA total, Marge brute %, Effectifs, Trésorerie nette, NPS. Sources : onglets Ventes, Finance, RH, Satisfaction.", result: "Claude crée l'onglet avec les formules qui agrègent les données depuis les onglets sources." },
+      { title: "Ajouter des indicateurs visuels", desc: "Rendre le dashboard lisible d'un coup d'œil avec du formatage conditionnel.", prompt: "Sur chaque KPI du dashboard, ajoute une flèche verte ↑ si supérieur au mois précédent, rouge ↓ si inférieur", result: "Claude ajoute des formules conditionnelles qui calculent la variation et affichent le bon symbole coloré." },
+      { title: "Créer un graphique synthétique", desc: "Visualiser l'évolution temporelle des principaux indicateurs.", prompt: "Crée un graphique combiné sur 12 mois : barres pour le CA mensuel, courbe pour la marge brute %", result: "Claude insère un graphique combo avec les bons axes, légendes et formatage adapté à une présentation." }
+    ]
+  },
+
+  // M7 - Instructions
+  {
+    id: 7, level: "Intermédiaire", levelColor: "intermediaire", duration: "20 min",
+    title: "Paramétrer les instructions persistantes",
+    theory: `
+      <p>Le champ <strong>Instructions</strong> dans le panneau latéral Claude permet de définir des préférences permanentes qui s'appliquent à toutes vos conversations dans Excel — sans avoir à les répéter à chaque session.</p>
+      <div class="info-box">
+        <div class="info-label">Exemples d'instructions utiles</div>
+        "Toujours utiliser le formatage IB : bleu pour les inputs, noir pour les formules, vert pour les outputs" · "Répondre en français uniquement" · "Expliquer chaque modification avant de l'appliquer" · "Utiliser la virgule comme séparateur décimal" · "Ne jamais écraser une cellule sans confirmation explicite"
+      </div>
+      <div class="warn-box">
+        <div class="warn-label">Important</div>
+        Les instructions Excel sont <strong>indépendantes</strong> des instructions PowerPoint. Elles ne se transfèrent pas entre les applications.
+      </div>
+    `,
+    prompts: [
+      "Aide-moi à rédiger des instructions adaptées à mon contexte de travail en finance",
+      "Quelles instructions recommandes-tu pour une équipe qui fait de la modélisation financière ?"
+    ],
+    exercise: {
+      scenario: "Vous travaillez en finance d'entreprise. Vous utilisez Claude for Excel quotidiennement pour des modèles financiers. Vous voulez que Claude respecte systématiquement les conventions IB et réponde toujours en français.",
+      question: "Parmi ces jeux d'instructions, lequel est le plus efficace pour votre cas ?",
+      choices: [
+        { text: "Parle français et sois professionnel", correct: false },
+        { text: "Réponds en français. Utilise le formatage IB : inputs en bleu (#0070C0), formules en noir, outputs en vert (#00B050). Explique chaque modification avant de l'appliquer. Ne jamais écraser sans confirmation.", correct: true },
+        { text: "Utilise les couleurs IB standard", correct: false },
+        { text: "Toujours demander confirmation", correct: false }
+      ],
+      feedbackCorrect: "✓ Parfait ! Ces instructions sont efficaces car elles couvrent 4 dimensions : langue (français), format visuel (codes couleur précis), comportement (expliquer avant d'agir) et sécurité (pas d'écrasement sans confirmation). Claude appliquera ces règles à chaque conversation.",
+      feedbackWrong: "Ces instructions sont trop vagues ou incomplètes. 'Professionnel' et 'couleurs IB' ne sont pas assez précis pour Claude. Spécifier les codes couleur exacts (#0070C0 pour le bleu IB par exemple) et les comportements attendus donne des résultats cohérents."
+    },
+    corrected: [
+      { title: "Rédiger ses instructions de base", desc: "Commencer par les 4 dimensions essentielles : langue, format, comportement, sécurité.", prompt: null, result: "Répondre toujours en français. Formatage IB : inputs #0070C0 (bleu), formules noir, outputs #00B050 (vert). Expliquer chaque modification. Ne jamais écraser sans confirmation explicite." },
+      { title: "Ajouter le contexte métier", desc: "Inclure des informations récurrentes sur votre activité pour éviter de les répéter.", prompt: null, result: "Compléter avec : 'Je travaille sur des modèles financiers M&A. Les montants sont en k€ sauf indication contraire. Toujours vérifier que le bilan est équilibré après chaque modification.'" },
+      { title: "Tester et affiner", desc: "Les instructions se perfectionnent avec l'usage — noter ce qui manque et les ajouter.", prompt: "Aide-moi à améliorer ces instructions en fonction de ce qu'on vient de faire ensemble", result: "Claude analyse la conversation et suggère des instructions supplémentaires basées sur vos besoins observés." }
+    ]
+  },
+
+  // M8 - Contexte
+  {
+    id: 8, level: "Intermédiaire", levelColor: "intermediaire", duration: "20 min",
+    title: "Gérer le contexte et les sessions",
+    theory: `
+      <p>Claude for Excel a des comportements spécifiques en matière de gestion du contexte et de la mémoire de session qu'il est important de connaître pour éviter les mauvaises surprises.</p>
+      <div class="warn-box">
+        <div class="warn-label">⚠ Pas de sauvegarde de l'historique</div>
+        L'historique de conversation <strong>n'est pas conservé entre deux sessions</strong>. Chaque ouverture de l'add-in repart à zéro. Pour les conversations longues, résumer le contexte en début de session.
+      </div>
+      <div class="info-box">
+        <div class="info-label">Session logging : la fonctionnalité à activer</div>
+        En activant le Session logging dans les paramètres, Claude crée un onglet "Claude Log" dans votre fichier qui trace toutes les actions effectuées. C'est votre historique d'audit de ce que Claude a modifié.
+      </div>
+      <p>La <strong>compaction automatique</strong> des conversations très longues évite les erreurs liées à un contexte trop chargé — Claude résume automatiquement les échanges anciens.</p>
+    `,
+    prompts: [
+      "Voici le contexte de notre travail : [description]. Reprends depuis là où nous en étions.",
+      "Active le logging et crée un onglet Claude Log pour tracer nos modifications",
+      "Résume toutes les modifications que tu as apportées dans cette session"
+    ],
+    exercise: {
+      scenario: "Vous avez travaillé 2h avec Claude sur un modèle financier complexe. Vous fermez Excel pour une réunion. Quand vous revenez et rouvrez l'add-in, la conversation a disparu.",
+      question: "Quelle est la meilleure façon de reprendre le travail efficacement ?",
+      choices: [
+        { text: "Recommencer toute la conversation depuis le début", correct: false },
+        { text: "Consulter l'onglet Claude Log créé lors de la session précédente pour identifier les modifications, puis fournir un résumé du contexte à Claude pour reprendre", correct: true },
+        { text: "Annuler toutes les modifications de Claude et repartir du fichier original", correct: false },
+        { text: "Attendre que l'historique soit restauré automatiquement", correct: false }
+      ],
+      feedbackCorrect: "✓ Bonne pratique ! L'onglet Claude Log (si activé) trace toutes les actions précédentes. En consultant ce log et en l'incluant dans votre résumé de contexte, Claude peut reprendre efficacement sans tout recommencer. C'est pour ça qu'activer le logging dès le début d'une longue session est indispensable.",
+      feedbackWrong: "L'historique n'est pas restauré automatiquement — ce n'est pas une fonctionnalité disponible. Recommencer ou annuler vous fait perdre le travail effectué. La bonne pratique est d'activer le Session logging AVANT de commencer une session longue."
+    },
+    corrected: [
+      { title: "Activer le Session logging en début de session", desc: "Pour toute session longue, activer le logging immédiatement.", prompt: "Active le session logging et crée un onglet Claude Log pour tracer nos échanges", result: "Claude crée l'onglet et commence à enregistrer chaque action : cellule modifiée | ancienne valeur | nouvelle valeur | timestamp." },
+      { title: "Fournir un contexte de reprise", desc: "En cas d'interruption, résumer le contexte pour reprendre efficacement.", prompt: "Contexte : je travaille sur un DCF pour la société XYZ. Nous avions fini de construire le compte de résultat et nous allions attaquer le bilan. Le modèle est en onglet DCF.", result: "Claude reprend avec le bon contexte sans nécessiter de tout réexpliquer." },
+      { title: "Clôturer proprement une session", desc: "Avant de fermer, demander un résumé des modifications pour future référence.", prompt: "Résume toutes les modifications que tu as apportées dans cette session et note-les dans une cellule commentaire en A1", result: "Claude produit un résumé structuré des modifications qui reste dans le fichier." }
+    ]
+  },
+
+  // M9 - Modèles financiers
+  {
+    id: 9, level: "Avancé", levelColor: "avance", duration: "50 min",
+    title: "Construire des modèles financiers complets",
+    theory: `
+      <p>Claude comprend les conventions de modélisation financière standards (IB, PE, VC) et peut construire des modèles complexes de zéro ou remplir des templates existants avec des données importées.</p>
+      <div class="info-box">
+        <div class="info-label">Modèles supportés</div>
+        3-statement model · DCF · LBO · Modèle SaaS (ARR, Churn, LTV) · Real estate pro forma · Analyse de sensibilité · Tableaux de dette · Prévisions de trésorerie
+      </div>
+      <div class="warn-box">
+        <div class="warn-label">⚠ Limites importantes à connaître</div>
+        Claude ne supporte PAS : Data Tables · Macros · VBA. Pour ces besoins, compléter avec d'autres outils. Ne jamais utiliser pour des livrables clients finaux sans revue humaine.
+      </div>
+      <p>Pour les modèles complexes, <strong>construire par blocs</strong> est plus efficace que tout demander en une fois. Commencer par le P&L, puis le bilan, puis le tableau de flux, puis les schedules.</p>
+    `,
+    prompts: [
+      "Construis un modèle financier 3 états pour une entreprise SaaS avec 5 ans de prévisions",
+      "Ajoute un scénario pessimiste avec une baisse de revenus de 20% et une hausse des charges de 10%",
+      "Crée une table de sensibilité montrant le TRI selon le multiple de sortie (5x-12x) et la durée de détention (3-7 ans)",
+      "Construis les schedules de dette pour un LBO avec 3 tranches : Senior, Mezzanine, PIK",
+      "Vérifie que le modèle 3 états est bien bouclé : bilan équilibré, flux de trésorerie cohérents"
+    ],
+    exercise: {
+      scenario: "Vous devez construire un DCF pour valoriser une PME industrielle. Vous disposez de 3 ans d'historique P&L et bilan. Vous devez projeter 5 ans et calculer une valeur terminale.",
+      question: "Quelle séquence de prompts est la plus efficace pour construire ce DCF ?",
+      choices: [
+        { text: "Construis un DCF complet pour cette entreprise", correct: false },
+        { text: "(1) Analyse l'historique P&L et bilan pour identifier les tendances clés → (2) Construis un P&L projeté sur 5 ans → (3) Déduis le FCF et construis le tableau de flux → (4) Calcule le WACC avec les hypothèses fournies → (5) Calcule la valeur terminale et la valorisation", correct: true },
+        { text: "Calcule le WACC et la valeur terminale de cette entreprise", correct: false },
+        { text: "Fais-moi un DCF comme pour une entreprise similaire", correct: false }
+      ],
+      feedbackCorrect: "✓ Excellente approche ! Construire le DCF par blocs séquentiels est beaucoup plus fiable. Chaque étape valide la précédente, vous pouvez corriger au fur et à mesure, et Claude maintient la cohérence entre les blocs. Un seul prompt pour tout = moins de contrôle et plus d'erreurs.",
+      feedbackWrong: "Cette approche demande trop en une seule fois ou saute des étapes critiques. Un DCF robuste se construit par blocs : historique → projections → FCF → WACC → valorisation. Chaque bloc doit être validé avant de passer au suivant."
+    },
+    corrected: [
+      { title: "Analyser l'historique", desc: "Partir des données existantes pour établir les tendances.", prompt: "Analyse les 3 dernières années de P&L. Calcule les taux de croissance, marges brute/EBITDA/nette et identifie les tendances.", result: "Claude produit une table de métriques historiques avec TCAM, marges et commentaires sur les variations." },
+      { title: "Construire les projections P&L", desc: "Projeter sur 5 ans avec des hypothèses explicites.", prompt: "Construis un P&L projeté sur 5 ans en utilisant : croissance CA de 8%/an, marge brute stable à 42%, OPEX croissant de 5%/an", result: "Claude crée le P&L projeté avec les hypothèses en cellules bleues séparées pour faciliter les analyses de sensibilité." },
+      { title: "Calculer le FCF et le WACC", desc: "Dériver les flux de trésorerie disponibles et le taux d'actualisation.", prompt: "À partir du P&L projeté, calcule le FCF = EBITDA - Capex - Variation BFR - Impôts. Puis calcule le WACC avec : Ke=12%, Kd=4%, Dette/Equity=40/60", result: "Claude construit le bridge EBITDA→FCF et calcule le WACC avec détail de chaque composant." },
+      { title: "Valorisation finale", desc: "Calculer la valeur terminale et la valorisation totale.", prompt: "Calcule la valeur terminale par Gordon Shapiro (g=2%) et par multiple EV/EBITDA (x7). Actualise au WACC et calcule la valeur d'entreprise et des fonds propres.", result: "Claude produit un tableau de valorisation avec les deux méthodes, les sous-totaux et une fourchette de valorisation." }
+    ]
+  },
+
+  // M10 - Audit
+  {
+    id: 10, level: "Avancé", levelColor: "avance", duration: "40 min",
+    title: "Auditer et valider un modèle existant",
+    theory: `
+      <p>Claude peut agir comme un auditeur de modèle financier : vérifier la cohérence des formules, détecter les hardcodes, valider l'équilibre du bilan et proposer des pistes d'amélioration structurelle.</p>
+      <div class="info-box">
+        <div class="info-label">Ce que Claude vérifie dans un audit</div>
+        Cohérence des liens entre onglets · Équilibre du bilan toutes périodes · Hardcodes cachés dans les formules · Références circulaires · Cohérence des flux de trésorerie · Formules dupliquées vs centralisées
+      </div>
+      <p>La revue humaine reste <strong>indispensable</strong> sur les calculs critiques. Claude est un outil de détection, pas un substitut à l'expertise financière.</p>
+    `,
+    prompts: [
+      "Vérifie que toutes les formules se lient correctement entre les onglets sans références cassées",
+      "Confirme que le bilan est équilibré (Actif = Passif) sur toutes les colonnes de périodes",
+      "Identifie toutes les valeurs hardcodées dans des cellules de formule qui devraient être des variables",
+      "Trouve les formules incohérentes : cellules similaires qui utilisent des formules différentes sans raison",
+      "Propose 3 améliorations structurelles pour rendre ce modèle plus robuste et maintenable"
+    ],
+    exercise: {
+      scenario: "Vous reprenez un modèle financier d'un collègue qui a quitté l'entreprise. Vous ne connaissez pas le modèle. Vous devez valider sa fiabilité avant de l'utiliser pour un board.",
+      question: "Dans quel ordre réaliser l'audit pour être le plus efficace ?",
+      choices: [
+        { text: "Commencer par vérifier les graphiques, puis les formules, puis le bilan", correct: false },
+        { text: "1) Cartographie générale → 2) Détection d'erreurs → 3) Audit des hardcodes → 4) Validation du bilan → 5) Recommandations", correct: true },
+        { text: "Vérifier le bilan en premier puis faire confiance si équilibré", correct: false },
+        { text: "Demander à Claude de refaire le modèle from scratch pour être sûr", correct: false }
+      ],
+      feedbackCorrect: "✓ Parfait ! Cet ordre est optimal : comprendre la structure avant de chercher les erreurs, puis valider les règles fondamentales (hardcodes, bilan) avant de formuler des recommandations. Un bilan équilibré ne garantit pas l'absence d'erreurs — deux erreurs peuvent se compenser.",
+      feedbackWrong: "Cet ordre n'est pas optimal. Un bilan équilibré peut masquer deux erreurs qui se compensent. Les graphiques ne détectent pas les erreurs de fond. Refaire from scratch ferait perdre du temps et les hypothèses métier du modèle original."
+    },
+    corrected: [
+      { title: "Cartographie du modèle", desc: "Comprendre la structure avant d'auditer.", prompt: "Décris la structure de ce modèle : onglets, flux de données entre onglets, logique générale", result: "Claude produit une cartographie : onglet | rôle | liens entrants | liens sortants" },
+      { title: "Détection d'erreurs et hardcodes", desc: "Identifier les risques de fiabilité.", prompt: "Trouve (1) toutes les erreurs de formules, (2) les valeurs hardcodées dans des cellules de calcul, (3) les formules qui diffèrent d'une cellule à l'autre sans raison apparente", result: "Claude produit un rapport d'anomalies priorisées par risque : critique | majeur | mineur" },
+      { title: "Validation du bilan", desc: "Vérifier l'équilibre sur toutes les périodes.", prompt: "Vérifie que Actif Total = Passif Total pour chaque colonne. Si déséquilibré, trace la source de l'écart", result: "Claude valide colonne par colonne et, si déséquilibre, remonte la chaîne de calcul pour trouver la ligne problématique." },
+      { title: "Recommandations d'amélioration", desc: "Proposer des optimisations structurelles.", prompt: "Quelles sont les 3 principales améliorations à apporter pour rendre ce modèle plus fiable et plus facile à maintenir ?", result: "Claude propose des recommandations concrètes : centraliser les hypothèses, ajouter des checks, restructurer les schedules." }
+    ]
+  },
+
+  // M11 - Skills
+  {
+    id: 11, level: "Avancé", levelColor: "avance", duration: "30 min",
+    title: "Utiliser les Skills",
+    theory: `
+      <p>Les Skills sont des workflows réutilisables configurables dans Claude que vous pouvez appeler en un clic depuis l'add-in Excel. Elles permettent d'automatiser des séquences d'actions récurrentes sans avoir à re-rédiger les prompts à chaque fois.</p>
+      <div class="info-box">
+        <div class="info-label">Comment accéder aux Skills dans Excel</div>
+        Taper <strong>/</strong> dans le panneau latéral affiche la liste des Skills disponibles. Les Skills non pertinentes pour Excel sont automatiquement filtrées. Exemple : /debug, /clean-up, /audit-model
+      </div>
+      <p>Les Skills configurées dans vos paramètres Claude (web ou desktop) sont <strong>automatiquement disponibles</strong> dans l'add-in. Les Skills financières (audit DCF, LBO, 3-statement) sont disponibles par défaut.</p>
+      <div class="info-box">
+        <div class="info-label">Skills financières disponibles par défaut</div>
+        Audit de modèle pour erreurs de formules · Construction de modèles LBO, DCF, 3-statement · Revue de cohérence données-narrative sur pitch decks
+      </div>
+    `,
+    prompts: [
+      "/audit — Lance un audit complet du modèle ouvert",
+      "/clean-up — Nettoie et standardise les données du classeur actif",
+      "Quelles Skills sont disponibles pour ce type de fichier ?"
+    ],
+    exercise: {
+      scenario: "Vous venez de recevoir un modèle financier LBO d'un associé et devez le valider rapidement avant une réunion dans 30 minutes.",
+      question: "Comment utiliser les Skills pour aller le plus vite possible ?",
+      choices: [
+        { text: "Lancer manuellement toutes les vérifications prompt par prompt", correct: false },
+        { text: "Taper / dans le panneau, sélectionner /audit-model ou la Skill LBO, la lancer sur le fichier et obtenir un rapport structuré en quelques secondes", correct: true },
+        { text: "Demander à Claude de lire le fichier et de donner son avis général", correct: false },
+        { text: "Configurer une nouvelle Skill pour l'occasion", correct: false }
+      ],
+      feedbackCorrect: "✓ Exactement ! Les Skills sont faites pour ça : des workflows préconfiguré qui s'exécutent en un clic. L'audit LBO via une Skill est beaucoup plus rapide et exhaustif qu'une série de prompts manuels, et le rapport produit est structuré et comparable d'un modèle à l'autre.",
+      feedbackWrong: "Cette approche n'exploite pas la puissance des Skills. Créer une Skill sur le moment prend du temps. Des prompts manuels sont moins exhaustifs et moins rapides qu'une Skill préconçue. Le '/' dans le panneau vous donne accès aux Skills disponibles instantanément."
+    },
+    corrected: [
+      { title: "Découvrir les Skills disponibles", desc: "Explorer les workflows disponibles dans votre contexte.", prompt: "/", result: "La liste des Skills pertinentes pour Excel s'affiche : /audit, /clean-up, /debug, /financial-model selon vos configurations." },
+      { title: "Lancer une Skill d'audit", desc: "Exécuter un audit structuré en un clic.", prompt: "/audit-model", result: "Claude exécute le workflow d'audit complet : cartographie → erreurs → hardcodes → bilan → recommandations. Rapport structuré produit en < 2 min." },
+      { title: "Créer une Skill personnalisée", desc: "Sauvegarder un workflow récurrent pour le réutiliser.", prompt: "Sauvegarde cette séquence d'audit comme une Skill nommée /audit-pme avec les mêmes étapes", result: "Claude vous guide pour configurer la Skill dans vos paramètres pour un usage futur dans tout classeur." }
+    ]
+  },
+
+  // M12 - Connecteurs
+  {
+    id: 12, level: "Avancé", levelColor: "avance", duration: "30 min",
+    title: "Connecter des sources externes",
+    theory: `
+      <p>Claude for Excel supporte des connecteurs qui permettent d'importer du contexte depuis d'autres outils directement dans votre conversation Excel — sans sortir de l'application.</p>
+      <div class="info-box">
+        <div class="info-label">Types de connecteurs supportés</div>
+        Connecteurs standards (configurés dans Claude.ai) · Connecteurs personnalisés via MCP (Model Context Protocol) · Connecteurs enterprise via LLM gateway (Amazon Bedrock, Google Cloud Vertex AI, Microsoft Foundry)
+      </div>
+      <div class="warn-box">
+        <div class="warn-label">⚠ Sécurité des connecteurs personnalisés</div>
+        Les connecteurs personnalisés peuvent introduire des risques de sécurité. Consulter la documentation MCP avant d'activer un connecteur non vérifié par votre équipe IT.
+      </div>
+      <p>Le <strong>contexte cross-app</strong> permet de travailler entre Excel, PowerPoint et Word sans copier-coller : Claude peut lire un classeur Excel et créer des slides PowerPoint en utilisant directement ces données.</p>
+    `,
+    prompts: [
+      "Connecte-toi à [outil] et importe les données de [source] dans ce classeur",
+      "Récupère les dernières métriques de vente depuis [CRM] et mets à jour la colonne C",
+      "Utilise les données de ce classeur pour créer une présentation PowerPoint de synthèse"
+    ],
+    exercise: {
+      scenario: "Votre organisation utilise Claude for Excel avec un accès via Amazon Bedrock pour des raisons de conformité. Un collègue vous demande d'activer un connecteur MCP trouvé sur GitHub pour importer des données boursières.",
+      question: "Quelle est la bonne démarche à suivre ?",
+      choices: [
+        { text: "Activer le connecteur directement, les données boursières sont publiques donc sans risque", correct: false },
+        { text: "Consulter votre équipe IT pour valider le connecteur, vérifier la documentation MCP officielle, et activer uniquement après validation du risque de sécurité", correct: true },
+        { text: "Refuser catégoriquement tout connecteur externe, le risque est trop élevé", correct: false },
+        { text: "Tester le connecteur sur un fichier de test sans données sensibles puis l'activer", correct: false }
+      ],
+      feedbackCorrect: "✓ Bonne pratique ! La documentation officielle indique explicitement que les connecteurs personnalisés peuvent introduire des risques de sécurité. La validation IT est indispensable avant activation, quel que soit le type de données importées. Un connecteur malveillant peut exfiltrer des données même depuis des sessions de test.",
+      feedbackWrong: "Cette approche comporte des risques. Un connecteur externe peut contenir des instructions malveillantes qui s'activent même sur des données non sensibles, ou servir de vecteur pour exfiltrer des informations de session. La validation IT n'est pas optionnelle."
+    },
+    corrected: [
+      { title: "Accéder aux connecteurs disponibles", desc: "Voir les connecteurs configurés et disponibles.", prompt: "Montre-moi les connecteurs disponibles dans cet environnement", result: "Claude affiche la liste des connecteurs actifs : Google Drive, Slack, CRM configuré, etc." },
+      { title: "Utiliser le contexte cross-app", desc: "Transférer des données d'Excel vers PowerPoint sans copier-coller.", prompt: "Utilise les données de ce classeur pour créer une présentation PowerPoint avec un slide par KPI principal", result: "Claude lit le classeur ouvert, identifie les KPIs et crée les slides dans PowerPoint ouvert en parallèle avec les valeurs exactes." },
+      { title: "Valider un connecteur personnalisé", desc: "Processus de validation avant activation.", prompt: null, result: "1) Lire la documentation du connecteur · 2) Soumettre à la revue IT · 3) Tester en environnement isolé · 4) Activer uniquement après validation · 5) Documenter l'usage autorisé." }
+    ]
+  },
+
+  // M13 - Sécurité
+  {
+    id: 13, level: "Avancé", levelColor: "avance", duration: "30 min",
+    title: "Sécurité et bonnes pratiques",
+    theory: `
+      <p>Claude for Excel comporte des risques de sécurité spécifiques qu'il est indispensable de connaître pour protéger vos données et celles de votre organisation.</p>
+      <div class="warn-box">
+        <div class="warn-label">⚠ Prompt injection : le risque principal</div>
+        Des fichiers externes (templates téléchargés, fichiers fournisseurs, imports) peuvent contenir des <strong>instructions malveillantes cachées</strong> dans des cellules, formules ou commentaires. Claude peut les interpréter comme des instructions légitimes et exfiltrer des données ou modifier des enregistrements critiques.
+      </div>
+      <div class="info-box">
+        <div class="info-label">Fonctions qui déclenchent une popup de confirmation</div>
+        Données externes : WEBSERVICE, STOCKHISTORY · Imports : IMPORTDATA, IMPORTXML · Références dynamiques : INDIRECT · Exécution de code : CALL, EVALUATE · Accès fichiers : IMAGE, FILES, DIRECTORY
+      </div>
+      <p><strong>Règle d'or</strong> : Ne jamais utiliser Claude for Excel avec des fichiers provenant de sources externes non vérifiées. Les données sensibles nécessitent une politique de sécurité organisationnelle.</p>
+    `,
+    prompts: [
+      "Ce fichier vient d'un prestataire externe. Fais une revue de sécurité avant qu'on travaille dessus",
+      "Y a-t-il des formules dans ce classeur qui pourraient déclencher des actions externes ?",
+      "Vérifie si des cellules contiennent des instructions inhabituelles ou cachées"
+    ],
+    exercise: {
+      scenario: "Un prospect vous envoie un 'template de due diligence' en Excel pour que vous le remplissiez avec les données financières de votre client. Vous voulez utiliser Claude for Excel pour aller plus vite.",
+      question: "Quelle est la démarche correcte avant d'ouvrir ce fichier avec Claude for Excel ?",
+      choices: [
+        { text: "Ouvrir directement et laisser Claude analyser le fichier pour détecter les problèmes", correct: false },
+        { text: "Faire analyser le fichier par l'équipe IT, vérifier l'absence de formules dangereuses (WEBSERVICE, IMPORTDATA, EVALUATE), puis travailler uniquement sur une copie nettoyée", correct: true },
+        { text: "Ne pas utiliser Claude for Excel sur ce fichier car tout fichier externe est dangereux", correct: false },
+        { text: "Approuver systématiquement toutes les popups de confirmation que Claude déclenche", correct: false }
+      ],
+      feedbackCorrect: "✓ Parfait ! C'est exactement la bonne démarche. Faire valider par IT, vérifier les formules à risque, travailler sur une copie — ces trois étapes protègent vos données clients. Un fichier de prospect peut contenir des instructions conçues pour exfiltrer les données que vous remplissez.",
+      feedbackWrong: "Cette approche comporte des risques sérieux. Ouvrir directement laisse Claude potentiellement exécuter des instructions malveillantes. Approuver aveuglément les popups est dangereux. Interdire tout usage est trop restrictif — la validation IT est la solution équilibrée."
+    },
+    corrected: [
+      { title: "Audit de sécurité préventif", desc: "Avant d'utiliser Claude sur un fichier externe, faire une revue manuelle.", prompt: "Ce fichier vient d'une source externe. Identifie toutes les formules qui pourraient déclencher des actions externes ou accéder à des ressources hors du classeur", result: "Claude liste les formules à risque : WEBSERVICE en D15, IMPORTDATA en A2:A100, etc." },
+      { title: "Gérer les popups de confirmation", desc: "Comprendre ce que chaque popup signifie avant de valider.", prompt: null, result: "Une popup apparaît pour : WEBSERVICE (récupère des données externes), IMPORTDATA (importe depuis une URL), INDIRECT (référence dynamique pouvant masquer une destination). Lire la cible avant de valider." },
+      { title: "Bonnes pratiques organisationnelles", desc: "Règles à mettre en place pour une équipe.", prompt: null, result: "✓ Ne jamais utiliser sur des fichiers de sources non vérifiées · ✓ Travailler sur des copies, pas sur les originaux · ✓ Maintenir une revue humaine sur les livrables clients · ✓ Activer les logs pour l'audit · ✓ Former l'équipe à reconnaître les fichiers à risque" }
+    ]
+  }
+];
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+const completed = new Set();
+let currentModule = null;
+let exerciseAnswered = false;
+
+// ─── NAVIGATION ──────────────────────────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (id === 'home') document.getElementById('nav-home').classList.add('active');
+}
+
+function showModule(idx) {
+  currentModule = idx;
+  exerciseAnswered = false;
+  const m = MODULES[idx];
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-module').classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('nav-m' + idx).classList.add('active');
+  renderModule(m);
+  window.scrollTo(0, 0);
+}
+
+// ─── RENDER ───────────────────────────────────────────────────────────────────
+function renderModule(m) {
+  const levelLabel = { debutant: '🟢 Débutant', intermediaire: '🟡 Intermédiaire', avance: '🔴 Avancé' };
+  const levelDot = { debutant: 'var(--debutant)', intermediaire: 'var(--intermediaire)', avance: 'var(--avance)' };
+
+  const html = `
+    <div class="module-header">
+      <div class="module-breadcrumb">
+        <span onclick="showScreen('home')" style="cursor:pointer;color:var(--accent2)">Formation</span>
+        <span class="sep">›</span>
+        <span style="color:${levelDot[m.levelColor]}">${levelLabel[m.levelColor]}</span>
+        <span class="sep">›</span>
+        <span>Module ${m.id + 1}</span>
+      </div>
+      <h2 class="module-title">${m.title}</h2>
+      <div class="module-meta">
+        <span class="meta-pill">⏱ ${m.duration}</span>
+        <span class="meta-pill level-badge badge-${m.levelColor === 'debutant' ? 'debutant' : m.levelColor === 'intermediaire' ? 'inter' : 'avance'}">${levelLabel[m.levelColor].replace('🟢 ','').replace('🟡 ','').replace('🔴 ','')}</span>
+      </div>
+    </div>
+
+    <!-- THEORY -->
+    <div class="lesson-section open" id="sec-theory">
+      <div class="lesson-section-header" onclick="toggleSection('sec-theory')">
+        <div class="section-icon icon-theory">📖</div>
+        <div class="section-title">Théorie & concepts clés</div>
+        <div class="section-toggle">▼</div>
+      </div>
+      <div class="section-body">
+        <div class="theory-content">${m.theory}</div>
+      </div>
+    </div>
+
+    <!-- PROMPTS -->
+    <div class="lesson-section" id="sec-prompts">
+      <div class="lesson-section-header" onclick="toggleSection('sec-prompts')">
+        <div class="section-icon icon-prompt">💬</div>
+        <div class="section-title">Prompts à pratiquer</div>
+        <div class="section-toggle">▼</div>
+      </div>
+      <div class="section-body">
+        <div class="prompt-list">
+          ${m.prompts.map((p, i) => `
+            <div class="prompt-card" onclick="copyPrompt(this, '${p.replace(/'/g, "\\'")}')" id="pc-${m.id}-${i}">
+              <span class="prompt-icon">›</span>
+              <span class="prompt-text">"${p}"</span>
+              <span class="copy-hint">Copier</span>
+            </div>
+          `).join('')}
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin-top:14px;">Cliquer sur un prompt pour le copier, puis collez-le dans le panneau Claude for Excel.</p>
+      </div>
+    </div>
+
+    <!-- EXERCISE -->
+    <div class="lesson-section" id="sec-exercise">
+      <div class="lesson-section-header" onclick="toggleSection('sec-exercise')">
+        <div class="section-icon icon-exercise">🎯</div>
+        <div class="section-title">Exercice interactif</div>
+        <div class="section-toggle">▼</div>
+      </div>
+      <div class="section-body">
+        <div class="exercise-wrapper">
+          <div class="exercise-scenario">
+            <div class="scenario-label">📋 Mise en situation</div>
+            ${m.exercise.scenario}
+          </div>
+          <div class="exercise-question">${m.exercise.question}</div>
+          <div class="choices" id="choices-${m.id}">
+            ${m.exercise.choices.map((c, i) => `
+              <div class="choice" onclick="selectChoice(${m.id}, ${i}, ${c.correct})" id="choice-${m.id}-${i}">
+                <span class="choice-letter">${String.fromCharCode(65+i)}</span>
+                ${c.text}
+              </div>
+            `).join('')}
+          </div>
+          <div class="feedback-box correct" id="fb-correct-${m.id}">${m.exercise.feedbackCorrect}</div>
+          <div class="feedback-box wrong" id="fb-wrong-${m.id}">${m.exercise.feedbackWrong}</div>
+          <div class="exercise-actions">
+            <button class="btn btn-primary" id="btn-validate-${m.id}" onclick="validateExercise(${m.id})" disabled>Valider</button>
+            <button class="btn" id="btn-reset-${m.id}" onclick="resetExercise(${m.id})" style="display:none">Réessayer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CORRECTED -->
+    <div class="lesson-section" id="sec-corrected">
+      <div class="lesson-section-header" onclick="toggleSection('sec-corrected')">
+        <div class="section-icon icon-corrected">✅</div>
+        <div class="section-title">Corrigé détaillé</div>
+        <div class="section-toggle">▼</div>
+      </div>
+      <div class="section-body">
+        <div class="corrected-wrapper">
+          ${m.corrected.map((s, i) => `
+            <div class="corrected-step">
+              <div class="corrected-num">${i+1}</div>
+              <div class="corrected-content">
+                <div class="step-title">${s.title}</div>
+                <div class="step-desc">${s.desc}</div>
+                ${s.prompt ? `<div class="corrected-prompt">"${s.prompt}"</div>` : ''}
+                ${s.result ? `<div class="result-preview">${s.result}</div>` : ''}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+
+    <!-- NAV -->
+    <div class="module-nav">
+      <button class="btn" onclick="${m.id > 0 ? 'showModule(' + (m.id-1) + ')' : "showScreen('home')"}" >
+        ← ${m.id > 0 ? 'Module précédent' : 'Accueil'}
+      </button>
+      <button class="module-complete-btn" onclick="completeModule(${m.id})">
+        ${completed.has(m.id) ? '✓ Module terminé' : 'Marquer comme terminé →'}
+      </button>
+    </div>
+  `;
+
+  document.getElementById('module-content').innerHTML = html;
+  if (completed.has(m.id)) {
+    document.querySelector('.module-complete-btn').style.background = 'linear-gradient(135deg, var(--green), #0ea572)';
+  }
+}
+
+// ─── INTERACTIONS ─────────────────────────────────────────────────────────────
+function toggleSection(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+function copyPrompt(el, text) {
+  navigator.clipboard.writeText(text).catch(() => {});
+  el.classList.add('copied');
+  el.querySelector('.copy-hint').textContent = '✓ Copié';
+  setTimeout(() => {
+    el.classList.remove('copied');
+    el.querySelector('.copy-hint').textContent = 'Copier';
+  }, 2000);
+}
+
+let selectedChoice = null;
+function selectChoice(moduleId, idx, correct) {
+  if (exerciseAnswered) return;
+  selectedChoice = { idx, correct };
+  document.querySelectorAll(`#choices-${moduleId} .choice`).forEach(c => {
+    c.classList.remove('selected-correct', 'selected-wrong');
+  });
+  const el = document.getElementById(`choice-${moduleId}-${idx}`);
+  el.classList.add(correct ? 'selected-correct' : 'selected-wrong');
+  document.getElementById(`btn-validate-${moduleId}`).disabled = false;
+}
+
+function validateExercise(moduleId) {
+  if (!selectedChoice) return;
+  exerciseAnswered = true;
+  const { idx, correct } = selectedChoice;
+
+  // Reveal correct answer
+  const m = MODULES[moduleId];
+  m.exercise.choices.forEach((c, i) => {
+    if (c.correct) document.getElementById(`choice-${moduleId}-${i}`).classList.add('reveal-correct');
+  });
+
+  document.getElementById(`fb-${correct ? 'correct' : 'wrong'}-${moduleId}`).classList.add('show');
+  document.getElementById(`btn-validate-${moduleId}`).disabled = true;
+  document.getElementById(`btn-reset-${moduleId}`).style.display = 'inline-block';
+
+  if (correct) {
+    completed.add(moduleId);
+    updateProgress();
+    markNavComplete(moduleId);
+  }
+}
+
+function resetExercise(moduleId) {
+  exerciseAnswered = false;
+  selectedChoice = null;
+  document.querySelectorAll(`#choices-${moduleId} .choice`).forEach(c => {
+    c.classList.remove('selected-correct', 'selected-wrong', 'reveal-correct');
+  });
+  document.getElementById(`fb-correct-${moduleId}`).classList.remove('show');
+  document.getElementById(`fb-wrong-${moduleId}`).classList.remove('show');
+  document.getElementById(`btn-validate-${moduleId}`).disabled = true;
+  document.getElementById(`btn-reset-${moduleId}`).style.display = 'none';
+}
+
+function completeModule(id) {
+  completed.add(id);
+  updateProgress();
+  markNavComplete(id);
+  const btn = document.querySelector('.module-complete-btn');
+  btn.textContent = '✓ Module terminé';
+  btn.style.background = 'linear-gradient(135deg, var(--green), #0ea572)';
+
+  // Auto-advance after 1s
+  if (id < MODULES.length - 1) {
+    setTimeout(() => showModule(id + 1), 800);
+  }
+}
+
+function markNavComplete(id) {
+  const nav = document.getElementById(`nav-m${id}`);
+  if (nav) nav.classList.add('completed');
+}
+
+function updateProgress() {
+  const pct = Math.round((completed.size / MODULES.length) * 100);
+  document.getElementById('globalProg').style.width = pct + '%';
+  document.getElementById('globalProgText').textContent = completed.size + ' / ' + MODULES.length + ' modules';
+}
+</script>
+</body>
+</html>

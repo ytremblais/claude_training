@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formations Claude</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --surface2: #1a1a26;
+  --border: #ffffff12;
+  --border2: #ffffff22;
+  --text: #f0f0f8;
+  --muted: #8888aa;
+  --accent: #7c6af7;
+  --accent2: #a594fa;
+  --green: #22d3a0;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+.hero {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.badge {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: white;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  padding: 0.3rem 0.9rem;
+  border-radius: 999px;
+  letter-spacing: 0.08em;
+  margin-bottom: 1.2rem;
+}
+h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--text), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.8rem;
+}
+.subtitle {
+  color: var(--muted);
+  font-size: 1.1rem;
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 700px;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  padding: 2rem;
+  text-decoration: none;
+  color: var(--text);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 8px 32px rgba(124, 106, 247, 0.18);
+}
+.card-icon {
+  font-size: 2.2rem;
+}
+.card-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.card-desc {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.card-cta {
+  margin-top: auto;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--accent2);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+</style>
+</head>
+<body>
+  <div class="hero">
+    <div class="badge">Formations Claude AI</div>
+    <h1>Maîtrisez Claude<br>dans vos outils</h1>
+    <p class="subtitle">Guides pratiques pour utiliser Claude efficacement dans vos applications Office.</p>
+  </div>
+  <div class="grid">
+    <a href="formation_claude_excel.html" class="card">
+      <div class="card-icon">📊</div>
+      <div class="card-title">Claude for Excel</div>
+      <div class="card-desc">Automatisez vos feuilles de calcul, générez des formules et analysez vos données avec Claude.</div>
+      <div class="card-cta">Accéder à la formation →</div>
+    </a>
+    <a href="formation_claude_powerpoint.html" class="card">
+      <div class="card-icon">📑</div>
+      <div class="card-title">Claude for PowerPoint</div>
+      <div class="card-desc">Créez des présentations percutantes, générez du contenu et structurez vos slides avec Claude.</div>
+      <div class="card-cta">Accéder à la formation →</div>
+    </a>
+  </div>
+</body>
+</html>
