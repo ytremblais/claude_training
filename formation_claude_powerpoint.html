@@ -755,20 +755,20 @@ const MODULES = [
       "Que peux-tu faire avec cette présentation ?"
     ],
     exercise: {
-      scenario: "Vous venez d'installer Claude for PowerPoint. Vous ouvrez un deck de 12 slides préparé par un collègue que vous n'avez jamais vu. Vous devez vous l'approprier rapidement avant une réunion.",
-      question: "Quel est le meilleur premier prompt pour comprendre rapidement ce deck ?",
+      scenario: "L'installation de Claude for PowerPoint a déjà été effectuée sur votre poste. Avant de commencer à l'utiliser, vous devez vous assurer que le plugin est bien présent et actif dans PowerPoint.",
+      question: "Quelle est la bonne démarche pour vérifier que Claude for PowerPoint est disponible et actif ?",
       choices: [
-        { text: "Génère-moi un résumé exécutif de cette présentation", correct: false },
-        { text: "Décris la structure de ce deck, l'objectif de chaque section et le message principal", correct: true },
-        { text: "Améliore le design de la slide 1", correct: false },
-        { text: "Ajoute 3 nouvelles slides sur les recommandations", correct: false }
+        { text: "Ouvrir PowerPoint et attendre que le panneau Claude apparaisse automatiquement au démarrage", correct: false },
+        { text: "Aller dans le ruban Accueil > Compléments et vérifier que 'Claude by Anthropic' apparaît dans la liste des compléments actifs", correct: true },
+        { text: "Chercher 'Claude' dans la barre de recherche de PowerPoint", correct: false },
+        { text: "Redémarrer l'ordinateur et voir si Claude s'affiche dans le ruban", correct: false }
       ],
-      feedbackCorrect: "✓ Parfait ! Commencer par une cartographie structurelle est la bonne approche. Claude va analyser toutes les slides, identifier le fil conducteur et vous donner une vision d'ensemble avant toute action.",
-      feedbackWrong: "Pas tout à fait. Demander directement une action (résumé, design, ajout) avant de comprendre le deck peut mener à des modifications inadaptées. Mieux vaut d'abord cartographier la présentation."
+      feedbackCorrect: "✓ Parfait ! La vérification passe bien par Accueil > Compléments (Windows) ou Outils > Compléments (Mac). C'est là que vous confirmez que le plugin est actif et que le panneau Claude peut s'afficher à droite de l'écran.",
+      feedbackWrong: "Pas tout à fait. Claude for PowerPoint ne s'affiche pas automatiquement au démarrage et n'est pas accessible via la barre de recherche. La bonne méthode est de vérifier sa présence dans les Compléments depuis le ruban Accueil (Windows) ou le menu Outils (Mac)."
     },
     corrected: [
-      { title: "Installer le add-in", desc: "Aller sur marketplace.microsoft.com, rechercher 'Claude by Anthropic in PowerPoint', cliquer sur « Obtenir maintenant ».", prompt: null, result: null },
-      { title: "Activer dans PowerPoint", desc: "Windows : Accueil > Compléments. Mac : Outils > Compléments. Le panneau Claude apparaît à droite de l'écran.", prompt: null, result: null },
+      { title: "Vérifier la présence du plugin", desc: "Windows : Accueil > Compléments, vérifier que 'Claude by Anthropic' apparaît dans la liste. Mac : Outils > Compléments. Si absent, relancer l'installation depuis marketplace.microsoft.com.", prompt: null, result: null },
+      { title: "Activer dans PowerPoint", desc: "Sélectionner 'Claude by Anthropic' dans la liste des compléments pour activer le panneau. Le panneau Claude apparaît à droite de l'écran.", prompt: null, result: null },
       { title: "Se connecter", desc: "Saisir ses identifiants Claude (Pro/Max/Team/Enterprise requis). La session est liée à votre compte existant.", prompt: null, result: null },
       { title: "Premier contact avec le deck", desc: "Avant toute action, demander une vue d'ensemble de la présentation.", prompt: "Décris la structure de ce deck, l'objectif de chaque section et le message principal", result: "Claude analyse toutes les slides, cite les éléments clés et vous donne une cartographie complète en quelques secondes." }
     ]
