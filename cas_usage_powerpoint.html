@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cas d'usage – Claude for PowerPoint</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --surface2: #1a1a26;
+  --border: #ffffff12;
+  --border2: #ffffff22;
+  --text: #f0f0f8;
+  --muted: #8888aa;
+  --accent: #7c6af7;
+  --accent2: #a594fa;
+  --green: #22d3a0;
+  --blue: #4facfe;
+  --amber: #f5a623;
+  --red: #f45b69;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(124,106,247,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,106,247,0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(10,10,15,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.back-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted);
+  text-decoration: none;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  transition: color 0.15s;
+}
+.back-link:hover { color: var(--accent2); }
+.topbar-sep { color: var(--border2); font-size: 1.2rem; }
+.topbar-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.content {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 3.5rem 2rem 5rem;
+  position: relative;
+}
+.hero {
+  margin-bottom: 3rem;
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--accent2);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.7rem;
+}
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--text) 0%, var(--accent2) 50%, var(--blue) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.8rem;
+  line-height: 1.15;
+}
+.hero-desc {
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.7;
+  max-width: 640px;
+}
+
+/* Category filter */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+}
+.filter-btn {
+  padding: 0.35rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--muted);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.filter-btn:hover { color: var(--text); }
+.filter-btn.active { background: rgba(124,106,247,0.1); border-color: var(--accent); color: var(--accent2); }
+
+/* Category section */
+.cat-section { margin-bottom: 2.5rem; }
+.cat-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1.2rem;
+}
+.cat-icon {
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+}
+.cat-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+}
+.cat-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--border2);
+}
+
+/* Cards grid */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 1rem;
+}
+.use-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  transition: all 0.2s;
+}
+.use-card:hover {
+  border-color: var(--border2);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+}
+.use-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+}
+.use-card-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+.use-card-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.3;
+  flex: 1;
+}
+.use-card-desc {
+  font-size: 0.83rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.use-card-prompt {
+  background: var(--surface2);
+  border-radius: 8px;
+  padding: 0.65rem 0.9rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--blue);
+  line-height: 1.5;
+  border-left: 2px solid rgba(79,172,254,0.4);
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+}
+.use-card-prompt:hover { border-left-color: var(--blue); background: rgba(79,172,254,0.06); }
+.use-card-prompt::after {
+  content: 'Copier';
+  position: absolute;
+  right: 0.7rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.65rem;
+  color: var(--muted);
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.use-card-prompt:hover::after { opacity: 1; }
+.use-card-prompt.copied { border-left-color: var(--green); color: var(--green); }
+.use-card-prompt.copied::after { content: '✓'; color: var(--green); opacity: 1; }
+
+.diff-tag {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  margin-top: auto;
+  align-self: flex-start;
+}
+.diff-debutant { background: rgba(34,211,160,0.1); color: var(--green); }
+.diff-inter { background: rgba(245,166,35,0.1); color: var(--amber); }
+.diff-avance { background: rgba(124,106,247,0.1); color: var(--accent2); }
+
+/* Category variants */
+.cat-creation .cat-icon { background: rgba(124,106,247,0.12); }
+.cat-creation .cat-label { color: var(--accent2); }
+.cat-creation .use-card-icon { background: rgba(124,106,247,0.1); }
+.cat-creation .use-card:hover { border-color: rgba(124,106,247,0.3); }
+
+.cat-edition .cat-icon { background: rgba(79,172,254,0.12); }
+.cat-edition .cat-label { color: var(--blue); }
+.cat-edition .use-card-icon { background: rgba(79,172,254,0.1); }
+.cat-edition .use-card:hover { border-color: rgba(79,172,254,0.3); }
+
+.cat-visuel .cat-icon { background: rgba(245,166,35,0.12); }
+.cat-visuel .cat-label { color: var(--amber); }
+.cat-visuel .use-card-icon { background: rgba(245,166,35,0.1); }
+.cat-visuel .use-card:hover { border-color: rgba(245,166,35,0.3); }
+
+.cat-productivite .cat-icon { background: rgba(34,211,160,0.12); }
+.cat-productivite .cat-label { color: var(--green); }
+.cat-productivite .use-card-icon { background: rgba(34,211,160,0.1); }
+.cat-productivite .use-card:hover { border-color: rgba(34,211,160,0.3); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="back-link">← Accueil</a>
+  <span class="topbar-sep">/</span>
+  <span class="topbar-title">Cas d'usage – Claude for PowerPoint</span>
+</div>
+
+<div class="content">
+
+  <div class="hero">
+    <div class="hero-eyebrow">// Claude for PowerPoint</div>
+    <h1>Ce que vous pouvez faire<br>avec Claude dans PowerPoint</h1>
+    <p class="hero-desc">Explorez les possibilités offertes par le plugin Claude dans PowerPoint. Cliquez sur un prompt exemple pour le copier et le coller directement dans le panneau Claude.</p>
+  </div>
+
+  <div class="filters">
+    <button class="filter-btn active" onclick="filterAll(this)">Tout afficher</button>
+    <button class="filter-btn" onclick="filterCat('creation', this)">🟣 Création de contenu</button>
+    <button class="filter-btn" onclick="filterCat('edition', this)">🔵 Édition & Optimisation</button>
+    <button class="filter-btn" onclick="filterCat('visuel', this)">🟡 Visuels & Graphiques</button>
+    <button class="filter-btn" onclick="filterCat('productivite', this)">🟢 Productivité & Conformité</button>
+  </div>
+
+  <!-- CRÉATION DE CONTENU -->
+  <div class="cat-section cat-creation" data-cat="creation">
+    <div class="cat-header">
+      <div class="cat-icon">✨</div>
+      <div class="cat-label">Création de contenu</div>
+      <span class="cat-count">5 cas</span>
+    </div>
+    <div class="cards-grid">
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🚀</div>
+          <div class="use-card-title">Générer un deck complet depuis un brief</div>
+        </div>
+        <p class="use-card-desc">Créez une présentation de A à Z depuis un brief en langage naturel : structure, titres, contenu et logique narrative en quelques secondes.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Crée un pitch deck d'investissement de 10 slides pour une solution SaaS B2B ciblant les DRH. Structure : problème, solution, taille de marché (TAM/SAM/SOM), différenciation, modèle économique, roadmap, équipe, prochaines étapes. Ton : synthétique et orienté business.</div>
+        <span class="diff-tag diff-debutant">🟢 Débutant</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">📋</div>
+          <div class="use-card-title">Créer un résumé exécutif</div>
+        </div>
+        <p class="use-card-desc">Condensez les points essentiels d'un deck en 1 à 2 slides d'executive summary lisibles en 30 secondes.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Ajoute un résumé exécutif d'1 slide au début de ce deck. Il doit contenir : les 3 messages clés sous forme de bullets d'une ligne, la décision attendue de l'audience et le chiffre d'impact principal. Maximum 80 mots au total.</div>
+        <span class="diff-tag diff-debutant">🟢 Débutant</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🎤</div>
+          <div class="use-card-title">Rédiger des notes de speaker</div>
+        </div>
+        <p class="use-card-desc">Générez des notes de présentation pour chaque slide : script naturel, points de transition et messages clés à ne pas oublier.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Pour chaque slide de ce deck, écris des notes de speaker de 4 à 6 lignes. Ton : conversationnel mais professionnel. Inclus pour chaque slide : le message principal, 2 points à développer à l'oral et la phrase de transition vers la slide suivante.</div>
+        <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🌍</div>
+          <div class="use-card-title">Traduire et localiser une présentation</div>
+        </div>
+        <p class="use-card-desc">Traduisez l'intégralité d'un deck dans une autre langue en conservant le ton, la structure et les nuances culturelles appropriées.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Traduis toutes les slides de ce deck en anglais. Adapte les expressions idiomatiques pour un public anglophone international (évite les expressions trop françaises). Conserve le ton professionnel et synthétique.</div>
+        <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🎯</div>
+          <div class="use-card-title">Adapter le contenu pour une audience spécifique</div>
+        </div>
+        <p class="use-card-desc">Réécrivez le contenu d'un deck pour une audience différente : décideurs non-techniques, opérationnels, clients, investisseurs...</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Ce deck est actuellement rédigé pour des équipes techniques. Réécris le contenu pour des dirigeants non-techniques : supprime le jargon, remplace les détails d'implémentation par des impacts business, et reformule les titres de slides en mode orienté résultats.</div>
+        <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ÉDITION -->
+  <div class="cat-section cat-edition" data-cat="edition">
+    <div class="cat-header">
+      <div class="cat-icon">✏️</div>
+      <div class="cat-label">Édition & Optimisation</div>
+      <span class="cat-count">5 cas</span>
+    </div>
+    <div class="cards-grid">
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">✂️</div>
+          <div class="use-card-title">Simplifier des slides surchargées</div>
+        </div>
+        <p class="use-card-desc">Réduisez des slides trop denses en conservant les 3 messages clés, avec une contrainte de longueur précise.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Simplifie cette slide : réduis-la à 3 bullet points maximum, chacun de moins de 12 mots. Conserve les 3 messages stratégiques les plus importants et supprime tout ce qui est secondaire.</div>
+        <span class="diff-tag diff-debutant">🟢 Débutant</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🔺</div>
+          <div class="use-card-title">Restructurer selon le Pyramid Principle</div>
+        </div>
+        <p class="use-card-desc">Réorganisez votre deck pour que les recommandations apparaissent en premier, suivies du contexte et des données de support.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Réorganise les slides de ce deck selon le Pyramid Principle : recommandations en premier (slides 12-15), puis analyse (6-11), puis données de support (1-5). Mets ensuite à jour la slide d'agenda pour refléter le nouvel ordre.</div>
+        <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">💬</div>
+          <div class="use-card-title">Reformuler les titres en mode action</div>
+        </div>
+        <p class="use-card-desc">Transformez des titres descriptifs passifs en titres orientés action ou résultat, plus percutants pour une audience décisionnaire.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Reformule tous les titres de slides de ce deck en mode "orienté action" ou "orienté résultat". Maximum 6 mots par titre. Les titres doivent répondre à la question "Pourquoi cette slide est importante pour mon audience ?"</div>
+        <span class="diff-tag diff-debutant">🟢 Débutant</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🔗</div>
+          <div class="use-card-title">Ajouter des slides de transition</div>
+        </div>
+        <p class="use-card-desc">Créez des slides de section pour fluidifier la navigation entre les grandes parties de votre présentation.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Ajoute des slides de transition entre chaque section principale de ce deck. Chaque slide de transition doit indiquer le nom de la section, un sous-titre descriptif en une ligne et rappeler où nous en sommes dans l'agenda.</div>
+        <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🔍</div>
+          <div class="use-card-title">Relire et corriger le contenu</div>
+        </div>
+        <p class="use-card-desc">Identifiez les fautes, incohérences, formulations maladroites et affirmations à vérifier avant de partager le deck.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Relis attentivement toutes les slides de ce deck et signale : les fautes d'orthographe ou grammaire, les formulations peu claires, les affirmations sans données de support et les incohérences entre slides. Donne ton retour slide par slide.</div>
+        <span class="diff-tag diff-debutant">🟢 Débutant</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- VISUELS -->
+  <div class="cat-section cat-visuel" data-cat="visuel">
+    <div class="cat-header">
+      <div class="cat-icon">🎨</div>
+      <div class="cat-label">Visuels & Graphiques</div>
+      <span class="cat-count">5 cas</span>
+    </div>
+    <div class="cards-grid">
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">📊</div>
+          <div class="use-card-title">Créer un graphique natif éditable</div>
+        </div>
+        <p class="use-card-desc">Générez des graphiques de données directement dans PowerPoint, éditables via Excel intégré, pas de simples images.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Crée un graphique en courbe PowerPoint natif (pas une image, doit être modifiable) montrant la croissance trimestrielle : T1=+12%, T2=+18%, T3=-4%, T4=+22%. Met en évidence T3 en rouge comme trimestre négatif.</div>
+        <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🔄</div>
+          <div class="use-card-title">Transformer des bullets en diagramme de processus</div>
+        </div>
+        <p class="use-card-desc">Convertissez une liste d'étapes textuelles en diagramme SmartArt ou en flux de processus visuel natif.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Transforme ces 5 étapes textuelles en diagramme de flux de processus PowerPoint natif : Collecte des besoins → Validation budget → Appel d'offres → Sélection fournisseur → Contractualisation. Utilise des flèches directionnelles et des couleurs distinctes par étape.</div>
+        <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🥧</div>
+          <div class="use-card-title">Créer un graphique de répartition</div>
+        </div>
+        <p class="use-card-desc">Visualisez des parts de marché, budgets ou répartitions avec un camembert ou un graphique en anneau natif.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Crée un graphique en anneau PowerPoint natif montrant la répartition du budget : Produit 40%, Marketing 25%, R&D 20%, Support 10%, Overhead 5%. Ajoute les pourcentages sur chaque segment et un titre "Budget 2024".</div>
+        <span class="diff-tag diff-debutant">🟢 Débutant</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🗺️</div>
+          <div class="use-card-title">Créer un tableau de comparaison visuel</div>
+        </div>
+        <p class="use-card-desc">Générez un tableau comparatif structuré (concurrents, options, scénarios) avec mise en forme conditionnelle visuellement claire.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Crée un tableau comparatif sur cette slide pour 4 solutions concurrentes sur 5 critères : Prix, Facilité d'usage, Support, Intégrations, Sécurité. Note chaque critère de 1 à 5. Met en vert les meilleures notes et en rouge les moins bonnes.</div>
+        <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">📅</div>
+          <div class="use-card-title">Créer une roadmap visuelle (timeline)</div>
+        </div>
+        <p class="use-card-desc">Générez une timeline ou roadmap produit/projet claire et lisible directement dans PowerPoint.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Crée une roadmap sur une slide avec une timeline horizontale en 4 trimestres (T1 à T4 2025). Place ces jalons : T1 - Lancement beta, T2 - 100 premiers clients, T3 - Levée de fonds, T4 - Expansion Europe. Utilise des couleurs différentes par phase.</div>
+        <span class="diff-tag diff-avance">🟣 Avancé</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PRODUCTIVITÉ -->
+  <div class="cat-section cat-productivite" data-cat="productivite">
+    <div class="cat-header">
+      <div class="cat-icon">⚡</div>
+      <div class="cat-label">Productivité & Conformité</div>
+      <span class="cat-count">5 cas</span>
+    </div>
+    <div class="cards-grid">
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">✅</div>
+          <div class="use-card-title">Vérifier la conformité charte graphique</div>
+        </div>
+        <p class="use-card-desc">Auditez votre présentation pour identifier les éléments hors template : polices, couleurs, layouts non conformes.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Vérifie la conformité charte de ce deck. Identifie : les slides qui n'utilisent pas les bons layouts du template, les couleurs qui ne correspondent pas à la palette (accent #0070C0, texte noir, fond blanc), les polices non standard. Donne un rapport slide par slide.</div>
+        <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🌐</div>
+          <div class="use-card-title">Enrichir un deck avec des données Google Drive</div>
+        </div>
+        <p class="use-card-desc">Connectez-vous à vos documents Drive pour enrichir automatiquement vos slides avec des données à jour, sans copier-coller.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">En me basant sur le document "Veille Marché Q3 2025" dans mon Google Drive, crée 3 slides sur les tendances marché identifiées. Utilise uniquement les données explicitement mentionnées dans le document, sans ajouter d'informations inventées.</div>
+        <span class="diff-tag diff-avance">🟣 Avancé</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">⚙️</div>
+          <div class="use-card-title">Configurer des instructions persistantes</div>
+        </div>
+        <p class="use-card-desc">Définissez une fois pour toutes vos contraintes de style, ton et vocabulaire pour qu'elles s'appliquent automatiquement.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Je veux configurer des instructions persistantes pour mes decks clients. Aide-moi à rédiger un bloc d'instructions couvrant : format des bullets (une ligne max), longueur des titres (6 mots max), couleur accent (#C8102E), audience type (décideurs seniors) et un "Et alors ?" obligatoire sur les slides de recommandations.</div>
+        <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">📝</div>
+          <div class="use-card-title">Générer un compte-rendu de réunion en slides</div>
+        </div>
+        <p class="use-card-desc">Transformez des notes de réunion brutes en une présentation structurée : décisions prises, actions et responsables.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Je te donne mes notes brutes de réunion CODIR. Crée 3 slides : 1) Décisions prises (bullets), 2) Actions et responsables (tableau : Action / Responsable / Deadline), 3) Prochaines étapes et sujets ouverts. [Coller les notes ici]</div>
+        <span class="diff-tag diff-debutant">🟢 Débutant</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🔎</div>
+          <div class="use-card-title">Analyser la structure narrative d'un deck</div>
+        </div>
+        <p class="use-card-desc">Obtenez un diagnostic de la logique narrative de votre présentation : fluidité, cohérence des messages, lacunes.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Analyse la structure narrative de ce deck. Dis-moi : le fil directeur est-il clair et logique ? Y a-t-il des transitions manquantes ? Les slides sont-elles dans le bon ordre ? Quels slides sont redondants ou peuvent être fusionnés ? Réponds de façon structurée.</div>
+        <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+function copyPrompt(el) {
+  const text = el.textContent.replace(/Copier|✓/g, '').trim();
+  navigator.clipboard.writeText(text).catch(() => {});
+  el.classList.add('copied');
+  setTimeout(() => el.classList.remove('copied'), 2000);
+}
+
+function filterAll(btn) {
+  document.querySelectorAll('.cat-section').forEach(s => s.style.display = '');
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function filterCat(cat, btn) {
+  document.querySelectorAll('.cat-section').forEach(s => {
+    s.style.display = s.dataset.cat === cat ? '' : 'none';
+  });
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

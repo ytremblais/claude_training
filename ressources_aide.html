@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ressources & Aide – Claude Plugin Office</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --surface2: #1a1a26;
+  --border: #ffffff12;
+  --border2: #ffffff22;
+  --text: #f0f0f8;
+  --muted: #8888aa;
+  --accent: #7c6af7;
+  --accent2: #a594fa;
+  --green: #22d3a0;
+  --blue: #4facfe;
+  --amber: #f5a623;
+  --red: #f45b69;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(124,106,247,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,106,247,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(10,10,15,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.back-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted);
+  text-decoration: none;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  transition: color 0.15s;
+}
+.back-link:hover { color: var(--accent2); }
+.topbar-sep { color: var(--border2); font-size: 1.2rem; }
+.topbar-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* Tab navigation */
+.tab-nav {
+  display: flex;
+  gap: 0;
+  margin-left: auto;
+}
+.tab-btn {
+  padding: 0 1.2rem;
+  height: 56px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: var(--text); border-bottom-color: var(--accent); }
+
+.content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 2rem 4rem;
+  position: relative;
+}
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.panel-hero {
+  margin-bottom: 2.5rem;
+}
+.panel-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--accent2);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.6rem;
+}
+.panel-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 800;
+  margin-bottom: 0.6rem;
+}
+.panel-desc {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  max-width: 620px;
+}
+
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-bottom: 1rem;
+  margin-top: 2.5rem;
+}
+.section-label:first-of-type { margin-top: 0; }
+
+/* Requirement cards */
+.req-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+.req-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.req-icon { font-size: 1.4rem; }
+.req-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+.req-detail { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+.req-tag {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  margin-top: auto;
+}
+.tag-ok { background: rgba(34,211,160,0.1); color: var(--green); }
+.tag-no { background: rgba(244,91,105,0.1); color: var(--red); }
+
+/* Steps */
+.steps { display: flex; flex-direction: column; gap: 0.75rem; }
+.step {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.1rem 1.3rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.step-num {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  background: rgba(124,106,247,0.15);
+  color: var(--accent2);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.step-body {}
+.step-title { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.3rem; }
+.step-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+.step-code {
+  margin-top: 0.5rem;
+  background: var(--surface2);
+  border-radius: 6px;
+  padding: 0.5rem 0.8rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--blue);
+}
+
+/* FAQ */
+.faq { display: flex; flex-direction: column; gap: 0.75rem; }
+.faq-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.faq-q {
+  padding: 1.1rem 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  user-select: none;
+  transition: background 0.15s;
+}
+.faq-q:hover { background: rgba(255,255,255,0.02); }
+.faq-q-icon { color: var(--accent2); font-size: 0.85rem; font-family: 'DM Mono', monospace; flex-shrink: 0; }
+.faq-toggle { margin-left: auto; color: var(--muted); font-size: 0.8rem; transition: transform 0.2s; }
+.faq-item.open .faq-toggle { transform: rotate(180deg); }
+.faq-a {
+  display: none;
+  padding: 0 1.3rem 1.1rem 3rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.7;
+  border-top: 1px solid var(--border);
+  padding-top: 0.9rem;
+}
+.faq-item.open .faq-a { display: block; }
+.faq-a strong { color: var(--text); }
+
+/* Warn/info box */
+.warn-box {
+  background: rgba(244,91,105,0.06);
+  border: 1px solid rgba(244,91,105,0.2);
+  border-radius: 12px;
+  padding: 1rem 1.3rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.warn-box .warn-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--red);
+  letter-spacing: 0.08em;
+  margin-bottom: 0.4rem;
+}
+.info-box {
+  background: rgba(124,106,247,0.06);
+  border: 1px solid rgba(124,106,247,0.2);
+  border-radius: 12px;
+  padding: 1rem 1.3rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.info-box .info-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--accent2);
+  letter-spacing: 0.08em;
+  margin-bottom: 0.4rem;
+}
+.info-box strong, .warn-box strong { color: var(--text); }
+
+/* Resource link cards */
+.resource-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.resource-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.4rem;
+  text-decoration: none;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.resource-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.resource-card:hover { transform: translateY(-3px); border-color: rgba(124,106,247,0.35); box-shadow: 0 8px 28px rgba(124,106,247,0.15); }
+.resource-card:hover::before { opacity: 1; }
+.resource-card-top { display: flex; align-items: center; gap: 0.8rem; }
+.resource-card-icon {
+  width: 40px; height: 40px;
+  border-radius: 11px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+.resource-card-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  flex: 1;
+}
+.resource-card-ext {
+  font-size: 0.7rem;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.resource-card-desc {
+  font-size: 0.83rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.resource-card-tag {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  padding: 0.18rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--border2);
+  color: var(--muted);
+  align-self: flex-start;
+}
+.resource-card-tag.tag-free { background: rgba(34,211,160,0.08); border-color: rgba(34,211,160,0.3); color: var(--green); }
+.resource-card-tag.tag-official { background: rgba(124,106,247,0.08); border-color: rgba(124,106,247,0.3); color: var(--accent2); }
+.resource-card-tag.tag-video { background: rgba(79,172,254,0.08); border-color: rgba(79,172,254,0.3); color: var(--blue); }
+
+/* Capability cards (no link) */
+.capability-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+.capability-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.capability-card-icon { font-size: 1.4rem; }
+.capability-card-title { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; }
+.capability-card-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.55; }
+.capability-card-detail {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--accent2);
+  margin-top: 0.2rem;
+}
+
+/* Tip list */
+.tip-list { display: flex; flex-direction: column; gap: 0.65rem; }
+.tip-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+}
+.tip-bullet {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--accent2);
+  background: rgba(124,106,247,0.12);
+  width: 24px; height: 24px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 0.05rem;
+}
+.tip-body { font-size: 0.84rem; color: var(--muted); line-height: 1.6; }
+.tip-body strong { color: var(--text); }
+
+/* Compte types */
+.account-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.75rem;
+}
+.account-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+}
+.account-name { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.3rem; }
+.account-desc { font-size: 0.75rem; color: var(--muted); line-height: 1.4; }
+.account-badge {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  margin-top: 0.5rem;
+  background: rgba(34,211,160,0.1);
+  color: var(--green);
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="back-link">← Accueil</a>
+  <span class="topbar-sep">/</span>
+  <span class="topbar-title">Ressources & Aide</span>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('ppt')">📑 PowerPoint</button>
+    <button class="tab-btn" onclick="switchTab('excel')">📊 Excel</button>
+    <button class="tab-btn" onclick="switchTab('claude')">🎓 Formations Claude</button>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- TAB POWERPOINT -->
+  <div class="tab-panel active" id="tab-ppt">
+    <div class="panel-hero">
+      <div class="panel-eyebrow">// Plugin officiel Anthropic</div>
+      <h1 class="panel-title">Claude for PowerPoint</h1>
+      <p class="panel-desc">Tout ce dont vous avez besoin pour installer, configurer et utiliser efficacement le plugin Claude dans PowerPoint.</p>
+    </div>
+
+    <p class="section-label">Compatibilité & prérequis</p>
+    <div class="req-grid">
+      <div class="req-card">
+        <div class="req-icon">🌐</div>
+        <div class="req-name">PowerPoint Web</div>
+        <div class="req-detail">Toutes versions récentes du navigateur.</div>
+        <span class="req-tag tag-ok">✓ Supporté</span>
+      </div>
+      <div class="req-card">
+        <div class="req-icon">🖥️</div>
+        <div class="req-name">Windows</div>
+        <div class="req-detail">Microsoft 365, build 16.0.13127 ou supérieur requis.</div>
+        <span class="req-tag tag-ok">✓ Supporté</span>
+      </div>
+      <div class="req-card">
+        <div class="req-icon">🍎</div>
+        <div class="req-name">Mac</div>
+        <div class="req-detail">PowerPoint version 16.46 ou supérieure.</div>
+        <span class="req-tag tag-ok">✓ Supporté</span>
+      </div>
+      <div class="req-card">
+        <div class="req-icon">📱</div>
+        <div class="req-name">iPad / Android</div>
+        <div class="req-detail">Versions mobiles non supportées.</div>
+        <span class="req-tag tag-no">✗ Non supporté</span>
+      </div>
+    </div>
+
+    <p class="section-label" style="margin-top:2rem">Comptes compatibles</p>
+    <div class="account-grid">
+      <div class="account-card"><div class="account-name">Pro</div><div class="account-desc">Compte individuel Claude Pro</div><span class="account-badge">✓ Compatible</span></div>
+      <div class="account-card"><div class="account-name">Max</div><div class="account-desc">Compte individuel Max</div><span class="account-badge">✓ Compatible</span></div>
+      <div class="account-card"><div class="account-name">Team</div><div class="account-desc">Compte d'équipe</div><span class="account-badge">✓ Compatible</span></div>
+      <div class="account-card"><div class="account-name">Enterprise</div><div class="account-desc">Compte entreprise</div><span class="account-badge">✓ Compatible</span></div>
+    </div>
+
+    <p class="section-label">Installation pas à pas</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Ouvrir le Microsoft AppSource depuis PowerPoint</div>
+          <div class="step-desc">Dans PowerPoint, allez dans le ruban <strong>Accueil</strong> (Windows) ou le menu <strong>Outils</strong> (Mac), puis cliquez sur <strong>Compléments</strong> ou <strong>Obtenir des compléments</strong>.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Rechercher "Claude by Anthropic"</div>
+          <div class="step-desc">Dans le store de compléments, recherchez <strong>Claude by Anthropic</strong> et cliquez sur <strong>Ajouter</strong> ou <strong>Obtenir maintenant</strong>.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Vérifier l'activation</div>
+          <div class="step-desc">Le panneau Claude doit apparaître à droite de votre fenêtre PowerPoint. S'il ne s'affiche pas, allez dans Accueil → Compléments et activez "Claude by Anthropic" dans la liste.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Se connecter avec son compte Claude</div>
+          <div class="step-desc">Entrez vos identifiants Claude (Pro / Max / Team / Enterprise). Chaque utilisateur se connecte avec son propre compte.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <div class="step-title">Vérification finale</div>
+          <div class="step-desc">Testez en tapant un message simple dans le panneau Claude, par exemple :</div>
+          <div class="step-code">Décris la structure de cette présentation</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="section-label">Limites connues</p>
+    <div class="warn-box" style="margin-bottom:0.75rem">
+      <div class="warn-label">⚠ Fichier unique</div>
+      Claude ne peut lire que la présentation <strong>actuellement ouverte</strong>. Les fichiers fermés et autres documents ne sont pas accessibles.
+    </div>
+    <div class="warn-box" style="margin-bottom:0.75rem">
+      <div class="warn-label">⚠ Pas d'historique inter-sessions</div>
+      Chaque ouverture du panneau démarre une <strong>conversation vierge</strong>. Le contexte de la session précédente n'est pas conservé.
+    </div>
+    <div class="warn-box" style="margin-bottom:0.75rem">
+      <div class="warn-label">⚠ Decks longs (30+ slides)</div>
+      Sur les présentations très longues avec une longue session, Claude peut démarrer une nouvelle conversation pour éviter les dépassements de contexte. Le fichier reste intact.
+    </div>
+    <div class="warn-box">
+      <div class="warn-label">⚠ Instructions indépendantes par outil</div>
+      Les instructions persistantes configurées dans PowerPoint n'affectent pas Excel, et vice versa.
+    </div>
+
+    <p class="section-label">Questions fréquentes</p>
+    <div class="faq">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-icon">Q</span>
+          Le panneau Claude n'apparaît pas dans mon ruban. Que faire ?
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-a">Vérifiez d'abord que le complément est bien activé : Accueil → Compléments (Windows) ou Outils → Compléments (Mac). Si "Claude by Anthropic" est absent de la liste, relancez l'installation depuis le Microsoft AppSource. Assurez-vous que votre version PowerPoint est compatible (build 16.0.13127+ sur Windows, 16.46+ sur Mac).</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-icon">Q</span>
+          Claude a modifié mes slides sans que je valide. Est-ce normal ?
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-a">Le plugin dispose d'une <strong>protection contre les écrasements accidentels</strong> : il vous prévient avant d'écraser du contenu existant. Lisez toujours cet avertissement. En cas d'erreur, utilisez <strong>Ctrl+Z / Cmd+Z</strong> pour annuler — PowerPoint conserve tout l'historique d'annulation.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-icon">Q</span>
+          Mes données sont-elles conservées par Anthropic ?
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-a">Selon la documentation officielle Anthropic, les inputs et outputs sont <strong>supprimés dans les 30 jours</strong>. Aucun historique n'est conservé entre les sessions. Les logs d'audit Enterprise ne couvrent pas encore Claude for PowerPoint.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-icon">Q</span>
+          Puis-je utiliser Claude avec un template téléchargé depuis internet ?
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-a"><strong>Déconseillé.</strong> Les fichiers externes non vérifiés peuvent contenir des instructions malveillantes (prompt injection) que Claude exécuterait sur votre deck. Utilisez uniquement des templates internes validés ou des fichiers dont vous contrôlez intégralement le contenu.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-icon">Q</span>
+          Comment configurer des instructions qui s'appliquent automatiquement à chaque session ?
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-a">Utilisez le champ <strong>Instructions</strong> dans le panneau Claude (icône engrenage). Les instructions saisies ici s'appliquent à toutes vos conversations PowerPoint sans avoir à les répéter. Exemple : "Bullets d'une seule ligne. Titres : max 6 mots. Couleur accent #0070C0."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB EXCEL -->
+  <div class="tab-panel" id="tab-excel">
+    <div class="panel-hero">
+      <div class="panel-eyebrow">// Plugin officiel Anthropic</div>
+      <h1 class="panel-title">Claude for Excel</h1>
+      <p class="panel-desc">Tout ce dont vous avez besoin pour installer, configurer et utiliser efficacement le plugin Claude dans Excel.</p>
+    </div>
+
+    <p class="section-label">Compatibilité & prérequis</p>
+    <div class="req-grid">
+      <div class="req-card">
+        <div class="req-icon">🌐</div>
+        <div class="req-name">Excel Web</div>
+        <div class="req-detail">Toutes versions récentes du navigateur.</div>
+        <span class="req-tag tag-ok">✓ Supporté</span>
+      </div>
+      <div class="req-card">
+        <div class="req-icon">🖥️</div>
+        <div class="req-name">Windows</div>
+        <div class="req-detail">Microsoft 365, build 16.0.13127 ou supérieur requis.</div>
+        <span class="req-tag tag-ok">✓ Supporté</span>
+      </div>
+      <div class="req-card">
+        <div class="req-icon">🍎</div>
+        <div class="req-name">Mac</div>
+        <div class="req-detail">Excel version 16.46 ou supérieure.</div>
+        <span class="req-tag tag-ok">✓ Supporté</span>
+      </div>
+      <div class="req-card">
+        <div class="req-icon">📱</div>
+        <div class="req-name">iPad / Android</div>
+        <div class="req-detail">Versions mobiles non supportées.</div>
+        <span class="req-tag tag-no">✗ Non supporté</span>
+      </div>
+    </div>
+
+    <p class="section-label" style="margin-top:2rem">Comptes compatibles</p>
+    <div class="account-grid">
+      <div class="account-card"><div class="account-name">Pro</div><div class="account-desc">Compte individuel Claude Pro</div><span class="account-badge">✓ Compatible</span></div>
+      <div class="account-card"><div class="account-name">Max</div><div class="account-desc">Compte individuel Max</div><span class="account-badge">✓ Compatible</span></div>
+      <div class="account-card"><div class="account-name">Team</div><div class="account-desc">Compte d'équipe</div><span class="account-badge">✓ Compatible</span></div>
+      <div class="account-card"><div class="account-name">Enterprise</div><div class="account-desc">Compte entreprise</div><span class="account-badge">✓ Compatible</span></div>
+    </div>
+
+    <p class="section-label">Installation pas à pas</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Ouvrir le Microsoft AppSource depuis Excel</div>
+          <div class="step-desc">Dans Excel, allez dans le ruban <strong>Accueil</strong> (Windows) ou le menu <strong>Outils</strong> (Mac), puis cliquez sur <strong>Compléments</strong> ou <strong>Obtenir des compléments</strong>.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Rechercher "Claude by Anthropic"</div>
+          <div class="step-desc">Dans le store de compléments, recherchez <strong>Claude by Anthropic</strong> et cliquez sur <strong>Ajouter</strong> ou <strong>Obtenir maintenant</strong>.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Vérifier l'activation</div>
+          <div class="step-desc">Le panneau Claude doit apparaître à droite de votre fenêtre Excel. S'il ne s'affiche pas, vérifiez dans Accueil → Compléments que "Claude by Anthropic" est bien coché.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Se connecter avec son compte Claude</div>
+          <div class="step-desc">Entrez vos identifiants Claude (Pro / Max / Team / Enterprise). Le plugin est lié à votre compte individuel.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <div class="step-title">Vérification finale</div>
+          <div class="step-desc">Testez avec un premier message dans le panneau Claude :</div>
+          <div class="step-code">Décris la structure de ce classeur et le contenu de chaque feuille</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="section-label">Limites connues</p>
+    <div class="warn-box" style="margin-bottom:0.75rem">
+      <div class="warn-label">⚠ Classeur actif uniquement</div>
+      Claude ne peut lire que le classeur <strong>actuellement ouvert</strong>. Les autres fichiers Excel ne sont pas accessibles.
+    </div>
+    <div class="warn-box" style="margin-bottom:0.75rem">
+      <div class="warn-label">⚠ Pas d'historique inter-sessions</div>
+      Chaque ouverture du panneau démarre une <strong>conversation vierge</strong>. Aucun contexte n'est conservé entre deux sessions de travail.
+    </div>
+    <div class="warn-box" style="margin-bottom:0.75rem">
+      <div class="warn-label">⚠ Fichiers volumineux</div>
+      Sur les classeurs très volumineux (nombreuses feuilles, milliers de lignes), Claude peut avoir une vision partielle des données. Précisez toujours la plage de cellules concernée dans vos prompts.
+    </div>
+    <div class="warn-box">
+      <div class="warn-label">⚠ Instructions indépendantes par outil</div>
+      Les instructions persistantes configurées dans Excel n'affectent pas PowerPoint, et vice versa.
+    </div>
+
+    <p class="section-label">Questions fréquentes</p>
+    <div class="faq">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-icon">Q</span>
+          Claude peut-il lire toutes les feuilles de mon classeur ?
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-a">Oui, Claude a accès à toutes les feuilles du classeur ouvert. Pour les classeurs volumineux, précisez dans votre prompt la feuille et la plage de données concernées pour obtenir des réponses plus précises. Exemple : <strong>"Sur la feuille 'Ventes', analyse les données de la plage A1:F200."</strong></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-icon">Q</span>
+          Claude peut-il modifier directement mes données Excel ?
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-a">Oui, Claude peut écrire des données, générer des formules et créer des structures directement dans votre classeur. Il vous avertit avant d'<strong>écraser du contenu existant</strong>. Utilisez <strong>Ctrl+Z / Cmd+Z</strong> pour annuler une action non souhaitée.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-icon">Q</span>
+          Les formules générées par Claude fonctionnent-elles dans toutes les versions d'Excel ?
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-a">Claude génère des formules adaptées à Excel Microsoft 365. Certaines fonctions récentes (XLOOKUP, FILTER, SORT, formules dynamiques) ne sont pas disponibles dans Excel 2016 ou 2019. Précisez dans votre prompt : <strong>"génère une formule compatible avec Excel 2019"</strong> si nécessaire.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-icon">Q</span>
+          Mes données confidentielles sont-elles en sécurité ?
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-a">Les données envoyées à Claude sont traitées selon la politique de confidentialité Anthropic. Les inputs et outputs sont <strong>supprimés dans les 30 jours</strong>. Pour des données sensibles (données clients, données RH, données financières réglementées), vérifiez préalablement que votre politique data interne autorise l'usage du plugin.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-icon">Q</span>
+          Comment donner des instructions qui s'appliquent à toutes mes sessions Excel ?
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-a">Utilisez le champ <strong>Instructions</strong> dans le panneau Claude (icône engrenage). Exemple d'instructions utiles : "Toujours utiliser des plages nommées dans les formules. Génère du code VBA compatible Excel 365. Commente les formules complexes en français."</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- TAB FORMATIONS CLAUDE -->
+  <div class="tab-panel" id="tab-claude">
+    <div class="panel-hero">
+      <div class="panel-eyebrow">// Apprendre Claude</div>
+      <h1 class="panel-title">Formations & Ressources Claude</h1>
+      <p class="panel-desc">Formations officielles, documentation et ressources pour comprendre les capacités de Claude et l'utiliser efficacement au-delà des plugins Office.</p>
+    </div>
+
+    <p class="section-label">Formations officielles Anthropic</p>
+    <div class="resource-grid">
+
+      <a href="https://anthropic.skilljar.com/claude-101" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-card-top">
+          <div class="resource-card-icon" style="background:rgba(124,106,247,0.12)">🎓</div>
+          <div class="resource-card-title">Claude 101</div>
+          <span class="resource-card-ext">↗</span>
+        </div>
+        <p class="resource-card-desc">La formation de référence par Anthropic. Introduction aux fondamentaux de Claude : comment interagir, structurer ses prompts et comprendre les comportements du modèle. Point de départ idéal pour tout nouvel utilisateur.</p>
+        <span class="resource-card-tag tag-free">Gratuit</span>
+      </a>
+
+      <a href="https://anthropic.skilljar.com" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-card-top">
+          <div class="resource-card-icon" style="background:rgba(124,106,247,0.12)">📚</div>
+          <div class="resource-card-title">Catalogue Anthropic Skilljar</div>
+          <span class="resource-card-ext">↗</span>
+        </div>
+        <p class="resource-card-desc">L'ensemble des formations officielles Anthropic disponibles en ligne : modules sur les fonctionnalités avancées, l'API, la sécurité, et les bonnes pratiques d'utilisation de Claude en contexte professionnel.</p>
+        <span class="resource-card-tag tag-official">Officiel</span>
+      </a>
+
+      <a href="https://docs.anthropic.com" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-card-top">
+          <div class="resource-card-icon" style="background:rgba(79,172,254,0.12)">📖</div>
+          <div class="resource-card-title">Documentation officielle</div>
+          <span class="resource-card-ext">↗</span>
+        </div>
+        <p class="resource-card-desc">La documentation technique complète d'Anthropic : guides d'utilisation, référence des modèles, bonnes pratiques de prompt engineering et documentation des fonctionnalités avancées de Claude.</p>
+        <span class="resource-card-tag tag-official">docs.anthropic.com</span>
+      </a>
+
+      <a href="https://claude.ai" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-card-top">
+          <div class="resource-card-icon" style="background:rgba(34,211,160,0.12)">✨</div>
+          <div class="resource-card-title">Claude.ai — Accès direct</div>
+          <span class="resource-card-ext">↗</span>
+        </div>
+        <p class="resource-card-desc">Accédez directement à Claude via l'interface web pour pratiquer, tester vos prompts et explorer les capacités du modèle en dehors des plugins Office. Le meilleur terrain d'entraînement.</p>
+        <span class="resource-card-tag tag-free">Interface web</span>
+      </a>
+
+    </div>
+
+    <p class="section-label">Capacités clés de Claude à connaître</p>
+    <div class="capability-grid">
+
+      <div class="capability-card">
+        <div class="capability-card-icon">🧠</div>
+        <div class="capability-card-title">Raisonnement complexe</div>
+        <p class="capability-card-desc">Claude peut analyser des problèmes multi-étapes, comparer des options et raisonner de façon structurée. Idéal pour l'analyse de données ou la structuration de présentations.</p>
+        <div class="capability-card-detail">Pertinent pour → Excel & PowerPoint</div>
+      </div>
+
+      <div class="capability-card">
+        <div class="capability-card-icon">💬</div>
+        <div class="capability-card-title">Longue fenêtre de contexte</div>
+        <p class="capability-card-desc">Claude peut traiter de longs documents en une seule fois. Pour les classeurs Excel volumineux ou les decks de 30+ slides, précisez la plage ou la section concernée pour des résultats optimaux.</p>
+        <div class="capability-card-detail">200 000 tokens de contexte</div>
+      </div>
+
+      <div class="capability-card">
+        <div class="capability-card-icon">🌍</div>
+        <div class="capability-card-title">Multilingue natif</div>
+        <p class="capability-card-desc">Claude comprend et génère du contenu en français, anglais et de nombreuses autres langues sans perte de qualité. Utilisez la langue dans laquelle vous êtes le plus à l'aise.</p>
+        <div class="capability-card-detail">Inutile d'écrire en anglais</div>
+      </div>
+
+      <div class="capability-card">
+        <div class="capability-card-icon">🔒</div>
+        <div class="capability-card-title">Modèle constitutionnel</div>
+        <p class="capability-card-desc">Claude est entraîné selon des principes de sécurité stricts (Constitutional AI). Il refusera certaines demandes jugées inappropriées et indiquera clairement ses limites.</p>
+        <div class="capability-card-detail">Anthropic Constitutional AI</div>
+      </div>
+
+      <div class="capability-card">
+        <div class="capability-card-icon">✏️</div>
+        <div class="capability-card-title">Génération et transformation</div>
+        <p class="capability-card-desc">Claude excelle à transformer du contenu existant : résumer, reformuler, adapter le ton, traduire, structurer. Donnez-lui du contenu brut et une instruction précise.</p>
+        <div class="capability-card-detail">Pertinent pour → PowerPoint</div>
+      </div>
+
+      <div class="capability-card">
+        <div class="capability-card-icon">💻</div>
+        <div class="capability-card-title">Génération de code</div>
+        <p class="capability-card-desc">Claude génère du code VBA, des formules Excel complexes, du Python pour l'analyse de données et bien d'autres langages. Toujours vérifier le code généré avant de l'exécuter.</p>
+        <div class="capability-card-detail">Pertinent pour → Excel (VBA)</div>
+      </div>
+
+    </div>
+
+    <p class="section-label">Conseils pour de meilleurs prompts</p>
+    <div class="tip-list">
+
+      <div class="tip-item">
+        <div class="tip-bullet">1</div>
+        <div class="tip-body"><strong>Soyez précis et quantifié.</strong> "Résume en 3 points de moins de 15 mots chacun" est bien plus efficace que "résume". Donnez des contraintes mesurables : nombre d'éléments, longueur, format attendu.</div>
+      </div>
+
+      <div class="tip-item">
+        <div class="tip-bullet">2</div>
+        <div class="tip-body"><strong>Donnez du contexte sur votre audience.</strong> Claude adapte son niveau de détail et son vocabulaire selon l'audience que vous lui décrivez. "Pour des dirigeants non-techniques" change radicalement le style de la réponse.</div>
+      </div>
+
+      <div class="tip-item">
+        <div class="tip-bullet">3</div>
+        <div class="tip-body"><strong>Décrivez le résultat attendu, pas l'action.</strong> Plutôt que "fais un graphique", dites "crée un graphique en courbe natif PowerPoint montrant l'évolution mensuelle, avec les valeurs suivantes : [données]". Plus le résultat est décrit, plus Claude peut l'atteindre.</div>
+      </div>
+
+      <div class="tip-item">
+        <div class="tip-bullet">4</div>
+        <div class="tip-body"><strong>Itérez plutôt que de tout demander en une fois.</strong> Un prompt complexe peut être décomposé en plusieurs échanges. Commencez par la structure, ajustez, puis affinez les détails. Claude conserve le contexte de la conversation.</div>
+      </div>
+
+      <div class="tip-item">
+        <div class="tip-bullet">5</div>
+        <div class="tip-body"><strong>Utilisez les instructions persistantes pour vos habitudes.</strong> Tout ce que vous répétez d'un prompt à l'autre (format, ton, contraintes) devrait être dans le champ Instructions du panneau Claude. Cela libère vos prompts pour le contenu réel.</div>
+      </div>
+
+      <div class="tip-item">
+        <div class="tip-bullet">6</div>
+        <div class="tip-body"><strong>Vérifiez toujours les données chiffrées.</strong> Claude peut halluciner des statistiques, arrondis ou références. Pour tout chiffre important dans un livrable, croisez avec la source d'origine avant de partager.</div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+function toggleFaq(el) {
+  el.closest('.faq-item').classList.toggle('open');
+}
+</script>
+</body>
+</html>

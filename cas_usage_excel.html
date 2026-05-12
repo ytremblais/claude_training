@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cas d'usage – Claude for Excel</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --surface2: #1a1a26;
+  --border: #ffffff12;
+  --border2: #ffffff22;
+  --text: #f0f0f8;
+  --muted: #8888aa;
+  --accent: #7c6af7;
+  --accent2: #a594fa;
+  --green: #22d3a0;
+  --blue: #4facfe;
+  --amber: #f5a623;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(34,211,160,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,211,160,0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(10,10,15,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.back-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted);
+  text-decoration: none;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  transition: color 0.15s;
+}
+.back-link:hover { color: var(--green); }
+.topbar-sep { color: var(--border2); font-size: 1.2rem; }
+.topbar-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.content {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 3.5rem 2rem 5rem;
+  position: relative;
+}
+.hero {
+  margin-bottom: 3rem;
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--green);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.7rem;
+}
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--text) 0%, var(--green) 60%, var(--blue) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.8rem;
+  line-height: 1.15;
+}
+.hero-desc {
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.7;
+  max-width: 640px;
+}
+
+/* Category filter */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+}
+.filter-btn {
+  padding: 0.35rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--muted);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.filter-btn:hover { color: var(--text); border-color: var(--border2); }
+.filter-btn.active { background: rgba(34,211,160,0.1); border-color: var(--green); color: var(--green); }
+
+/* Category section */
+.cat-section { margin-bottom: 2.5rem; }
+.cat-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1.2rem;
+}
+.cat-icon {
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+}
+.cat-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+}
+.cat-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--border2);
+}
+
+/* Cards grid */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 1rem;
+}
+.use-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  transition: all 0.2s;
+  cursor: default;
+}
+.use-card:hover {
+  border-color: var(--border2);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+}
+.use-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+}
+.use-card-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+.use-card-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.3;
+  flex: 1;
+}
+.use-card-desc {
+  font-size: 0.83rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.use-card-prompt {
+  background: var(--surface2);
+  border-radius: 8px;
+  padding: 0.65rem 0.9rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--blue);
+  line-height: 1.5;
+  border-left: 2px solid rgba(79,172,254,0.4);
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+}
+.use-card-prompt:hover { border-left-color: var(--blue); background: rgba(79,172,254,0.06); }
+.use-card-prompt::after {
+  content: 'Copier';
+  position: absolute;
+  right: 0.7rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.65rem;
+  color: var(--muted);
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.use-card-prompt:hover::after { opacity: 1; }
+.use-card-prompt.copied { border-left-color: var(--green); color: var(--green); }
+.use-card-prompt.copied::after { content: '✓'; color: var(--green); opacity: 1; }
+
+/* Difficulty tag */
+.diff-tag {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  margin-top: auto;
+  align-self: flex-start;
+}
+.diff-debutant { background: rgba(34,211,160,0.1); color: var(--green); }
+.diff-inter { background: rgba(245,166,35,0.1); color: var(--amber); }
+.diff-avance { background: rgba(124,106,247,0.1); color: var(--accent2); }
+
+/* Category color variants */
+.cat-formules .cat-icon { background: rgba(34,211,160,0.12); }
+.cat-formules .cat-label { color: var(--green); }
+.cat-formules .use-card-icon { background: rgba(34,211,160,0.1); }
+.cat-formules .use-card:hover { border-color: rgba(34,211,160,0.3); }
+
+.cat-donnees .cat-icon { background: rgba(79,172,254,0.12); }
+.cat-donnees .cat-label { color: var(--blue); }
+.cat-donnees .use-card-icon { background: rgba(79,172,254,0.1); }
+.cat-donnees .use-card:hover { border-color: rgba(79,172,254,0.3); }
+
+.cat-auto .cat-icon { background: rgba(245,166,35,0.12); }
+.cat-auto .cat-label { color: var(--amber); }
+.cat-auto .use-card-icon { background: rgba(245,166,35,0.1); }
+.cat-auto .use-card:hover { border-color: rgba(245,166,35,0.3); }
+
+.cat-rapports .cat-icon { background: rgba(124,106,247,0.12); }
+.cat-rapports .cat-label { color: var(--accent2); }
+.cat-rapports .use-card-icon { background: rgba(124,106,247,0.1); }
+.cat-rapports .use-card:hover { border-color: rgba(124,106,247,0.3); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="back-link">← Accueil</a>
+  <span class="topbar-sep">/</span>
+  <span class="topbar-title">Cas d'usage – Claude for Excel</span>
+</div>
+
+<div class="content">
+
+  <div class="hero">
+    <div class="hero-eyebrow">// Claude for Excel</div>
+    <h1>Ce que vous pouvez faire<br>avec Claude dans Excel</h1>
+    <p class="hero-desc">Explorez les possibilités offertes par le plugin Claude dans Excel. Cliquez sur un prompt exemple pour le copier et le coller directement dans le panneau Claude.</p>
+  </div>
+
+  <div class="filters">
+    <button class="filter-btn active" onclick="filterAll(this)">Tout afficher</button>
+    <button class="filter-btn" onclick="filterCat('formules', this)">🟢 Formules & Calculs</button>
+    <button class="filter-btn" onclick="filterCat('donnees', this)">🔵 Données & Analyse</button>
+    <button class="filter-btn" onclick="filterCat('auto', this)">🟡 Automatisation</button>
+    <button class="filter-btn" onclick="filterCat('rapports', this)">🟣 Rapports & Visuels</button>
+  </div>
+
+  <!-- FORMULES -->
+  <div class="cat-section cat-formules" data-cat="formules">
+    <div class="cat-header">
+      <div class="cat-icon">🧮</div>
+      <div class="cat-label">Formules & Calculs</div>
+      <span class="cat-count">5 cas</span>
+    </div>
+    <div class="cards-grid">
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🔍</div>
+          <div class="use-card-title">Générer une formule de recherche avancée</div>
+        </div>
+        <p class="use-card-desc">Créez des formules XLOOKUP, INDEX/MATCH ou RECHERCHEV adaptées à votre structure de données, sans connaître la syntaxe exacte.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Crée une formule pour rechercher la valeur de la colonne D correspondant à la valeur en A2, dans la plage A:D de la feuille "Référentiel". Utilise XLOOKUP si disponible, sinon INDEX/MATCH.</div>
+        <span class="diff-tag diff-debutant">🟢 Débutant</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🐛</div>
+          <div class="use-card-title">Déboguer une formule en erreur</div>
+        </div>
+        <p class="use-card-desc">Identifiez la cause d'une erreur (#N/A, #VALEUR!, #REF!) et obtenez une formule corrigée avec une explication claire.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Cette formule retourne #N/A : =RECHERCHEV(A2;Feuil2!B:D;2;0). Explique pourquoi et propose une version corrigée.</div>
+        <span class="diff-tag diff-debutant">🟢 Débutant</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🧩</div>
+          <div class="use-card-title">Construire des formules imbriquées complexes</div>
+        </div>
+        <p class="use-card-desc">Créez des formules combinant plusieurs fonctions (SI, ET, OU, SOMME.SI.ENS...) pour des règles métier complexes.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Crée une formule qui calcule une prime : si la valeur en B2 est supérieure à 100 ET que C2 est "Validé", alors 15% de B2, sinon si B2 > 50 alors 5% de B2, sinon 0.</div>
+        <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">📐</div>
+          <div class="use-card-title">Expliquer une formule complexe existante</div>
+        </div>
+        <p class="use-card-desc">Faites traduire en langage clair une formule héritée ou complexe que vous ne comprenez pas entièrement.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Explique cette formule en français simple, étape par étape : =SOMME.SI.ENS(D:D;A:A;"Paris";B:B;">="&DATE(2024;1;1);C:C;"Actif")</div>
+        <span class="diff-tag diff-debutant">🟢 Débutant</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">⚡</div>
+          <div class="use-card-title">Optimiser des formules lentes</div>
+        </div>
+        <p class="use-card-desc">Remplacez les formules volatiles ou inefficaces (INDIRECT, formules matricielles classiques) par des équivalents plus performants.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Ce classeur rame avec des RECHERCHEV sur 50 000 lignes. Propose une alternative plus rapide et explique comment la mettre en place.</div>
+        <span class="diff-tag diff-avance">🟣 Avancé</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- DONNÉES -->
+  <div class="cat-section cat-donnees" data-cat="donnees">
+    <div class="cat-header">
+      <div class="cat-icon">📊</div>
+      <div class="cat-label">Données & Analyse</div>
+      <span class="cat-count">5 cas</span>
+    </div>
+    <div class="cards-grid">
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🧹</div>
+          <div class="use-card-title">Nettoyer et normaliser des données</div>
+        </div>
+        <p class="use-card-desc">Standardisez des formats incohérents (dates, noms, catégories), supprimez les espaces parasites et corrigez les valeurs aberrantes.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">La colonne A contient des noms de villes avec des casses incohérentes (PARIS, paris, Paris). Propose une formule pour tout normaliser en "Première lettre majuscule" et ajoute une colonne nettoyée.</div>
+        <span class="diff-tag diff-debutant">🟢 Débutant</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🔎</div>
+          <div class="use-card-title">Analyser un tableau et extraire des insights</div>
+        </div>
+        <p class="use-card-desc">Demandez à Claude de lire vos données et de produire un résumé structuré : tendances, valeurs remarquables, anomalies.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Analyse le tableau de la feuille "Ventes 2024" et dis-moi : les 3 meilleures performances, les 3 pires, la tendance générale et les anomalies notables.</div>
+        <span class="diff-tag diff-debutant">🟢 Débutant</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">⚠️</div>
+          <div class="use-card-title">Détecter des doublons et incohérences</div>
+        </div>
+        <p class="use-card-desc">Identifiez automatiquement les doublons, les valeurs manquantes et les incohérences logiques dans vos jeux de données.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Analyse la colonne ID (colonne A) et identifie tous les doublons. Pour chaque doublon, indique les numéros de lignes concernées. Propose ensuite une formule pour les signaler automatiquement.</div>
+        <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🔄</div>
+          <div class="use-card-title">Transformer et restructurer des données</div>
+        </div>
+        <p class="use-card-desc">Convertissez un tableau de format large en format long (ou l'inverse), dépivotez des données, concaténez ou séparez des colonnes.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Mon tableau a une ligne par client avec 12 colonnes de chiffre mensuel (Jan à Déc). Je veux le transformer en format avec 3 colonnes : Client, Mois, Valeur. Propose la méthode la plus simple pour Excel 365.</div>
+        <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">📈</div>
+          <div class="use-card-title">Calculs statistiques et interprétation</div>
+        </div>
+        <p class="use-card-desc">Calculez des indicateurs statistiques (moyenne, médiane, écart-type, percentiles) et obtenez une interprétation en langage naturel.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Calcule la moyenne, la médiane, l'écart-type et les percentiles 25/75 des valeurs de la colonne B (B2:B500). Puis dis-moi en 3 phrases ce que ces chiffres indiquent sur la distribution.</div>
+        <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- AUTOMATISATION -->
+  <div class="cat-section cat-auto" data-cat="auto">
+    <div class="cat-header">
+      <div class="cat-icon">⚙️</div>
+      <div class="cat-label">Automatisation</div>
+      <span class="cat-count">5 cas</span>
+    </div>
+    <div class="cards-grid">
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🤖</div>
+          <div class="use-card-title">Générer du code VBA sur mesure</div>
+        </div>
+        <p class="use-card-desc">Créez des macros VBA pour automatiser des tâches répétitives : copie de données, mises en forme automatiques, exports, envois.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Écris une macro VBA qui : parcourt toutes les lignes de la feuille "Données", copie les lignes dont la colonne C vaut "À traiter" dans une nouvelle feuille nommée "En cours", puis supprime ces lignes de la feuille d'origine.</div>
+        <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🎨</div>
+          <div class="use-card-title">Automatiser la mise en forme conditionnelle</div>
+        </div>
+        <p class="use-card-desc">Générez des règles de mise en forme conditionnelle complexes ou demandez à Claude de les appliquer directement via VBA.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Ajoute une mise en forme conditionnelle sur la plage B2:B100 : fond rouge si la valeur est inférieure à 0, fond orange si entre 0 et 50, fond vert si supérieure à 50.</div>
+        <span class="diff-tag diff-debutant">🟢 Débutant</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">📋</div>
+          <div class="use-card-title">Créer des listes déroulantes et validations</div>
+        </div>
+        <p class="use-card-desc">Configurez des validations de données (listes déroulantes, contraintes numériques, formats) pour sécuriser la saisie.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Ajoute une liste déroulante en colonne D pour les valeurs : "En cours", "Validé", "Refusé", "En attente". Ajoute aussi un message d'erreur si l'utilisateur tente de saisir autre chose.</div>
+        <span class="diff-tag diff-debutant">🟢 Débutant</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">📄</div>
+          <div class="use-card-title">Documenter un fichier Excel complexe</div>
+        </div>
+        <p class="use-card-desc">Générez automatiquement une documentation des feuilles, formules clés et logiques métier d'un classeur complexe.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Documente ce classeur : liste toutes les feuilles, leur rôle apparent, les formules les plus complexes que tu identifies et les dépendances entre feuilles. Formate la réponse comme un guide de référence.</div>
+        <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🔗</div>
+          <div class="use-card-title">Déboguer une macro VBA existante</div>
+        </div>
+        <p class="use-card-desc">Identifiez les erreurs dans un code VBA, comprenez ce qu'il fait et obtenez une version corrigée et commentée.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Cette macro VBA plante à la ligne 12 avec "Erreur 1004". Explique pourquoi et propose une version corrigée : [coller le code VBA ici]</div>
+        <span class="diff-tag diff-avance">🟣 Avancé</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RAPPORTS -->
+  <div class="cat-section cat-rapports" data-cat="rapports">
+    <div class="cat-header">
+      <div class="cat-icon">📑</div>
+      <div class="cat-label">Rapports & Visuels</div>
+      <span class="cat-count">5 cas</span>
+    </div>
+    <div class="cards-grid">
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">📊</div>
+          <div class="use-card-title">Créer un tableau de bord synthétique</div>
+        </div>
+        <p class="use-card-desc">Structurez un onglet de tableau de bord avec les KPIs clés, les formules associées et les recommandations de mise en forme.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Crée un onglet "Dashboard" dans ce classeur avec : le chiffre d'affaires total, la marge brute, le nombre de commandes et le panier moyen — calculés depuis la feuille "Données". Propose aussi la structure de mise en forme recommandée.</div>
+        <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">📉</div>
+          <div class="use-card-title">Recommander le bon type de graphique</div>
+        </div>
+        <p class="use-card-desc">Décrivez vos données et obtenez une recommandation argumentée sur le type de graphique le plus adapté à votre message.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">J'ai des données de ventes mensuelles sur 3 régions sur 2 ans. Je veux montrer à la fois l'évolution dans le temps ET la comparaison entre régions. Quel type de graphique recommandes-tu et pourquoi ?</div>
+        <span class="diff-tag diff-debutant">🟢 Débutant</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🗂️</div>
+          <div class="use-card-title">Générer un rapport de synthèse textuel</div>
+        </div>
+        <p class="use-card-desc">Transformez des données brutes en un résumé rédigé prêt à coller dans un email ou un document de reporting.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">À partir des données de la feuille "Résultats Q3", rédige un résumé de 5 lignes en français pour un reporting dirigeant : performance globale, point positif et point d'attention. Sois factuel et concis.</div>
+        <span class="diff-tag diff-debutant">🟢 Débutant</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🔢</div>
+          <div class="use-card-title">Structurer un tableau croisé dynamique</div>
+        </div>
+        <p class="use-card-desc">Obtenez des instructions pas à pas pour créer le TCD optimal selon votre question d'analyse.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">Je veux analyser les ventes par région et par catégorie de produit, avec le CA et le volume en valeurs. Comment configurer le tableau croisé dynamique sur mes données (colonnes : Date, Région, Catégorie, Produit, CA, Volume) ?</div>
+        <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🔮</div>
+          <div class="use-card-title">Créer des prévisions et projections</div>
+        </div>
+        <p class="use-card-desc">Construisez des modèles de projection simples (tendance linéaire, saisonnalité) avec les formules Excel appropriées.</p>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">J'ai 18 mois de données de ventes mensuelles en colonne B. Crée une projection pour les 6 prochains mois avec une tendance linéaire et indique l'intervalle de confiance. Utilise les fonctions Excel natives.</div>
+        <span class="diff-tag diff-avance">🟣 Avancé</span>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+function copyPrompt(el) {
+  const text = el.textContent.replace(/Copier|✓/g, '').trim();
+  navigator.clipboard.writeText(text).catch(() => {});
+  el.classList.add('copied');
+  setTimeout(() => el.classList.remove('copied'), 2000);
+}
+
+function filterAll(btn) {
+  document.querySelectorAll('.cat-section').forEach(s => s.style.display = '');
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function filterCat(cat, btn) {
+  document.querySelectorAll('.cat-section').forEach(s => {
+    s.style.display = s.dataset.cat === cat ? '' : 'none';
+  });
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
