@@ -864,6 +864,10 @@ const MODULES = [
         <div class="info-label">Comment Claude lit votre template</div>
         Il analyse : les noms de layouts (ex. "Two Content", "Title Only"), les polices du slide master, la palette de couleurs thème, et les styles de titres et de corps de texte.
       </div>
+      <div class="info-box">
+        <div class="info-label">Template standard du Groupe</div>
+        Ouvrez toujours PowerPoint avec le template standard du Groupe chargé <strong>avant</strong> de générer. Mentionnez dans vos prompts <em>"en utilisant le template actuellement chargé"</em> ou citez le nom exact du layout souhaité. Claude respectera automatiquement les polices, couleurs et layouts de votre charte graphique.
+      </div>
       <div class="warn-box">
         <div class="warn-label">⚠ Points de vigilance template</div>
         Les templates complexes (dégradés custom, icônes SVG, effets 3D) peuvent ne pas être parfaitement respectés. Toujours vérifier la conformité charte après génération.
@@ -887,7 +891,7 @@ const MODULES = [
       feedbackWrong: "Ce prompt laisse trop de liberté à Claude. Sans nommer le layout, la couleur ou le format des bullets, Claude va interpréter selon ses propres standards — pas forcément les vôtres."
     },
     corrected: [
-      { title: "Charger le template en premier", desc: "Ouvrir PowerPoint avec votre template corporate déjà appliqué. Ne pas demander à Claude d'appliquer le template après génération.", prompt: null, result: null },
+      { title: "Charger le template standard du Groupe", desc: "Ouvrir PowerPoint avec le template standard du Groupe déjà appliqué. Ne jamais partir d'un fichier vierge — Claude ne peut pas appliquer le template après génération.", prompt: null, result: null },
       { title: "Identifier les noms de layouts", desc: "Dans PowerPoint : clic droit sur une slide > Layout. Notez les noms exacts (ex. 'Two Content', 'Title Only') pour les citer dans vos prompts.", prompt: null, result: null },
       { title: "Générer avec le layout nommé", desc: "Mentionner explicitement le nom du layout dans le prompt.", prompt: "Crée 3 slides de recommandations avec le layout 'Deux contenus', couleur d'accent pour les titres, bullets d'une seule ligne.", result: "Claude génère 3 slides conformes avec le bon layout et les contraintes de formatage." },
       { title: "Vérifier la conformité", desc: "Comparer les slides générées avec votre template sur 3 critères : police, couleur dominante, style des titres. Corriger via un prompt de raffinement si nécessaire.", prompt: null, result: null }
@@ -1014,7 +1018,8 @@ const MODULES = [
       { title: "Ouvrir le champ Instructions", desc: "Dans le panneau Claude for PowerPoint, cliquer sur l'icône engrenage ou sur 'Instructions' en bas du panneau.", prompt: null, result: null },
       { title: "Saisir les instructions mesurables", desc: "Écrire des contraintes précises et quantifiées.", prompt: null, result: "Utiliser uniquement des bullets d'une ligne. Titres : max 6 mots, orientés action. Couleur accent #C8102E pour les données clés. Audience : décideurs seniors, pas de jargon. Ajouter 'Et alors ?' sur les slides de recommandations." },
       { title: "Tester l'effet", desc: "Générer un deck test et vérifier que chaque instruction a bien été respectée. Reformuler les instructions ignorées.", prompt: "Crée une analyse concurrentielle de 5 slides couvrant 4 concurrents", result: "Claude génère les slides en respectant toutes les instructions sans qu'elles soient mentionnées dans le prompt." },
-      { title: "Explorer les Skills avec /", desc: "Taper / dans le panneau pour voir les Skills disponibles. Invoquer /deck-check pour vérifier la conformité charte.", prompt: null, result: null }
+      { title: "Explorer les Skills avec /", desc: "Taper / dans le panneau pour voir les Skills disponibles. Invoquer /deck-check pour vérifier la conformité charte.", prompt: null, result: null },
+      { title: "Personnaliser le design, le ton et le vocabulaire", desc: "Dans le champ Instructions (icône engrenage), définir les préférences de design, le ton attendu et le vocabulaire officiel du Groupe. Ces réglages s'appliquent automatiquement à toutes les générations sans avoir à les répéter dans chaque prompt.", prompt: null, result: "Ton : professionnel et direct, sans jargon technique. Bullets d'une seule ligne. Titres : max 6 mots, orientés action. Vocabulaire Groupe : 'collaborateurs' (pas 'employés'), 'axes stratégiques', 'plan d'action'. Couleur accent : #0070C0 pour les données clés." }
     ]
   },
 
