@@ -436,47 +436,82 @@ const MODULES = [
 
   // ── M4 ─────────────────────────────────────────────────────────────────────
   {
-    id: 4, level: "Intermédiaire", levelColor: "intermediaire", duration: "35 min",
-    title: "Créer sa première Skill",
+    id: 4, level: "Intermédiaire", levelColor: "intermediaire", duration: "45 min",
+    title: "Créer, importer et tester une Skill",
     theory: `
-      <p>Créer une Skill personnalisée se fait depuis les <strong>paramètres Claude</strong> (claude.ai ou application desktop), dans la section dédiée aux Skills. Une Skill est définie par un nom, une description courte et un prompt d'instructions.</p>
+      <p>Ce module couvre les trois opérations fondamentales : <strong>créer une Skill de zéro</strong>, <strong>en importer une partagée par un collègue</strong>, puis <strong>la tester dans le plugin</strong> pour vérifier qu'elle produit le résultat attendu.</p>
+
       <div class="info-box">
-        <div class="info-label">Structure d'une Skill</div>
-        <strong>Nom</strong> (ex: audit-hebdo) : le mot-clé que vous taperez après /<br>
-        <strong>Description</strong> : quelques mots pour la retrouver dans la liste<br>
-        <strong>Instructions</strong> : le prompt complet que Claude exécutera
+        <div class="info-label">Où se trouvent les paramètres Skills ?</div>
+        <strong>Sur claude.ai :</strong> icône de votre profil (en bas à gauche) → Paramètres → Skills<br>
+        <strong>Application desktop :</strong> menu Claude → Préférences → Skills<br>
+        <strong>Dans le plugin Office :</strong> les Skills sont en lecture seule — la création et l'édition se font uniquement depuis claude.ai ou le desktop.
       </div>
-      <p>Le prompt d'une Skill doit être <strong>autonome</strong> : Claude doit pouvoir l'exécuter sans contexte supplémentaire. Il analysera le fichier ouvert dans le plugin et appliquera les instructions telles qu'elles sont écrites.</p>
-      <div class="green-box">
-        <div class="green-label">Bonne pratique</div>
-        Commencer par transformer un prompt que vous tapez déjà régulièrement en Skill. Si vous avez un prompt que vous copiez-collez plus de deux fois par semaine, c'est un bon candidat à la Skillification.
+
+      <p>Une Skill est définie par trois champs :</p>
+      <div class="compare-grid">
+        <div class="compare-col good">
+          <div class="col-label">Nom</div>
+          <ul>
+            <li>Mot-clé court, en minuscules</li>
+            <li>Tirets autorisés (pas d'espaces)</li>
+            <li>Ex : rapport-ventes, audit-hebdo</li>
+            <li>C'est ce que vous taperez après /</li>
+          </ul>
+        </div>
+        <div class="compare-col good">
+          <div class="col-label">Description</div>
+          <ul>
+            <li>1 à 2 lignes maximum</li>
+            <li>Visible dans la liste après /</li>
+            <li>Indiquer le contexte (Excel, PPT)</li>
+            <li>Ex : "Rapport ventes hebdo – Excel"</li>
+          </ul>
+        </div>
       </div>
+      <p>Le troisième champ, <strong>Instructions</strong>, est le prompt complet que Claude exécutera. Il doit être autonome : Claude s'appuie sur le fichier ouvert dans le plugin et applique les instructions telles qu'elles sont rédigées, sans rien demander en plus.</p>
+
       <div class="warn-box">
-        <div class="warn-label">⚠ Spécificité du contexte</div>
-        Les Skills configurées apparaissent dans Excel ET dans PowerPoint. Si votre Skill est spécifique à l'un ou l'autre, précisez-le dans le nom ou la description pour éviter la confusion.
+        <div class="warn-label">⚠ Les Skills apparaissent dans Excel ET PowerPoint</div>
+        Une Skill créée dans les paramètres est disponible dans les deux plugins. Si elle est spécifique à l'un, précisez-le dans la description (ex : "Excel uniquement") pour éviter de la lancer au mauvais endroit.
       </div>
     `,
     prompts: [
-      "Comment structurer le prompt de cette tâche répétitive pour en faire une Skill ?",
-      "Aide-moi à transformer ce prompt en instructions claires pour une Skill réutilisable",
-      "Quelles informations dois-je inclure dans le prompt de ma Skill /rapport-hebdo ?"
+      "Aide-moi à rédiger le prompt de ma Skill /rapport-ventes pour qu'il soit autonome et précis",
+      "Quels champs sont obligatoires quand je crée une nouvelle Skill dans les paramètres ?",
+      "Comment vérifier qu'une Skill importée fonctionnera sur mes fichiers avant de la diffuser ?"
     ],
     exercise: {
-      scenario: "Chaque vendredi, vous exportez les données de vente de votre CRM dans Excel et calculez : CA total, CA par commercial, top 5 clients, variation vs semaine précédente (toujours en colonne H). Vous voulez créer une Skill /rapport-ventes.",
-      question: "Quel prompt d'instructions convient le mieux à cette Skill ?",
+      scenario: "Un collègue vous partage le prompt de sa Skill /revue-offre par email. Vous copiez le texte, créez la Skill dans vos paramètres, et vous lancez /revue-offre dans PowerPoint. Le résultat est en anglais alors que vos decks sont en français.",
+      question: "Quelle est la bonne marche à suivre ?",
       choices: [
-        { text: "Analyse les données de vente et fais un résumé.", correct: false },
-        { text: "Analyse ce classeur Excel de données de vente. Calcule : 1) CA total (somme colonne CA), 2) CA par commercial (groupe par colonne Nom), 3) top 5 clients par CA, 4) variation vs semaine précédente (colonne H). Présente les résultats sous forme de tableau structuré avec les variations en rouge si négatives.", correct: true },
-        { text: "Fais un rapport de ventes complet avec toutes les métriques importantes.", correct: false },
-        { text: "Résume les données du fichier ouvert.", correct: false }
+        { text: "Supprimer la Skill et demander à votre collègue de refaire une version française", correct: false },
+        { text: "Retourner dans les paramètres, ouvrir la Skill, ajouter 'Réponds toujours en français.' au début des Instructions, sauvegarder et relancer", correct: true },
+        { text: "Ajouter 'en français' après /revue-offre dans le panneau à chaque utilisation", correct: false },
+        { text: "Créer une nouvelle Skill /revue-offre-fr en copiant les instructions et en les traduisant entièrement", correct: false }
       ],
-      feedbackCorrect: "✓ Excellent ! Ce prompt est autonome et précis : il nomme les colonnes exactes, liste les 4 indicateurs attendus dans l'ordre, et précise le format de sortie (tableau, couleur rouge). Claude produira le même rapport structuré chaque vendredi, quel que soit l'opérateur.",
-      feedbackWrong: "Trop vague. Un prompt de Skill doit être autonome et décrire précisément ce que Claude doit calculer, quelles colonnes utiliser et quel format de sortie produire. Sans précision sur les colonnes et indicateurs, le résultat variera d'une semaine à l'autre."
+      feedbackCorrect: "✓ Exactement ! L'ajout d'une seule ligne au début des Instructions règle le problème définitivement, sans recréer de zéro. La Skill importée est votre base — vous l'adaptez à votre contexte. Inutile de dupliquer ou de retraduire tout le prompt.",
+      feedbackWrong: "Il y a plus simple. Retourner dans les paramètres et ajouter 'Réponds toujours en français.' en tête du prompt existant suffit. Pas besoin de supprimer, recréer ou dupliquer — juste adapter le prompt importé à votre contexte."
     },
     corrected: [
-      { title: "Accéder à la création de Skill", desc: "Dans claude.ai ou l'application desktop, aller dans Paramètres > Skills > Nouvelle Skill.", prompt: null, result: null },
-      { title: "Rédiger le prompt autonome", desc: "Le prompt doit fonctionner sans contexte supplémentaire, en s'appuyant sur le fichier ouvert.", prompt: "Analyse ce classeur Excel de données de vente hebdomadaires.\nCalcule et affiche :\n1. CA total (somme colonne CA)\n2. CA par commercial (groupe par colonne Nom, trié décroissant)\n3. Top 5 clients par CA\n4. Variation vs semaine précédente (colonne H, en % et valeur absolue)\n\nFormat de sortie : tableau structuré. Variations négatives en rouge, positives en vert.", result: "Skill /rapport-ventes disponible dans Excel chaque vendredi — même résultat, zéro retape." },
-      { title: "Tester et affiner", desc: "Lancer la Skill sur un fichier test et vérifier que le résultat est conforme. Ajuster le prompt si nécessaire.", prompt: "/rapport-ventes", result: "Si le résultat est correct, la Skill est prête. Sinon, éditer le prompt dans les paramètres et relancer." }
+      {
+        title: "OPÉRATION 1 — Créer une Skill de zéro",
+        desc: "Démarche complète depuis les paramètres Claude.",
+        prompt: "1. Ouvrir claude.ai dans votre navigateur\n2. Cliquer sur l'icône de votre profil (bas gauche) → Paramètres\n3. Sélectionner l'onglet « Skills » dans le menu latéral\n4. Cliquer sur « Nouvelle Skill » (bouton en haut à droite)\n5. Renseigner le champ Nom : rapport-ventes\n   (minuscules, tirets, pas d'espaces)\n6. Renseigner la Description : Rapport ventes hebdo – Excel\n   (visible dans la liste après /)\n7. Rédiger les Instructions dans le grand champ texte :\n   ────────────────────────────\n   Analyse ce classeur Excel de données de vente.\n   Calcule et affiche :\n   1. CA total (somme de la colonne dont l'en-tête contient \"CA\" ou \"Chiffre\")\n   2. CA par commercial (groupe par colonne Nom, trié décroissant)\n   3. Top 5 clients par CA\n   4. Variation vs semaine précédente si une colonne \"Semaine préc.\" existe\n   Format : tableau structuré. Variations négatives signalées avec ⚠.\n   ────────────────────────────\n8. Cliquer sur Enregistrer\n9. La Skill apparaît dans la liste — disponible immédiatement dans Excel et PowerPoint",
+        result: "La Skill /rapport-ventes est créée. Elle sera visible dès que vous taperez / dans le panneau Claude d'un plugin Office."
+      },
+      {
+        title: "OPÉRATION 2 — Importer une Skill partagée par un collègue",
+        desc: "Votre collègue vous envoie par email ou Confluence le nom, la description et le prompt de sa Skill. Démarche pour l'importer.",
+        prompt: "1. Copier le texte du prompt envoyé par votre collègue\n   (sélectionner tout le texte des Instructions, Ctrl+C)\n2. Ouvrir claude.ai → Paramètres → Skills → Nouvelle Skill\n3. Renseigner le Nom indiqué par votre collègue : revue-offre\n   (utiliser exactement le même nom pour cohérence d'équipe)\n4. Renseigner la Description : Audit propositions commerciales – PowerPoint\n5. Cliquer dans le champ Instructions et coller (Ctrl+V)\n6. Lire rapidement le prompt collé — vérifier :\n   • Pas de références à des chemins de fichiers locaux\n   • Pas de noms de colonnes trop spécifiques au fichier du collègue\n   • La langue correspond à votre usage\n7. Adapter si nécessaire (ex : ajouter \"Réponds en français.\" en première ligne)\n8. Cliquer sur Enregistrer",
+        result: "La Skill /revue-offre est disponible dans vos deux plugins. Vous utilisez le même workflow que votre collègue, adapté à votre contexte."
+      },
+      {
+        title: "OPÉRATION 3 — Tester la Skill dans le plugin et lire le résultat",
+        desc: "Vérifier que la Skill fonctionne comme prévu avant de l'utiliser en production.",
+        prompt: "1. Ouvrir Excel (ou PowerPoint) avec un fichier de test représentatif\n   → Idéalement un vrai fichier, pas un fichier vide\n2. Ouvrir le panneau Claude (ruban Accueil ou Outils > Compléments)\n3. Taper / dans la zone de saisie\n   → La liste des Skills disponibles s'affiche\n   → Vérifier que votre nouvelle Skill apparaît dans la liste\n   → Si elle n'apparaît pas : attendre 30 secondes et réessayer (synchronisation)\n4. Cliquer sur la Skill ou continuer à taper son nom pour filtrer\n5. Appuyer sur Entrée pour lancer\n6. Lire le résultat produit par Claude\n\nCe qu'il faut évaluer dans le résultat :\n• Les indicateurs demandés sont-ils tous présents ?\n• Le format de sortie correspond-il à ce qui était décrit ?\n• Les valeurs calculées semblent-elles correctes ?\n• La langue est-elle correcte ?\n• Y a-t-il des erreurs ou des mentions \"colonne introuvable\" ?",
+        result: "Si le résultat est conforme → Skill prête à l'usage.\nSi quelque chose manque ou est incorrect → retourner dans Paramètres → Skills → cliquer sur la Skill → modifier les Instructions → Enregistrer → relancer dans le plugin."
+      }
     ]
   },
 
