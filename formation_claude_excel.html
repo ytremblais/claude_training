@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; script-src 'unsafe-inline'; img-src 'self' data:; connect-src 'none';">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Formation Claude for Excel</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
@@ -762,6 +763,7 @@ const MODULES = [
   // M0 - Installation
   {
     id: 0, level: "Débutant", levelColor: "debutant", duration: "20 min",
+    timing: { theory: "7 min", prompts: "5 min", exercise: "6 min", corrected: "2 min" },
     title: "Installation et connexion",
     theory: `
       <p>Claude for Excel est un add-in officiel d'Anthropic disponible sur le Microsoft Marketplace. Il s'intègre directement dans le ruban <strong>Accueil</strong> d'Excel sous forme de panneau latéral interactif.</p>
@@ -803,6 +805,7 @@ const MODULES = [
   // M1 - Questions
   {
     id: 1, level: "Débutant", levelColor: "debutant", duration: "30 min",
+    timing: { theory: "10 min", prompts: "8 min", exercise: "9 min", corrected: "3 min" },
     title: "Poser des questions sur son classeur",
     theory: `
       <p>Claude peut répondre à n'importe quelle question sur votre classeur en <strong>langage naturel</strong>. Il navigue entre les onglets, lit les formules, et cite directement les cellules concernées dans ses réponses.</p>
@@ -840,6 +843,7 @@ const MODULES = [
   // M2 - Erreurs
   {
     id: 2, level: "Débutant", levelColor: "debutant", duration: "30 min",
+    timing: { theory: "10 min", prompts: "8 min", exercise: "9 min", corrected: "3 min" },
     title: "Corriger des erreurs",
     theory: `
       <p>Claude peut identifier et corriger les erreurs Excel courantes : <strong>#REF!</strong>, <strong>#VALUE!</strong>, <strong>#DIV/0!</strong>, et les références circulaires. Il propose des corrections concrètes qui maintiennent l'intégrité des formules et des dépendances.</p>
@@ -881,6 +885,7 @@ const MODULES = [
   // M3 - Nettoyage
   {
     id: 3, level: "Débutant", levelColor: "debutant", duration: "30 min",
+    timing: { theory: "10 min", prompts: "8 min", exercise: "9 min", corrected: "3 min" },
     title: "Nettoyer et standardiser les données",
     theory: `
       <p>Claude peut nettoyer, harmoniser et transformer des données brutes directement dans Excel. Il comprend les demandes en langage naturel et applique des transformations précises tout en expliquant chaque étape.</p>
@@ -920,6 +925,7 @@ const MODULES = [
   // M4 - Formules
   {
     id: 4, level: "Intermédiaire", levelColor: "intermediaire", duration: "40 min",
+    timing: { theory: "14 min", prompts: "10 min", exercise: "12 min", corrected: "4 min" },
     title: "Créer et expliquer des formules complexes",
     theory: `
       <p>Claude génère des formules Excel à partir de descriptions en langage naturel. Il explique chaque formule créée et peut documenter un modèle entier. Il peut également tracer une cellule jusqu'à ses inputs sources pour comprendre le flux de calcul.</p>
@@ -958,6 +964,7 @@ const MODULES = [
   // M5 - Analyse
   {
     id: 5, level: "Intermédiaire", levelColor: "intermediaire", duration: "40 min",
+    timing: { theory: "14 min", prompts: "10 min", exercise: "12 min", corrected: "4 min" },
     title: "Analyser des données et produire des insights",
     theory: `
       <p>Claude peut effectuer des analyses comparatives, identifier des tendances, détecter des anomalies et produire des synthèses directement dans Excel. Il peut croiser des données entre plusieurs onglets sans copier-coller.</p>
@@ -996,6 +1003,7 @@ const MODULES = [
   // M6 - Dashboard
   {
     id: 6, level: "Intermédiaire", levelColor: "intermediaire", duration: "40 min",
+    timing: { theory: "14 min", prompts: "10 min", exercise: "12 min", corrected: "4 min" },
     title: "Créer des tableaux de bord et graphiques",
     theory: `
       <p>Claude peut créer des dashboards, des graphiques, du formatage conditionnel et des tableaux croisés dynamiques directement dans Excel. Il comprend les demandes visuelles en langage naturel et choisit le type de représentation le plus adapté.</p>
@@ -1034,6 +1042,7 @@ const MODULES = [
   // M7 - Instructions
   {
     id: 7, level: "Intermédiaire", levelColor: "intermediaire", duration: "20 min",
+    timing: { theory: "7 min", prompts: "5 min", exercise: "6 min", corrected: "2 min" },
     title: "Paramétrer les instructions persistantes",
     theory: `
       <p>Le champ <strong>Instructions</strong> dans le panneau latéral Claude permet de définir des préférences permanentes qui s'appliquent à toutes vos conversations dans Excel — sans avoir à les répéter à chaque session.</p>
@@ -1072,6 +1081,7 @@ const MODULES = [
   // M8 - Contexte
   {
     id: 8, level: "Intermédiaire", levelColor: "intermediaire", duration: "20 min",
+    timing: { theory: "7 min", prompts: "5 min", exercise: "6 min", corrected: "2 min" },
     title: "Gérer le contexte et les sessions",
     theory: `
       <p>Claude for Excel a des comportements spécifiques en matière de gestion du contexte et de la mémoire de session qu'il est important de connaître pour éviter les mauvaises surprises.</p>
@@ -1112,6 +1122,7 @@ const MODULES = [
   // M9 - Modèles financiers
   {
     id: 9, level: "Avancé", levelColor: "avance", duration: "50 min",
+    timing: { theory: "18 min", prompts: "12 min", exercise: "15 min", corrected: "5 min" },
     title: "Construire des modèles financiers complets",
     theory: `
       <p>Claude comprend les conventions de modélisation financière standards (IB, PE, VC) et peut construire des modèles complexes de zéro ou remplir des templates existants avec des données importées.</p>
@@ -1155,6 +1166,7 @@ const MODULES = [
   // M10 - Audit
   {
     id: 10, level: "Avancé", levelColor: "avance", duration: "40 min",
+    timing: { theory: "14 min", prompts: "10 min", exercise: "12 min", corrected: "4 min" },
     title: "Auditer et valider un modèle existant",
     theory: `
       <p>Claude peut agir comme un auditeur de modèle financier : vérifier la cohérence des formules, détecter les hardcodes, valider l'équilibre du bilan et proposer des pistes d'amélioration structurelle.</p>
@@ -1194,6 +1206,7 @@ const MODULES = [
   // M11 - Skills
   {
     id: 11, level: "Avancé", levelColor: "avance", duration: "30 min",
+    timing: { theory: "10 min", prompts: "8 min", exercise: "9 min", corrected: "3 min" },
     title: "Utiliser les Skills",
     theory: `
       <p>Les Skills sont des workflows réutilisables configurables dans Claude que vous pouvez appeler en un clic depuis l'add-in Excel. Elles permettent d'automatiser des séquences d'actions récurrentes sans avoir à re-rédiger les prompts à chaque fois.</p>
@@ -1234,6 +1247,7 @@ const MODULES = [
   // M12 - Connecteurs
   {
     id: 12, level: "Avancé", levelColor: "avance", duration: "30 min",
+    timing: { theory: "10 min", prompts: "8 min", exercise: "9 min", corrected: "3 min" },
     title: "Connecter des sources externes",
     theory: `
       <p>Claude for Excel supporte des connecteurs qui permettent d'importer du contexte depuis d'autres outils directement dans votre conversation Excel — sans sortir de l'application.</p>
@@ -1274,6 +1288,7 @@ const MODULES = [
   // M13 - Sécurité
   {
     id: 13, level: "Avancé", levelColor: "avance", duration: "30 min",
+    timing: { theory: "10 min", prompts: "8 min", exercise: "9 min", corrected: "3 min" },
     title: "Sécurité et bonnes pratiques",
     theory: `
       <p>Claude for Excel comporte des risques de sécurité spécifiques qu'il est indispensable de connaître pour protéger vos données et celles de votre organisation.</p>
@@ -1363,6 +1378,7 @@ function renderModule(m) {
       <div class="lesson-section-header" onclick="toggleSection('sec-theory')">
         <div class="section-icon icon-theory">📖</div>
         <div class="section-title">Théorie & concepts clés</div>
+        <span class="meta-pill" style="font-size:10px;padding:2px 8px;margin-left:auto;margin-right:8px;">⏱ ${m.timing.theory}</span>
         <div class="section-toggle">▼</div>
       </div>
       <div class="section-body">
@@ -1375,6 +1391,7 @@ function renderModule(m) {
       <div class="lesson-section-header" onclick="toggleSection('sec-prompts')">
         <div class="section-icon icon-prompt">💬</div>
         <div class="section-title">Prompts à pratiquer</div>
+        <span class="meta-pill" style="font-size:10px;padding:2px 8px;margin-left:auto;margin-right:8px;">⏱ ${m.timing.prompts}</span>
         <div class="section-toggle">▼</div>
       </div>
       <div class="section-body">
@@ -1396,6 +1413,7 @@ function renderModule(m) {
       <div class="lesson-section-header" onclick="toggleSection('sec-exercise')">
         <div class="section-icon icon-exercise">🎯</div>
         <div class="section-title">Exercice interactif</div>
+        <span class="meta-pill" style="font-size:10px;padding:2px 8px;margin-left:auto;margin-right:8px;">⏱ ${m.timing.exercise}</span>
         <div class="section-toggle">▼</div>
       </div>
       <div class="section-body">
@@ -1428,6 +1446,7 @@ function renderModule(m) {
       <div class="lesson-section-header" onclick="toggleSection('sec-corrected')">
         <div class="section-icon icon-corrected">✅</div>
         <div class="section-title">Corrigé détaillé</div>
+        <span class="meta-pill" style="font-size:10px;padding:2px 8px;margin-left:auto;margin-right:8px;">⏱ ${m.timing.corrected}</span>
         <div class="section-toggle">▼</div>
       </div>
       <div class="section-body">
@@ -1470,7 +1489,9 @@ function toggleSection(id) {
 }
 
 function copyPrompt(el, text) {
-  navigator.clipboard.writeText(text).catch(() => {});
+  navigator.clipboard.writeText(text).catch(() => {
+    el.querySelector('.copy-hint').textContent = '⚠ Copie manuelle';
+  });
   el.classList.add('copied');
   el.querySelector('.copy-hint').textContent = '✓ Copié';
   setTimeout(() => {

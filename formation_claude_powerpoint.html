@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; script-src 'unsafe-inline'; img-src 'self' data:; connect-src 'none';">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Formation Claude for PowerPoint</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
@@ -736,6 +737,7 @@ const MODULES = [
   // M0 - Installation
   {
     id: 0, level: "Débutant", levelColor: "debutant", duration: "30 min",
+    timing: { theory: "10 min", prompts: "8 min", exercise: "9 min", corrected: "3 min" },
     title: "Installation et connexion",
     theory: `
       <p>Claude for PowerPoint est un add-in officiel d'Anthropic disponible sur le <strong>Microsoft Marketplace</strong>. Il s'intègre directement dans le ruban <strong>Accueil</strong> de PowerPoint sous forme de panneau latéral interactif.</p>
@@ -777,6 +779,7 @@ const MODULES = [
   // M1 - Générer un deck
   {
     id: 1, level: "Débutant", levelColor: "debutant", duration: "30 min",
+    timing: { theory: "10 min", prompts: "8 min", exercise: "9 min", corrected: "3 min" },
     title: "Générer un deck complet",
     theory: `
       <p>Claude peut générer une présentation complète à partir d'une <strong>description en langage naturel</strong>. Il construit automatiquement une structure logique, des titres de slides et du contenu adapté à votre objectif.</p>
@@ -818,6 +821,7 @@ const MODULES = [
   // M2 - Modifier une slide
   {
     id: 2, level: "Débutant", levelColor: "debutant", duration: "30 min",
+    timing: { theory: "10 min", prompts: "8 min", exercise: "9 min", corrected: "3 min" },
     title: "Modifier une slide existante",
     theory: `
       <p>Claude peut effectuer des <strong>modifications ciblées</strong> sur une ou plusieurs slides sans régénérer tout le deck. Il suffit de sélectionner la slide et de formuler une instruction précise.</p>
@@ -856,6 +860,7 @@ const MODULES = [
   // M3 - Templates
   {
     id: 3, level: "Intermédiaire", levelColor: "intermediaire", duration: "50 min",
+    timing: { theory: "18 min", prompts: "12 min", exercise: "15 min", corrected: "5 min" },
     title: "Travailler avec les templates corporate",
     theory: `
       <p>Claude lit automatiquement le <strong>slide master</strong> de votre présentation : polices, couleurs, layouts disponibles, schéma de couleurs. Il utilise ces éléments lors de toute génération ou modification.</p>
@@ -901,6 +906,7 @@ const MODULES = [
   // M4 - Graphiques natifs
   {
     id: 4, level: "Intermédiaire", levelColor: "intermediaire", duration: "50 min",
+    timing: { theory: "18 min", prompts: "12 min", exercise: "15 min", corrected: "5 min" },
     title: "Créer des graphiques et diagrammes natifs",
     theory: `
       <p>Claude peut convertir du contenu textuel en <strong>visuels PowerPoint natifs</strong> : diagrammes SmartArt, graphiques de données (barres, courbes, camemberts), et flows de processus. Ces objets sont entièrement <strong>éditables</strong> — ce ne sont pas des images.</p>
@@ -942,6 +948,7 @@ const MODULES = [
   // M5 - Restructurer
   {
     id: 5, level: "Intermédiaire", levelColor: "intermediaire", duration: "50 min",
+    timing: { theory: "18 min", prompts: "12 min", exercise: "15 min", corrected: "5 min" },
     title: "Restructurer un deck complet",
     theory: `
       <p>Claude peut agir sur <strong>plusieurs slides à la fois</strong> : réorganiser l'ordre, fusionner deux slides, ajouter des slides de liaison, ou réécrire la logique narrative d'une section entière.</p>
@@ -983,6 +990,7 @@ const MODULES = [
   // M6 - Instructions persistantes
   {
     id: 6, level: "Avancé", levelColor: "avance", duration: "60 min",
+    timing: { theory: "21 min", prompts: "15 min", exercise: "18 min", corrected: "6 min" },
     title: "Instructions persistantes et personnalisation",
     theory: `
       <p>Le champ <strong>Instructions</strong> dans le panneau Claude permet de définir des préférences qui s'appliquent à <strong>toutes les conversations PowerPoint</strong>, sans avoir à les répéter dans chaque prompt.</p>
@@ -1026,6 +1034,7 @@ const MODULES = [
   // M7 - Connecteurs
   {
     id: 7, level: "Avancé", levelColor: "avance", duration: "60 min",
+    timing: { theory: "21 min", prompts: "15 min", exercise: "18 min", corrected: "6 min" },
     title: "Connecteurs et données externes",
     theory: `
       <p>Les <strong>connecteurs</strong> permettent à Claude d'accéder à des données depuis vos outils externes (Google Drive, Gmail, etc.) pour enrichir le contenu de vos slides sans copier-coller manuel.</p>
@@ -1068,6 +1077,7 @@ const MODULES = [
   // M8 - Sécurité
   {
     id: 8, level: "Avancé", levelColor: "avance", duration: "60 min",
+    timing: { theory: "21 min", prompts: "15 min", exercise: "18 min", corrected: "6 min" },
     title: "Sécurité et bonnes pratiques professionnelles",
     theory: `
       <p>Claude for PowerPoint présente des <strong>risques spécifiques</strong> liés à son accès en lecture/écriture sur vos présentations. La documentation officielle Anthropic identifie plusieurs scénarios à risque.</p>
@@ -1159,6 +1169,7 @@ function renderModule(m) {
       <div class="lesson-section-header" onclick="toggleSection('sec-theory')">
         <div class="section-icon icon-theory">📖</div>
         <div class="section-title">Théorie &amp; concepts clés</div>
+        <span class="meta-pill" style="font-size:10px;padding:2px 8px;margin-left:auto;margin-right:8px;">⏱ ${m.timing.theory}</span>
         <div class="section-toggle">▼</div>
       </div>
       <div class="section-body">
@@ -1170,6 +1181,7 @@ function renderModule(m) {
       <div class="lesson-section-header" onclick="toggleSection('sec-prompts')">
         <div class="section-icon icon-prompt">💬</div>
         <div class="section-title">Prompts à pratiquer</div>
+        <span class="meta-pill" style="font-size:10px;padding:2px 8px;margin-left:auto;margin-right:8px;">⏱ ${m.timing.prompts}</span>
         <div class="section-toggle">▼</div>
       </div>
       <div class="section-body">
@@ -1190,6 +1202,7 @@ function renderModule(m) {
       <div class="lesson-section-header" onclick="toggleSection('sec-exercise')">
         <div class="section-icon icon-exercise">🎯</div>
         <div class="section-title">Exercice interactif</div>
+        <span class="meta-pill" style="font-size:10px;padding:2px 8px;margin-left:auto;margin-right:8px;">⏱ ${m.timing.exercise}</span>
         <div class="section-toggle">▼</div>
       </div>
       <div class="section-body">
@@ -1221,6 +1234,7 @@ function renderModule(m) {
       <div class="lesson-section-header" onclick="toggleSection('sec-corrected')">
         <div class="section-icon icon-corrected">✅</div>
         <div class="section-title">Corrigé détaillé</div>
+        <span class="meta-pill" style="font-size:10px;padding:2px 8px;margin-left:auto;margin-right:8px;">⏱ ${m.timing.corrected}</span>
         <div class="section-toggle">▼</div>
       </div>
       <div class="section-body">
@@ -1262,7 +1276,9 @@ function toggleSection(id) {
 }
 
 function copyPrompt(el, text) {
-  navigator.clipboard.writeText(text).catch(() => {});
+  navigator.clipboard.writeText(text).catch(() => {
+    el.querySelector('.copy-hint').textContent = '⚠ Copie manuelle';
+  });
   el.classList.add('copied');
   el.querySelector('.copy-hint').textContent = '✓ Copié';
   setTimeout(() => {
