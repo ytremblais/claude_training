@@ -69,6 +69,21 @@ body::before {
   font-weight: 700;
   color: var(--text);
 }
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-decoration: none;
+  border: 1px solid var(--border2);
+  padding: 0.25rem 0.65rem;
+  border-radius: 6px;
+  transition: color 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+.lang-toggle:hover { color: var(--accent2); border-color: var(--accent2); }
 
 /* Tab navigation */
 .tab-nav {
@@ -436,6 +451,7 @@ body::before {
     <button class="tab-btn" onclick="switchTab('excel')">📊 Excel</button>
     <button class="tab-btn" onclick="switchTab('claude')">🎓 Formations Claude</button>
   </div>
+  <a href="ressources_aide-en.html" class="lang-toggle">🇬🇧 EN</a>
 </div>
 
 <div class="content">

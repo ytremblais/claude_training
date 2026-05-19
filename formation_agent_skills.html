@@ -166,14 +166,84 @@ body::before {
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(10,10,15,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 1.5rem;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.topbar-back {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--muted);
+  text-decoration: none;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  transition: color 0.15s;
+}
+.topbar-back:hover { color: var(--accent2); }
+.topbar-sep { color: var(--border2); font-size: 1.1rem; }
+.topbar-title { font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--text); }
+.sidebar-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.sidebar-breadcrumb a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.sidebar-breadcrumb a:hover { color: var(--accent2); }
+.sidebar-breadcrumb .sep { opacity: 0.4; }
+.sidebar-breadcrumb .crumb-current { color: var(--accent2); }
+.lang-toggle {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-decoration: none;
+  border: 1px solid var(--border2);
+  padding: 0.25rem 0.65rem;
+  border-radius: 6px;
+  transition: color 0.15s, border-color 0.15s;
+}
+.lang-toggle:hover { color: var(--accent2); border-color: var(--accent2); }
 </style>
 </head>
 <body>
+
+<div class="topbar">
+  <a href="formations.html" class="topbar-back">← Formations</a>
+  <span class="topbar-sep">/</span>
+  <span class="topbar-title">Skills Office</span>
+  <a href="formation_agent_skills-en.html" class="lang-toggle">🇬🇧 EN</a>
+</div>
+
 <div class="shell">
 
 <nav class="sidebar">
   <div class="sidebar-logo">
-    <a href="index.html" style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--muted);text-decoration:none;margin-bottom:10px;font-family:'DM Mono',monospace;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">← Accueil</a>
+    <div class="sidebar-breadcrumb">
+      <a href="index.html">Accueil</a>
+      <span class="sep">/</span>
+      <a href="formations.html">Formations</a>
+      <span class="sep">/</span>
+      <span class="crumb-current">Skills</span>
+    </div>
     <div class="app-name">Skills Office</div>
     <div class="app-sub">// autoformation interactive</div>
   </div>

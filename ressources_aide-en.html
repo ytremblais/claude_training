@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resources & Help – Claude Plugin Office</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --surface2: #1a1a26;
+  --border: #ffffff12;
+  --border2: #ffffff22;
+  --text: #f0f0f8;
+  --muted: #8888aa;
+  --accent: #7c6af7;
+  --accent2: #a594fa;
+  --green: #22d3a0;
+  --blue: #4facfe;
+  --amber: #f5a623;
+  --red: #f45b69;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(124,106,247,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,106,247,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(10,10,15,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.back-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted);
+  text-decoration: none;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  transition: color 0.15s;
+}
+.back-link:hover { color: var(--accent2); }
+.topbar-sep { color: var(--border2); font-size: 1.2rem; }
+.topbar-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-decoration: none;
+  border: 1px solid var(--border2);
+  padding: 0.25rem 0.65rem;
+  border-radius: 6px;
+  transition: color 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+.lang-toggle:hover { color: var(--accent2); border-color: var(--accent2); }
+
+/* Tab navigation */
+.tab-nav {
+  display: flex;
+  gap: 0;
+  margin-left: auto;
+}
+.tab-btn {
+  padding: 0 1.2rem;
+  height: 56px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: var(--text); border-bottom-color: var(--accent); }
+
+.content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 2rem 4rem;
+  position: relative;
+}
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.panel-hero {
+  margin-bottom: 2.5rem;
+}
+.panel-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--accent2);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.6rem;
+}
+.panel-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 800;
+  margin-bottom: 0.6rem;
+}
+.panel-desc {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  max-width: 620px;
+}
+
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-bottom: 1rem;
+  margin-top: 2.5rem;
+}
+.section-label:first-of-type { margin-top: 0; }
+
+/* Requirement cards */
+.req-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+.req-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.req-icon { font-size: 1.4rem; }
+.req-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+.req-detail { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+.req-tag {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  margin-top: auto;
+}
+.tag-ok { background: rgba(34,211,160,0.1); color: var(--green); }
+.tag-no { background: rgba(244,91,105,0.1); color: var(--red); }
+
+/* Steps */
+.steps { display: flex; flex-direction: column; gap: 0.75rem; }
+.step {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.1rem 1.3rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.step-num {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  background: rgba(124,106,247,0.15);
+  color: var(--accent2);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.step-body {}
+.step-title { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.3rem; }
+.step-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+.step-code {
+  margin-top: 0.5rem;
+  background: var(--surface2);
+  border-radius: 6px;
+  padding: 0.5rem 0.8rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--blue);
+}
+
+/* FAQ */
+.faq { display: flex; flex-direction: column; gap: 0.75rem; }
+.faq-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.faq-q {
+  padding: 1.1rem 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  user-select: none;
+  transition: background 0.15s;
+}
+.faq-q:hover { background: rgba(255,255,255,0.02); }
+.faq-q-icon { color: var(--accent2); font-size: 0.85rem; font-family: 'DM Mono', monospace; flex-shrink: 0; }
+.faq-toggle { margin-left: auto; color: var(--muted); font-size: 0.8rem; transition: transform 0.2s; }
+.faq-item.open .faq-toggle { transform: rotate(180deg); }
+.faq-a {
+  display: none;
+  padding: 0 1.3rem 1.1rem 3rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.7;
+  border-top: 1px solid var(--border);
+  padding-top: 0.9rem;
+}
+.faq-item.open .faq-a { display: block; }
+.faq-a strong { color: var(--text); }
+
+/* Warn/info box */
+.warn-box {
+  background: rgba(244,91,105,0.06);
+  border: 1px solid rgba(244,91,105,0.2);
+  border-radius: 12px;
+  padding: 1rem 1.3rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.warn-box .warn-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--red);
+  letter-spacing: 0.08em;
+  margin-bottom: 0.4rem;
+}
+.info-box {
+  background: rgba(124,106,247,0.06);
+  border: 1px solid rgba(124,106,247,0.2);
+  border-radius: 12px;
+  padding: 1rem 1.3rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.info-box .info-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--accent2);
+  letter-spacing: 0.08em;
+  margin-bottom: 0.4rem;
+}
+.info-box strong, .warn-box strong { color: var(--text); }
+
+/* Resource link cards */
+.resource-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.resource-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.4rem;
+  text-decoration: none;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.resource-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.resource-card:hover { transform: translateY(-3px); border-color: rgba(124,106,247,0.35); box-shadow: 0 8px 28px rgba(124,106,247,0.15); }
+.resource-card:hover::before { opacity: 1; }
+.resource-card-top { display: flex; align-items: center; gap: 0.8rem; }
+.resource-card-icon {
+  width: 40px; height: 40px;
+  border-radius: 11px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+.resource-card-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  flex: 1;
+}
+.resource-card-ext {
+  font-size: 0.7rem;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.resource-card-desc {
+  font-size: 0.83rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.resource-card-tag {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  padding: 0.18rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--border2);
+  color: var(--muted);
+  align-self: flex-start;
+}
+.resource-card-tag.tag-free { background: rgba(34,211,160,0.08); border-color: rgba(34,211,160,0.3); color: var(--green); }
+.resource-card-tag.tag-official { background: rgba(124,106,247,0.08); border-color: rgba(124,106,247,0.3); color: var(--accent2); }
+.resource-card-tag.tag-video { background: rgba(79,172,254,0.08); border-color: rgba(79,172,254,0.3); color: var(--blue); }
+
+/* Capability cards (no link) */
+.capability-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+.capability-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.capability-card-icon { font-size: 1.4rem; }
+.capability-card-title { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; }
+.capability-card-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.55; }
+.capability-card-detail {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--accent2);
+  margin-top: 0.2rem;
+}
+
+/* Tip list */
+.tip-list { display: flex; flex-direction: column; gap: 0.65rem; }
+.tip-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+}
+.tip-bullet {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--accent2);
+  background: rgba(124,106,247,0.12);
+  width: 24px; height: 24px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 0.05rem;
+}
+.tip-body { font-size: 0.84rem; color: var(--muted); line-height: 1.6; }
+.tip-body strong { color: var(--text); }
+
+/* Compte types */
+.account-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.75rem;
+}
+.account-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+}
+.account-name { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.3rem; }
+.account-desc { font-size: 0.75rem; color: var(--muted); line-height: 1.4; }
+.account-badge {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  margin-top: 0.5rem;
+  background: rgba(34,211,160,0.1);
+  color: var(--green);
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index-en.html" class="back-link">← Home</a>
+  <span class="topbar-sep">/</span>
+  <span class="topbar-title">Resources & Help</span>
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('ppt')">📑 PowerPoint</button>
+    <button class="tab-btn" onclick="switchTab('excel')">📊 Excel</button>
+    <button class="tab-btn" onclick="switchTab('claude')">🎓 Claude Training</button>
+  </div>
+  <a href="ressources_aide.html" class="lang-toggle">🇫🇷 FR</a>
+</div>
+
+<div class="content">
+
+  <!-- TAB POWERPOINT -->
+  <div class="tab-panel active" id="tab-ppt">
+    <div class="panel-hero">
+      <div class="panel-eyebrow">// Official Anthropic Plugin</div>
+      <h1 class="panel-title">Claude for PowerPoint</h1>
+      <p class="panel-desc">Everything you need to install, configure and effectively use the Claude plugin in PowerPoint.</p>
+    </div>
+
+    <p class="section-label">Step-by-step installation</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Open Microsoft AppSource from PowerPoint</div>
+          <div class="step-desc">In PowerPoint, go to the <strong>Home</strong> ribbon (Windows) or the <strong>Tools</strong> menu (Mac), then click <strong>Add-ins</strong> or <strong>Get Add-ins</strong>.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Search for "Claude by Anthropic"</div>
+          <div class="step-desc">In the add-ins store, search for <strong>Claude by Anthropic</strong> and click <strong>Add</strong> or <strong>Get it now</strong>.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Verify activation</div>
+          <div class="step-desc">The Claude panel should appear on the right side of your PowerPoint window. If it doesn't show up, go to Home → Add-ins and enable "Claude by Anthropic" in the list.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Sign in with your Claude account</div>
+          <div class="step-desc">Enter your Claude credentials (Pro / Max / Team / Enterprise). Each user signs in with their own account.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <div class="step-title">Final check</div>
+          <div class="step-desc">Test by typing a simple message in the Claude panel, for example:</div>
+          <div class="step-code">Describe the structure of this presentation</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="section-label">Known limitations</p>
+    <div class="warn-box" style="margin-bottom:0.75rem">
+      <div class="warn-label">⚠ Single file</div>
+      Claude can only read the presentation that is <strong>currently open</strong>. Closed files and other documents are not accessible.
+    </div>
+    <div class="warn-box" style="margin-bottom:0.75rem">
+      <div class="warn-label">⚠ No cross-session history</div>
+      Each time the panel is opened, it starts a <strong>fresh conversation</strong>. Context from the previous session is not retained.
+    </div>
+    <div class="warn-box" style="margin-bottom:0.75rem">
+      <div class="warn-label">⚠ Long decks (30+ slides)</div>
+      For very long presentations with a long session, Claude may start a new conversation to avoid context overflow. The file remains intact.
+    </div>
+    <div class="warn-box">
+      <div class="warn-label">⚠ Independent instructions per tool</div>
+      Persistent instructions configured in PowerPoint do not affect Excel, and vice versa.
+    </div>
+
+    <p class="section-label">Frequently asked questions</p>
+    <div class="faq">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-icon">Q</span>
+          The Claude panel doesn't appear in my ribbon. What should I do?
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-a">First check that the add-in is enabled: Home → Add-ins (Windows) or Tools → Add-ins (Mac). If "Claude by Anthropic" is missing from the list, restart the installation from Microsoft AppSource. Make sure your PowerPoint version is compatible (build 16.0.13127+ on Windows, 16.46+ on Mac).</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-icon">Q</span>
+          Claude modified my slides without my approval. Is that normal?
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-a">The plugin has <strong>protection against accidental overwriting</strong>: it warns you before overwriting existing content. Always read this warning. If a mistake occurs, use <strong>Ctrl+Z / Cmd+Z</strong> to undo — PowerPoint keeps the full undo history.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-icon">Q</span>
+          Is my data retained by Anthropic?
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-a">According to official Anthropic documentation, inputs and outputs are <strong>deleted within 30 days</strong>. No history is retained between sessions. Enterprise audit logs do not yet cover Claude for PowerPoint.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-icon">Q</span>
+          Can I use Claude with a template downloaded from the internet?
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-a"><strong>Not recommended.</strong> Unverified external files may contain malicious instructions (prompt injection) that Claude would execute on your deck. Use only validated internal templates or files whose content you fully control.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-icon">Q</span>
+          How do I configure instructions that automatically apply to every session?
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-a">Use the <strong>Instructions</strong> field in the Claude panel (gear icon). Instructions entered here apply to all your PowerPoint conversations without having to repeat them. Example: "Single-line bullets. Titles: max 6 words. Accent color #0070C0."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB EXCEL -->
+  <div class="tab-panel" id="tab-excel">
+    <div class="panel-hero">
+      <div class="panel-eyebrow">// Official Anthropic Plugin</div>
+      <h1 class="panel-title">Claude for Excel</h1>
+      <p class="panel-desc">Everything you need to install, configure and effectively use the Claude plugin in Excel.</p>
+    </div>
+
+    <p class="section-label">Step-by-step installation</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Open Microsoft AppSource from Excel</div>
+          <div class="step-desc">In Excel, go to the <strong>Home</strong> ribbon (Windows) or the <strong>Tools</strong> menu (Mac), then click <strong>Add-ins</strong> or <strong>Get Add-ins</strong>.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Search for "Claude by Anthropic"</div>
+          <div class="step-desc">In the add-ins store, search for <strong>Claude by Anthropic</strong> and click <strong>Add</strong> or <strong>Get it now</strong>.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Verify activation</div>
+          <div class="step-desc">The Claude panel should appear on the right side of your Excel window. If it doesn't show up, check in Home → Add-ins that "Claude by Anthropic" is checked.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Sign in with your Claude account</div>
+          <div class="step-desc">Enter your Claude credentials (Pro / Max / Team / Enterprise). The plugin is tied to your individual account.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <div class="step-title">Final check</div>
+          <div class="step-desc">Test with a first message in the Claude panel:</div>
+          <div class="step-code">Describe the structure of this workbook and the content of each sheet</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="section-label">Known limitations</p>
+    <div class="warn-box" style="margin-bottom:0.75rem">
+      <div class="warn-label">⚠ Active workbook only</div>
+      Claude can only read the workbook that is <strong>currently open</strong>. Other Excel files are not accessible.
+    </div>
+    <div class="warn-box" style="margin-bottom:0.75rem">
+      <div class="warn-label">⚠ No cross-session history</div>
+      Each time the panel is opened, it starts a <strong>fresh conversation</strong>. No context is retained between work sessions.
+    </div>
+    <div class="warn-box" style="margin-bottom:0.75rem">
+      <div class="warn-label">⚠ Large files</div>
+      For very large workbooks (many sheets, thousands of rows), Claude may have only a partial view of the data. Always specify the relevant cell range in your prompts.
+    </div>
+    <div class="warn-box">
+      <div class="warn-label">⚠ Independent instructions per tool</div>
+      Persistent instructions configured in Excel do not affect PowerPoint, and vice versa.
+    </div>
+
+    <p class="section-label">Frequently asked questions</p>
+    <div class="faq">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-icon">Q</span>
+          Can Claude read all the sheets in my workbook?
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-a">Yes, Claude has access to all sheets in the open workbook. For large workbooks, specify the sheet and data range in your prompt to get more accurate responses. Example: <strong>"On the 'Sales' sheet, analyze the data in range A1:F200."</strong></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-icon">Q</span>
+          Can Claude directly modify my Excel data?
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-a">Yes, Claude can write data, generate formulas and create structures directly in your workbook. It warns you before <strong>overwriting existing content</strong>. Use <strong>Ctrl+Z / Cmd+Z</strong> to undo an unwanted action.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-icon">Q</span>
+          Do formulas generated by Claude work in all versions of Excel?
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-a">Claude generates formulas tailored for Excel Microsoft 365. Some recent functions (XLOOKUP, FILTER, SORT, dynamic array formulas) are not available in Excel 2016 or 2019. Specify in your prompt: <strong>"generate a formula compatible with Excel 2019"</strong> if needed.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-icon">Q</span>
+          Is my confidential data safe?
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-a">Data sent to Claude is processed according to Anthropic's privacy policy. Inputs and outputs are <strong>deleted within 30 days</strong>. For sensitive data (customer data, HR data, regulated financial data), first verify that your internal data policy permits use of the plugin.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span class="faq-q-icon">Q</span>
+          How do I set instructions that apply to all my Excel sessions?
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-a">Use the <strong>Instructions</strong> field in the Claude panel (gear icon). Example of useful instructions: "Always use named ranges in formulas. Generate VBA code compatible with Excel 365. Comment complex formulas in English."</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- TAB CLAUDE TRAINING -->
+  <div class="tab-panel" id="tab-claude">
+    <div class="panel-hero">
+      <div class="panel-eyebrow">// Learn Claude</div>
+      <h1 class="panel-title">Training & Claude Resources</h1>
+      <p class="panel-desc">Official training, documentation and resources to understand Claude's capabilities and use it effectively beyond Office plugins.</p>
+    </div>
+
+    <div style="margin-bottom:1.5rem; padding:1.25rem 1.5rem; background:rgba(124,106,247,0.08); border:1px solid rgba(124,106,247,0.35); border-radius:10px; display:flex; align-items:flex-start; gap:1rem;">
+      <span style="font-size:1.4rem; flex-shrink:0;">🎓</span>
+      <div>
+        <div style="font-family:'Syne',sans-serif; font-size:0.95rem; font-weight:700; color:var(--accent2); margin-bottom:0.3rem;">Official Anthropic Training</div>
+        <div style="font-size:0.82rem; color:var(--muted); line-height:1.5;">Anthropic-certified training courses — start with <strong style="color:var(--text);">Claude 101</strong> if it's your first time.</div>
+      </div>
+    </div>
+    <div class="resource-grid">
+
+      <a href="https://anthropic.skilljar.com/claude-101" target="_blank" rel="noopener noreferrer" class="resource-card">
+        <div class="resource-card-top">
+          <div class="resource-card-icon" style="background:rgba(124,106,247,0.12)">🎓</div>
+          <div class="resource-card-title">Claude 101</div>
+          <span class="resource-card-ext">↗</span>
+        </div>
+        <p class="resource-card-desc">The reference training by Anthropic. Introduction to Claude's fundamentals: how to interact, structure your prompts and understand the model's behaviors. The ideal starting point for any new user.</p>
+        <span class="resource-card-tag tag-free">Free</span>
+      </a>
+
+      <a href="https://anthropic.skilljar.com" target="_blank" rel="noopener noreferrer" class="resource-card">
+        <div class="resource-card-top">
+          <div class="resource-card-icon" style="background:rgba(124,106,247,0.12)">📚</div>
+          <div class="resource-card-title">Anthropic Skilljar Catalog</div>
+          <span class="resource-card-ext">↗</span>
+        </div>
+        <p class="resource-card-desc">All official Anthropic training available online: modules on advanced features, the API, security, and best practices for using Claude in a professional context.</p>
+        <span class="resource-card-tag tag-official">Official</span>
+      </a>
+
+      <a href="https://docs.anthropic.com" target="_blank" rel="noopener noreferrer" class="resource-card">
+        <div class="resource-card-top">
+          <div class="resource-card-icon" style="background:rgba(79,172,254,0.12)">📖</div>
+          <div class="resource-card-title">Official Documentation</div>
+          <span class="resource-card-ext">↗</span>
+        </div>
+        <p class="resource-card-desc">Anthropic's complete technical documentation: usage guides, model reference, prompt engineering best practices and documentation for Claude's advanced features.</p>
+        <span class="resource-card-tag tag-official">docs.anthropic.com</span>
+      </a>
+
+      <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" class="resource-card">
+        <div class="resource-card-top">
+          <div class="resource-card-icon" style="background:rgba(34,211,160,0.12)">✨</div>
+          <div class="resource-card-title">Claude.ai — Direct Access</div>
+          <span class="resource-card-ext">↗</span>
+        </div>
+        <p class="resource-card-desc">Access Claude directly via the web interface to practice, test your prompts and explore the model's capabilities outside of Office plugins. The best training ground.</p>
+        <span class="resource-card-tag tag-free">Web interface</span>
+      </a>
+
+    </div>
+
+    <p class="section-label">Key Claude capabilities to know</p>
+    <div class="capability-grid">
+
+      <div class="capability-card">
+        <div class="capability-card-icon">🧠</div>
+        <div class="capability-card-title">Complex reasoning</div>
+        <p class="capability-card-desc">Claude can analyze multi-step problems, compare options and reason in a structured way. Ideal for data analysis or structuring presentations.</p>
+        <div class="capability-card-detail">Relevant for → Excel & PowerPoint</div>
+      </div>
+
+      <div class="capability-card">
+        <div class="capability-card-icon">💬</div>
+        <div class="capability-card-title">Long context window</div>
+        <p class="capability-card-desc">Claude can process long documents all at once. For large Excel workbooks or 30+ slide decks, specify the relevant range or section for optimal results.</p>
+        <div class="capability-card-detail">200,000 token context</div>
+      </div>
+
+      <div class="capability-card">
+        <div class="capability-card-icon">🌍</div>
+        <div class="capability-card-title">Native multilingual</div>
+        <p class="capability-card-desc">Claude understands and generates content in English, French and many other languages without loss of quality. Use whichever language you are most comfortable with.</p>
+        <div class="capability-card-detail">No need to write in English</div>
+      </div>
+
+      <div class="capability-card">
+        <div class="capability-card-icon">🔒</div>
+        <div class="capability-card-title">Constitutional model</div>
+        <p class="capability-card-desc">Claude is trained according to strict safety principles (Constitutional AI). It will refuse certain requests deemed inappropriate and will clearly indicate its limits.</p>
+        <div class="capability-card-detail">Anthropic Constitutional AI</div>
+      </div>
+
+      <div class="capability-card">
+        <div class="capability-card-icon">✏️</div>
+        <div class="capability-card-title">Generation and transformation</div>
+        <p class="capability-card-desc">Claude excels at transforming existing content: summarizing, rephrasing, adapting tone, translating, structuring. Give it raw content and a precise instruction.</p>
+        <div class="capability-card-detail">Relevant for → PowerPoint</div>
+      </div>
+
+      <div class="capability-card">
+        <div class="capability-card-icon">💻</div>
+        <div class="capability-card-title">Code generation</div>
+        <p class="capability-card-desc">Claude generates VBA code, complex Excel formulas, Python for data analysis and many other languages. Always verify generated code before running it.</p>
+        <div class="capability-card-detail">Relevant for → Excel (VBA)</div>
+      </div>
+
+    </div>
+
+    <p class="section-label">Tips for better prompts</p>
+    <div class="tip-list">
+
+      <div class="tip-item">
+        <div class="tip-bullet">1</div>
+        <div class="tip-body"><strong>Be precise and quantified.</strong> "Summarize in 3 bullet points of fewer than 15 words each" is far more effective than "summarize". Give measurable constraints: number of items, length, expected format.</div>
+      </div>
+
+      <div class="tip-item">
+        <div class="tip-bullet">2</div>
+        <div class="tip-body"><strong>Provide context about your audience.</strong> Claude adapts its level of detail and vocabulary based on the audience you describe. "For non-technical executives" radically changes the style of the response.</div>
+      </div>
+
+      <div class="tip-item">
+        <div class="tip-bullet">3</div>
+        <div class="tip-body"><strong>Describe the expected result, not the action.</strong> Rather than "make a chart", say "create a native PowerPoint line chart showing the monthly trend, with the following values: [data]". The more the result is described, the better Claude can achieve it.</div>
+      </div>
+
+      <div class="tip-item">
+        <div class="tip-bullet">4</div>
+        <div class="tip-body"><strong>Iterate rather than asking for everything at once.</strong> A complex prompt can be broken down into several exchanges. Start with the structure, adjust, then refine the details. Claude retains the conversation context.</div>
+      </div>
+
+      <div class="tip-item">
+        <div class="tip-bullet">5</div>
+        <div class="tip-body"><strong>Use persistent instructions for your habits.</strong> Anything you repeat from one prompt to the next (format, tone, constraints) should be in the Instructions field of the Claude panel. This frees up your prompts for the actual content.</div>
+      </div>
+
+      <div class="tip-item">
+        <div class="tip-bullet">6</div>
+        <div class="tip-body"><strong>Always verify numerical data.</strong> Claude can hallucinate statistics, rounded figures or references. For any important number in a deliverable, cross-check with the original source before sharing.</div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+function toggleFaq(el) {
+  el.closest('.faq-item').classList.toggle('open');
+}
+</script>
+</body>
+</html>
