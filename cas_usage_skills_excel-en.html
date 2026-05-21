@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skills Use Cases – Claude for Excel</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --surface2: #1a1a26;
+  --border: #ffffff12;
+  --border2: #ffffff22;
+  --text: #f0f0f8;
+  --muted: #8888aa;
+  --accent: #7c6af7;
+  --accent2: #a594fa;
+  --green: #22d3a0;
+  --blue: #4facfe;
+  --amber: #f5a623;
+  --rose: #f472b6;
+  --coral: #fb923c;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(124,106,247,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,106,247,0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(10,10,15,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.back-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted);
+  text-decoration: none;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  transition: color 0.15s;
+}
+.back-link:hover { color: var(--accent2); }
+.topbar-sep { color: var(--border2); font-size: 1.2rem; }
+.topbar-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.lang-toggle {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-decoration: none;
+  border: 1px solid var(--border2);
+  padding: 0.25rem 0.65rem;
+  border-radius: 6px;
+  transition: color 0.15s, border-color 0.15s;
+}
+.lang-toggle:hover { color: var(--accent2); border-color: var(--accent2); }
+.content {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 3.5rem 2rem 5rem;
+  position: relative;
+}
+.hero {
+  margin-bottom: 3rem;
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--accent2);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.7rem;
+}
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--text) 0%, var(--accent2) 60%, var(--blue) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.8rem;
+  line-height: 1.15;
+}
+.hero-desc {
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.7;
+  max-width: 640px;
+}
+
+/* Category filter */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+}
+.filter-btn {
+  padding: 0.35rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--muted);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.filter-btn:hover { color: var(--text); border-color: var(--border2); }
+.filter-btn.active { background: rgba(124,106,247,0.1); border-color: var(--accent); color: var(--accent); }
+
+/* Category section */
+.cat-section { margin-bottom: 2.5rem; }
+.cat-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1.2rem;
+}
+.cat-icon {
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+}
+.cat-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+}
+.cat-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--border2);
+}
+
+/* Cards grid */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 1rem;
+}
+.use-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  transition: all 0.2s;
+  cursor: default;
+}
+.use-card:hover {
+  border-color: var(--border2);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+}
+.use-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+}
+.use-card-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+.use-card-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.3;
+  flex: 1;
+}
+.use-card-desc {
+  font-size: 0.83rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* Skill badge */
+.skill-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--accent2);
+  background: rgba(124,106,247,0.08);
+  border: 1px solid rgba(124,106,247,0.25);
+  border-radius: 6px;
+  padding: 0.3rem 0.7rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: fit-content;
+}
+
+/* Prompt label */
+.prompt-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.3rem;
+}
+
+/* Prompt box */
+.use-card-prompt {
+  background: var(--surface2);
+  border-radius: 8px;
+  padding: 0.65rem 0.9rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--accent2);
+  line-height: 1.5;
+  border-left: 2px solid rgba(124,106,247,0.4);
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+}
+.use-card-prompt:hover { border-left-color: var(--accent); background: rgba(124,106,247,0.06); }
+.use-card-prompt::after {
+  content: 'Copy';
+  position: absolute;
+  right: 0.7rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.65rem;
+  color: var(--muted);
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.use-card-prompt:hover::after { opacity: 1; }
+.use-card-prompt.copied { border-left-color: var(--green); color: var(--green); }
+.use-card-prompt.copied::after { content: '✓'; color: var(--green); opacity: 1; }
+
+/* Difficulty tag */
+.diff-tag {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  margin-top: auto;
+  align-self: flex-start;
+}
+.diff-debutant { background: rgba(34,211,160,0.1); color: var(--green); }
+.diff-inter { background: rgba(245,166,35,0.1); color: var(--amber); }
+.diff-avance { background: rgba(124,106,247,0.1); color: var(--accent2); }
+
+/* Category color variants */
+.cat-rapports .cat-icon { background: rgba(124,106,247,0.12); }
+.cat-rapports .cat-label { color: var(--accent2); }
+.cat-rapports .use-card-icon { background: rgba(124,106,247,0.1); }
+.cat-rapports .use-card:hover { border-color: rgba(124,106,247,0.3); }
+
+.cat-finance .cat-icon { background: rgba(79,172,254,0.12); }
+.cat-finance .cat-label { color: var(--blue); }
+.cat-finance .use-card-icon { background: rgba(79,172,254,0.1); }
+.cat-finance .use-card:hover { border-color: rgba(79,172,254,0.3); }
+
+.cat-marketing .cat-icon { background: rgba(34,211,160,0.12); }
+.cat-marketing .cat-label { color: var(--green); }
+.cat-marketing .use-card-icon { background: rgba(34,211,160,0.1); }
+.cat-marketing .use-card:hover { border-color: rgba(34,211,160,0.3); }
+
+.cat-rh .cat-icon { background: rgba(245,166,35,0.12); }
+.cat-rh .cat-label { color: var(--amber); }
+.cat-rh .use-card-icon { background: rgba(245,166,35,0.1); }
+.cat-rh .use-card:hover { border-color: rgba(245,166,35,0.3); }
+
+.cat-commercial .cat-icon { background: rgba(165,148,250,0.12); }
+.cat-commercial .cat-label { color: var(--accent2); }
+.cat-commercial .use-card-icon { background: rgba(165,148,250,0.1); }
+.cat-commercial .use-card:hover { border-color: rgba(165,148,250,0.3); }
+
+.cat-it .cat-icon { background: rgba(244,114,182,0.12); }
+.cat-it .cat-label { color: var(--rose); }
+.cat-it .use-card-icon { background: rgba(244,114,182,0.1); }
+.cat-it .use-card:hover { border-color: rgba(244,114,182,0.3); }
+
+.cat-direction .cat-icon { background: rgba(251,146,60,0.12); }
+.cat-direction .cat-label { color: var(--coral); }
+.cat-direction .use-card-icon { background: rgba(251,146,60,0.1); }
+.cat-direction .use-card:hover { border-color: rgba(251,146,60,0.3); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="back-link">← Home</a>
+  <span class="topbar-sep">/</span>
+  <a href="cas_usage_excel-en.html" class="back-link">Use Cases Excel</a>
+  <span class="topbar-sep">/</span>
+  <span class="topbar-title">Skills – Excel</span>
+  <a href="cas_usage_skills_excel.html" class="lang-toggle">🇫🇷 FR</a>
+</div>
+
+<div class="content">
+
+  <div class="hero">
+    <div class="hero-eyebrow">// Skills – Claude for Excel</div>
+    <h1>Skills use cases<br>by business domain</h1>
+    <p class="hero-desc">Discover ready-to-use Skills to automate your Excel workflows by business area. Copy the skill definition to create it in Claude for Excel, then invoke it with the command shown.</p>
+  </div>
+
+  <div class="filters">
+    <button class="filter-btn active" onclick="filterAll(this)">Show all</button>
+    <button class="filter-btn" onclick="filterCat('finance', this)">💰 Finance</button>
+    <button class="filter-btn" onclick="filterCat('marketing', this)">📣 Marketing</button>
+    <button class="filter-btn" onclick="filterCat('rh', this)">👥 HR</button>
+    <button class="filter-btn" onclick="filterCat('commercial', this)">🤝 Sales</button>
+    <button class="filter-btn" onclick="filterCat('it', this)">⚙️ IT</button>
+    <button class="filter-btn" onclick="filterCat('direction', this)">🏆 Management</button>
+  </div>
+
+  <!-- FINANCE -->
+  <div class="cat-section cat-finance" data-cat="finance">
+    <div class="cat-header">
+      <div class="cat-icon">💰</div>
+      <div class="cat-label">Finance / Accounting</div>
+      <span class="cat-count">3 skills</span>
+    </div>
+    <div class="cards-grid">
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">💵</div>
+          <div class="use-card-title">Weekly Cash Flow Report</div>
+        </div>
+        <p class="use-card-desc">Automatically generates the cash balance, weekly inflows/outflows, and an alert if the projected balance falls below the critical threshold.</p>
+        <div class="skill-badge">⚡ /tresorerie-hebdo</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are a cash management assistant. When invoked, analyze the cash flow data in the active sheet (date, description, amount, category). Calculate: the current balance, inflows and outflows for the current week, and the top 3 expense categories. Flag in red if the projected balance at D+7 is below $50,000. Present the result in a structured table.</div>
+        <span class="diff-tag diff-inter">🟡 Intermediate</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">📊</div>
+          <div class="use-card-title">Budget vs. Actual Analysis</div>
+        </div>
+        <p class="use-card-desc">Compares the planned budget to actuals line by line, calculates variances in %, and automatically generates comments for out-of-tolerance line items.</p>
+        <div class="skill-badge">⚡ /budget-ecarts</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are an expert management controller. Analyze the budget sheet: identify the Budget and Actual columns, calculate the absolute and percentage variance for each line. Highlight variances greater than 10% with a concise explanation. Generate a summary table with the 5 largest favorable and unfavorable variances.</div>
+        <span class="diff-tag diff-inter">🟡 Intermediate</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">📋</div>
+          <div class="use-card-title">Monthly Close Pack</div>
+        </div>
+        <p class="use-card-desc">Prepares the close pack: consistency checks, account reconciliation, monthly P&L generation, and a list of attention points.</p>
+        <div class="skill-badge">⚡ /cloture-mensuelle</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are an accounting close expert. Perform the following checks on the active sheet: verify that total debits equal total credits, identify lines without an analytical code, list necessary adjustment entries. Then generate a summary P&L by major category and a list of attention points for validation.</div>
+        <span class="diff-tag diff-avance">🟣 Advanced</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MARKETING -->
+  <div class="cat-section cat-marketing" data-cat="marketing">
+    <div class="cat-header">
+      <div class="cat-icon">📣</div>
+      <div class="cat-label">Marketing / Communications</div>
+      <span class="cat-count">3 skills</span>
+    </div>
+    <div class="cards-grid">
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">📈</div>
+          <div class="use-card-title">Monthly Campaign KPIs</div>
+        </div>
+        <p class="use-card-desc">Summarizes the month's marketing KPIs: reach, engagement, conversions, cost per acquisition, and comparison with the previous month.</p>
+        <div class="skill-badge">⚡ /kpi-campagne</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are a marketing analyst. Analyze the data in the active sheet containing campaign metrics (impressions, clicks, conversions, budget spent). Calculate: CTR, conversion rate, CPA, and ROAS. Compare with the previous month if data is available. Provide a 3-line verdict: what is working, what is underperforming, one priority recommendation.</div>
+        <span class="diff-tag diff-debutant">🟢 Beginner</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🔮</div>
+          <div class="use-card-title">Lead Generation Forecast</div>
+        </div>
+        <p class="use-card-desc">Models the lead generation forecast for the next 3 months based on historical trends and allocated budget, with 3 scenarios.</p>
+        <div class="skill-badge">⚡ /prevision-leads</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are a growth marketing specialist. Using the historical lead generation data in the active sheet (date, source, number of leads, cost), build a 3-month projection. Apply a seasonal trend if relevant. Present 3 scenarios: pessimistic, realistic, optimistic. Provide the corresponding Excel formulas.</div>
+        <span class="diff-tag diff-avance">🟣 Advanced</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🎯</div>
+          <div class="use-card-title">Channel Performance Analysis</div>
+        </div>
+        <p class="use-card-desc">Compares the performance of each marketing channel (SEO, SEA, Social, Email...) and recommends an optimized budget allocation.</p>
+        <div class="skill-badge">⚡ /analyse-canaux</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are a digital marketing strategist. Analyze the table in the active sheet listing performance by channel (traffic, leads, conversions, budget). Rank channels by efficiency (conversions/cost). Identify the most profitable channel and the one to optimize as a priority. Propose a budget allocation recommendation in 3 points.</div>
+        <span class="diff-tag diff-inter">🟡 Intermediate</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- HR -->
+  <div class="cat-section cat-rh" data-cat="rh">
+    <div class="cat-header">
+      <div class="cat-icon">👥</div>
+      <div class="cat-label">HR / Human Resources</div>
+      <span class="cat-count">3 skills</span>
+    </div>
+    <div class="cards-grid">
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">📋</div>
+          <div class="use-card-title">Monthly Headcount Report</div>
+        </div>
+        <p class="use-card-desc">Generates the headcount report: hires, departures, annualized turnover rate, breakdown by department, and flagging of at-risk teams.</p>
+        <div class="skill-badge">⚡ /suivi-effectifs</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are an HR analyst. Using the data in the active sheet (employees, department, start date, end date if applicable, status), calculate: total current headcount, monthly hires and departures, annualized turnover rate, and breakdown by department. Flag departments with a turnover rate above 15% over 12 months.</div>
+        <span class="diff-tag diff-debutant">🟢 Beginner</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">⚠️</div>
+          <div class="use-card-title">Absenteeism Dashboard</div>
+        </div>
+        <p class="use-card-desc">Analyzes absence data: rate by department, main reasons, lost days, and comparison with the standard 4% benchmark.</p>
+        <div class="skill-badge">⚡ /dashboard-absences</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are an HR expert in absence management. Analyze the active sheet (employee, department, absence type, duration, date). Calculate the absenteeism rate by department, the 3 most frequent reasons, and the estimated cost in lost working days. Compare with a standard benchmark of 4% and flag out-of-norm departments. Suggest 2 corrective actions.</div>
+        <span class="diff-tag diff-inter">🟡 Intermediate</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🌟</div>
+          <div class="use-card-title">Team Evaluation Matrix</div>
+        </div>
+        <p class="use-card-desc">Structures the annual performance review: scores by criterion, 9-box distribution, identification of top performers and struggling profiles.</p>
+        <div class="skill-badge">⚡ /evaluation-equipe</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are an HR Director expert in performance management. Using the evaluation sheet (employee, criteria rated 1 to 5), calculate each person's overall score, the grade distribution (9-box), identify top performers (>4) and struggling employees (<2.5). Generate a summary table for the review committee.</div>
+        <span class="diff-tag diff-avance">🟣 Advanced</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SALES -->
+  <div class="cat-section cat-commercial" data-cat="commercial">
+    <div class="cat-header">
+      <div class="cat-icon">🤝</div>
+      <div class="cat-label">Sales / Revenue</div>
+      <span class="cat-count">3 skills</span>
+    </div>
+    <div class="cards-grid">
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🔭</div>
+          <div class="use-card-title">Sales Pipeline Tracker</div>
+        </div>
+        <p class="use-card-desc">Weekly pipeline summary: deals by stage, weighted amount, closing probability, and flagging of deals with no recent activity.</p>
+        <div class="skill-badge">⚡ /pipeline-hebdo</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are a Sales Director. Analyze the CRM pipeline exported in the active sheet (deal, customer, amount, stage, probability, expected date). Calculate: total pipeline, probability-weighted amount, high-value deals (>$50k), and 30-day closing forecasts. Flag deals with no activity in more than 14 days.</div>
+        <span class="diff-tag diff-inter">🟡 Intermediate</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">👤</div>
+          <div class="use-card-title">ABC Customer Segmentation</div>
+        </div>
+        <p class="use-card-desc">Segments the customer portfolio into A/B/C categories, identifies customers at churn risk, and lists the best upsell opportunities.</p>
+        <div class="skill-badge">⚡ /analyse-clients</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are a customer relationship expert. Analyze the customer portfolio in the active sheet (customer, annual revenue, number of orders, last order, satisfaction). Perform an ABC segmentation (A = top 20% of revenue). Identify at-risk customers (>90 days without an order or satisfaction <3/5). List the top 5 upsell opportunities.</div>
+        <span class="diff-tag diff-inter">🟡 Intermediate</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">📊</div>
+          <div class="use-card-title">Monthly Sales Report</div>
+        </div>
+        <p class="use-card-desc">Consolidates monthly sales performance: revenue, conversion rate by stage, performance by sales rep, and variance vs. target.</p>
+        <div class="skill-badge">⚡ /rapport-commercial</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are a Sales Director. Consolidate the month's sales data (rep, number of meetings, number of quotes, number of orders, revenue). Calculate conversion rates at each stage, revenue per rep, and variance vs. target. Rank reps by performance. Write a 5-point executive summary for the monthly management report.</div>
+        <span class="diff-tag diff-debutant">🟢 Beginner</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- IT -->
+  <div class="cat-section cat-it" data-cat="it">
+    <div class="cat-header">
+      <div class="cat-icon">⚙️</div>
+      <div class="cat-label">IT / Technical</div>
+      <span class="cat-count">3 skills</span>
+    </div>
+    <div class="cards-grid">
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🔧</div>
+          <div class="use-card-title">IT Incident Dashboard</div>
+        </div>
+        <p class="use-card-desc">Analyzes the incident log: by priority, by team, SLAs met vs. breached, average resolution time, and longest-open tickets.</p>
+        <div class="skill-badge">⚡ /suivi-incidents</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are an IT Manager. Analyze the incident log in the active sheet (ticket, priority, team, open date, resolution date, status). Calculate: number of incidents by priority (P1/P2/P3), SLA compliance rate, average resolution time by priority. List the 5 tickets that have been open the longest.</div>
+        <span class="diff-tag diff-inter">🟡 Intermediate</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🖥️</div>
+          <div class="use-card-title">Asset Inventory & Renewal</div>
+        </div>
+        <p class="use-card-desc">IT inventory status: net book value, assets depreciated over 80%, prioritized renewal plan, and budget estimate.</p>
+        <div class="skill-badge">⚡ /inventaire-assets</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are an IT Asset Manager. Using the inventory table (equipment, category, purchase date, value, depreciation period), calculate: the net book value of each asset, assets depreciated over 80%, those to be renewed in the next 6 months. Generate a prioritized renewal plan and a budget estimate.</div>
+        <span class="diff-tag diff-avance">🟣 Advanced</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">📡</div>
+          <div class="use-card-title">Service Availability Report</div>
+        </div>
+        <p class="use-card-desc">Calculates uptime per service (target 99.9%), identifies at-risk windows, and generates the monthly SLA report with corrective actions.</p>
+        <div class="skill-badge">⚡ /disponibilite-services</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are a service availability management expert. Using the monitoring log (service, date, outage start time, end time, impact), calculate the monthly uptime rate per service (target 99.9%). Identify services below SLA, at-risk time windows, and generate the monthly report with recommended corrective actions.</div>
+        <span class="diff-tag diff-avance">🟣 Advanced</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MANAGEMENT -->
+  <div class="cat-section cat-direction" data-cat="direction">
+    <div class="cat-header">
+      <div class="cat-icon">🏆</div>
+      <div class="cat-label">Management / Leadership</div>
+      <span class="cat-count">3 skills</span>
+    </div>
+    <div class="cards-grid">
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🎯</div>
+          <div class="use-card-title">Strategic Balanced Scorecard</div>
+        </div>
+        <p class="use-card-desc">Consolidates company KPIs into a Balanced Scorecard across 4 axes: Finance, Customer, Internal Processes, Learning & Growth.</p>
+        <div class="skill-badge">⚡ /scorecard-direction</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are a CEO. Using the data in the active sheet grouping company KPIs (indicator, current value, target, trend), build a Balanced Scorecard across 4 axes: Finance, Customer, Internal Processes, Learning & Growth. Calculate the target achievement rate per axis. Identify the 3 most critical indicators and summarize the overall status in 1 paragraph.</div>
+        <span class="diff-tag diff-avance">🟣 Advanced</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">📋</div>
+          <div class="use-card-title">Executive Committee Reporting Pack</div>
+        </div>
+        <p class="use-card-desc">Prepares the monthly pack for the executive committee: key highlights, KPIs with RAG status, attention points requiring a decision, month priorities.</p>
+        <div class="skill-badge">⚡ /reporting-comex</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are a CEO assistant. Using the data in the active sheet, write the monthly reporting pack for the Executive Committee: 1) Key highlights of the month in 3 points, 2) The 5 key KPIs with their status (green/orange/red), 3) The 2 attention points requiring a decision, 4) Priorities for next month. Concise and decision-oriented format.</div>
+        <span class="diff-tag diff-inter">🟡 Intermediate</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">⚠️</div>
+          <div class="use-card-title">Project Risk Matrix</div>
+        </div>
+        <p class="use-card-desc">Qualifies operational or project risks (probability × impact), ranks by criticality, and generates a priority action table with owners.</p>
+        <div class="skill-badge">⚡ /matrice-risques</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are a risk management officer. Using the risk list in the active sheet (risk, probability 1-5, impact 1-5, owner, action plan), calculate the criticality score (probability × impact). Rank risks in descending order of criticality. Identify major risks (score ≥ 12) and generate a priority action table with owners.</div>
+        <span class="diff-tag diff-inter">🟡 Intermediate</span>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+function copyPrompt(el) {
+  const text = el.textContent.replace(/Copy|✓/g, '').trim();
+  navigator.clipboard.writeText(text).catch(() => {});
+  el.classList.add('copied');
+  setTimeout(() => el.classList.remove('copied'), 2000);
+}
+
+function filterAll(btn) {
+  document.querySelectorAll('.cat-section').forEach(s => s.style.display = '');
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function filterCat(cat, btn) {
+  document.querySelectorAll('.cat-section').forEach(s => {
+    s.style.display = s.dataset.cat === cat ? '' : 'none';
+  });
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

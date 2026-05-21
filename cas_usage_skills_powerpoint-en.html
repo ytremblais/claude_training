@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skills Use Cases – Claude for PowerPoint</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --surface2: #1a1a26;
+  --border: #ffffff12;
+  --border2: #ffffff22;
+  --text: #f0f0f8;
+  --muted: #8888aa;
+  --accent: #7c6af7;
+  --accent2: #a594fa;
+  --green: #22d3a0;
+  --blue: #4facfe;
+  --amber: #f5a623;
+  --red: #f45b69;
+  --rose: #f472b6;
+  --coral: #fb923c;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(124,106,247,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,106,247,0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(10,10,15,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.back-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted);
+  text-decoration: none;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  transition: color 0.15s;
+}
+.back-link:hover { color: var(--accent2); }
+.topbar-sep { color: var(--border2); font-size: 1.2rem; }
+.topbar-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.lang-toggle {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-decoration: none;
+  border: 1px solid var(--border2);
+  padding: 0.25rem 0.65rem;
+  border-radius: 6px;
+  transition: color 0.15s, border-color 0.15s;
+}
+.lang-toggle:hover { color: var(--accent2); border-color: var(--accent2); }
+.content {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 3.5rem 2rem 5rem;
+  position: relative;
+}
+.hero {
+  margin-bottom: 3rem;
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--accent2);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.7rem;
+}
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--text) 0%, var(--accent2) 50%, var(--blue) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.8rem;
+  line-height: 1.15;
+}
+.hero-desc {
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.7;
+  max-width: 640px;
+}
+
+/* Category filter */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+}
+.filter-btn {
+  padding: 0.35rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--muted);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.filter-btn:hover { color: var(--text); }
+.filter-btn.active { background: rgba(124,106,247,0.1); border-color: var(--accent); color: var(--accent); }
+
+/* Category section */
+.cat-section { margin-bottom: 2.5rem; }
+.cat-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1.2rem;
+}
+.cat-icon {
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+}
+.cat-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+}
+.cat-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--border2);
+}
+
+/* Cards grid */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 1rem;
+}
+.use-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  transition: all 0.2s;
+}
+.use-card:hover {
+  border-color: var(--border2);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+}
+.use-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+}
+.use-card-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+.use-card-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.3;
+  flex: 1;
+}
+.use-card-desc {
+  font-size: 0.83rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* Skill badge */
+.skill-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--accent2);
+  background: rgba(124,106,247,0.08);
+  border: 1px solid rgba(124,106,247,0.25);
+  border-radius: 6px;
+  padding: 0.3rem 0.7rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: fit-content;
+}
+
+/* Prompt label */
+.prompt-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.3rem;
+}
+
+/* Copyable prompt box */
+.use-card-prompt {
+  background: var(--surface2);
+  border-radius: 8px;
+  padding: 0.65rem 0.9rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--accent2);
+  line-height: 1.5;
+  border-left: 2px solid rgba(124,106,247,0.4);
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+}
+.use-card-prompt:hover { border-left-color: var(--accent); background: rgba(124,106,247,0.06); }
+.use-card-prompt::after {
+  content: 'Copy';
+  position: absolute;
+  right: 0.7rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.65rem;
+  color: var(--muted);
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.use-card-prompt:hover::after { opacity: 1; }
+.use-card-prompt.copied { border-left-color: var(--green); color: var(--green); }
+.use-card-prompt.copied::after { content: '✓'; color: var(--green); opacity: 1; }
+
+.diff-tag {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  margin-top: auto;
+  align-self: flex-start;
+}
+.diff-debutant { background: rgba(34,211,160,0.1); color: var(--green); }
+.diff-inter { background: rgba(245,166,35,0.1); color: var(--amber); }
+.diff-avance { background: rgba(124,106,247,0.1); color: var(--accent2); }
+
+/* Category variants */
+/* Finance = blue */
+.cat-finance .cat-icon { background: rgba(79,172,254,0.12); }
+.cat-finance .cat-label { color: var(--blue); }
+.cat-finance .use-card-icon { background: rgba(79,172,254,0.1); }
+.cat-finance .use-card:hover { border-color: rgba(79,172,254,0.3); }
+
+/* Marketing = green */
+.cat-marketing .cat-icon { background: rgba(34,211,160,0.12); }
+.cat-marketing .cat-label { color: var(--green); }
+.cat-marketing .use-card-icon { background: rgba(34,211,160,0.1); }
+.cat-marketing .use-card:hover { border-color: rgba(34,211,160,0.3); }
+
+/* RH = amber */
+.cat-rh .cat-icon { background: rgba(245,166,35,0.12); }
+.cat-rh .cat-label { color: var(--amber); }
+.cat-rh .use-card-icon { background: rgba(245,166,35,0.1); }
+.cat-rh .use-card:hover { border-color: rgba(245,166,35,0.3); }
+
+/* Commercial = accent2 */
+.cat-commercial .cat-icon { background: rgba(165,148,250,0.12); }
+.cat-commercial .cat-label { color: var(--accent2); }
+.cat-commercial .use-card-icon { background: rgba(165,148,250,0.1); }
+.cat-commercial .use-card:hover { border-color: rgba(165,148,250,0.3); }
+
+/* IT = rose */
+.cat-it .cat-icon { background: rgba(244,114,182,0.12); }
+.cat-it .cat-label { color: var(--rose); }
+.cat-it .use-card-icon { background: rgba(244,114,182,0.1); }
+.cat-it .use-card:hover { border-color: rgba(244,114,182,0.3); }
+
+/* Direction = coral */
+.cat-direction .cat-icon { background: rgba(251,146,60,0.12); }
+.cat-direction .cat-label { color: var(--coral); }
+.cat-direction .use-card-icon { background: rgba(251,146,60,0.1); }
+.cat-direction .use-card:hover { border-color: rgba(251,146,60,0.3); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="back-link">← Home</a>
+  <span class="topbar-sep">/</span>
+  <a href="cas_usage_powerpoint-en.html" class="back-link">Use Cases PowerPoint</a>
+  <span class="topbar-sep">/</span>
+  <span class="topbar-title">Skills – PowerPoint</span>
+  <a href="cas_usage_skills_powerpoint.html" class="lang-toggle">🇫🇷 FR</a>
+</div>
+
+<div class="content">
+
+  <div class="hero">
+    <div class="hero-eyebrow">// Skills – Claude for PowerPoint</div>
+    <h1>Skills use cases<br>by business domain</h1>
+    <p class="hero-desc">Discover ready-to-use Skills to generate your PowerPoint presentations by business area. Copy the skill definition to create it in Claude for PowerPoint, then invoke it with the command shown.</p>
+  </div>
+
+  <div class="filters">
+    <button class="filter-btn active" onclick="filterAll(this)">Show all</button>
+    <button class="filter-btn" onclick="filterCat('finance', this)">💰 Finance</button>
+    <button class="filter-btn" onclick="filterCat('marketing', this)">📣 Marketing</button>
+    <button class="filter-btn" onclick="filterCat('rh', this)">👥 HR</button>
+    <button class="filter-btn" onclick="filterCat('commercial', this)">🤝 Sales</button>
+    <button class="filter-btn" onclick="filterCat('it', this)">⚙️ IT</button>
+    <button class="filter-btn" onclick="filterCat('direction', this)">🏆 Management</button>
+  </div>
+
+  <!-- FINANCE -->
+  <div class="cat-section cat-finance" data-cat="finance">
+    <div class="cat-header">
+      <div class="cat-icon">💰</div>
+      <div class="cat-label">Finance / Accounting</div>
+      <span class="cat-count">3 skills</span>
+    </div>
+    <div class="cards-grid">
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">📊</div>
+          <div class="use-card-title">Quarterly Financial Results</div>
+        </div>
+        <p class="use-card-desc">Generates financial results slides: P&amp;L summary, revenue trend chart, year-over-year comparison, and cash flow indicators.</p>
+        <div class="skill-badge">⚡ /slides-resultats</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are a CFO. Based on the figures provided (revenue, expenses, net income, cash), generate a financial results presentation: P&L summary slide, revenue trend chart, year-over-year comparison, cash flow slide. Use a clean and professional format. Highlight positive indicators in green and negative ones in red.</div>
+        <span class="diff-tag diff-inter">🟡 Intermediate</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">💼</div>
+          <div class="use-card-title">N+1 Budget for the Board</div>
+        </div>
+        <p class="use-card-desc">Prepares the annual budget presentation deck: assumptions, 3 scenarios (pessimistic/realistic/optimistic), key investments, and recommendation.</p>
+        <div class="skill-badge">⚡ /budget-board</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are a CFO. Generate the N+1 budget presentation deck: macro context slide, key assumptions (3-5 points), budget table by major category, comparison of the 3 scenarios (pessimistic/realistic/optimistic), priority investments, summary slide and recommendation. Board-ready format, concise, decision-oriented.</div>
+        <span class="diff-tag diff-avance">🟣 Advanced</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">⚡</div>
+          <div class="use-card-title">Monthly Financial Flash</div>
+        </div>
+        <p class="use-card-desc">2 financial summary slides for the management meeting: 4 key KPIs with trend vs target and prior month, watch points and corrective actions.</p>
+        <div class="skill-badge">⚡ /flash-financier</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are a financial controller. Generate 2 monthly financial flash slides: slide 1 – the 4 key KPIs (revenue, margin, costs, cash) with their trend vs target and vs prior month, slide 2 – 3 watch points and 2 corrective actions. Clean style, figures front and center, short commentary.</div>
+        <span class="diff-tag diff-debutant">🟢 Beginner</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MARKETING -->
+  <div class="cat-section cat-marketing" data-cat="marketing">
+    <div class="cat-header">
+      <div class="cat-icon">📣</div>
+      <div class="cat-label">Marketing / Communications</div>
+      <span class="cat-count">3 skills</span>
+    </div>
+    <div class="cards-grid">
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">📈</div>
+          <div class="use-card-title">Marketing Campaign Review</div>
+        </div>
+        <p class="use-card-desc">Campaign results presentation: objectives vs actuals, performance by channel, key insights, and recommendations for the next campaign.</p>
+        <div class="skill-badge">⚡ /bilan-campagne</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are a Marketing Director. Generate the campaign review in slides: slide 1 – objectives vs results (comparison table), slide 2 – channel performance analysis (chart), slide 3 – key insights and learnings (3 points), slide 4 – recommendations for the next campaign. Modern, visual style with data front and center.</div>
+        <span class="diff-tag diff-debutant">🟢 Beginner</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🚀</div>
+          <div class="use-card-title">New Product Pitch Deck</div>
+        </div>
+        <p class="use-card-desc">New product presentation deck: customer problem, solution, competitive positioning, go-to-market plan, and success metrics.</p>
+        <div class="skill-badge">⚡ /pitch-produit</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are a Product Marketing Manager. Generate a product pitch deck: slide 1 – the customer problem (1 strong insight), slide 2 – our solution (headline + 3 benefits), slide 3 – positioning and differentiation vs competitors, slide 4 – go-to-market (target, channels, timing), slide 5 – success metrics. Compelling, customer-benefit oriented.</div>
+        <span class="diff-tag diff-inter">🟡 Intermediate</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🏷️</div>
+          <div class="use-card-title">Annual Brand Review</div>
+        </div>
+        <p class="use-card-desc">Brand health presentation: awareness, perceived image, 12-month evolution, competitive comparison, and brand action plan.</p>
+        <div class="skill-badge">⚡ /revue-marque</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are a Brand Director. Generate a brand review: slide 1 – awareness indicators (unaided and aided), slide 2 – brand image (positive and negative attributes), slide 3 – 12-month evolution, slide 4 – competitive comparison, slide 5 – brand action plan. Institutional format, clean and factual.</div>
+        <span class="diff-tag diff-avance">🟣 Advanced</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- HR -->
+  <div class="cat-section cat-rh" data-cat="rh">
+    <div class="cat-header">
+      <div class="cat-icon">👥</div>
+      <div class="cat-label">HR / Human Resources</div>
+      <span class="cat-count">3 skills</span>
+    </div>
+    <div class="cards-grid">
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">👋</div>
+          <div class="use-card-title">Onboarding Presentation</div>
+        </div>
+        <p class="use-card-desc">Welcome deck for new employees: company history and values, org chart, first 30-day plan, tools, and key contacts.</p>
+        <div class="skill-badge">⚡ /onboarding-deck</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are an HR Director. Generate the onboarding deck: slide 1 – welcome and company history, slide 2 – our values and culture (3-4 pillars), slide 3 – simplified org chart, slide 4 – the first 30 days (roadmap), slide 5 – key resources and tools, slide 6 – Q&A and useful contacts. Warm and inspiring tone.</div>
+        <span class="diff-tag diff-debutant">🟢 Beginner</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🎓</div>
+          <div class="use-card-title">Professional Training Deck</div>
+        </div>
+        <p class="use-card-desc">Generates a structured learning deck: objectives, content in 3 parts, practical case, key takeaways, and additional resources.</p>
+        <div class="skill-badge">⚡ /formation-slides</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are an expert trainer. Based on the training topic provided, generate a learning deck: slide 1 – training objectives, slides 2-4 – content structured in 3 parts (10 min each), slide 5 – practical case or exercise, slide 6 – key takeaways, slide 7 – additional resources. Clear, pedagogical format with concrete examples.</div>
+        <span class="diff-tag diff-inter">🟡 Intermediate</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">📋</div>
+          <div class="use-card-title">HR Review for the Board</div>
+        </div>
+        <p class="use-card-desc">HR presentation for the board of directors: headcount, key indicators, skills development, succession planning, and HR risks.</p>
+        <div class="skill-badge">⚡ /revue-rh-board</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are an HR Director. Generate the HR board presentation: slide 1 – headcount and evolution (chart), slide 2 – key indicators (turnover, absenteeism, satisfaction), slide 3 – training and skills development, slide 4 – succession plan for key positions, slide 5 – watch points and HR risks. Board-ready format, factual and strategic.</div>
+        <span class="diff-tag diff-avance">🟣 Advanced</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SALES -->
+  <div class="cat-section cat-commercial" data-cat="commercial">
+    <div class="cat-header">
+      <div class="cat-icon">🤝</div>
+      <div class="cat-label">Sales / Revenue</div>
+      <span class="cat-count">3 skills</span>
+    </div>
+    <div class="cards-grid">
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🎯</div>
+          <div class="use-card-title">Personalized Client Pitch</div>
+        </div>
+        <p class="use-card-desc">Tailored sales presentation deck: understanding client challenges, bespoke value proposition, sector references, and next steps.</p>
+        <div class="skill-badge">⚡ /pitch-client</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are an expert sales professional. Based on the client brief provided (sector, challenges, stakeholder), generate a personalized pitch: slide 1 – understanding of client challenges, slide 2 – our tailored value proposition, slide 3 – references in their sector, slide 4 – our solution and its concrete benefits, slide 5 – proposed next steps. Consultative tone, client ROI-oriented.</div>
+        <span class="diff-tag diff-inter">🟡 Intermediate</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">📅</div>
+          <div class="use-card-title">QBR – Quarterly Business Review</div>
+        </div>
+        <p class="use-card-desc">Quarterly client review presentation: executive summary, KPIs vs targets, resolved incidents, relevant product updates, and mutual goals for next quarter.</p>
+        <div class="skill-badge">⚡ /qbr-slides</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are a Customer Success Manager. Generate the QBR deck: slide 1 – quarterly executive summary, slide 2 – KPIs and results vs targets (table), slide 3 – incidents and resolutions, slide 4 – relevant product innovations and updates, slide 5 – roadmap and next steps, slide 6 – mutual goals for next quarter. Professional and co-built.</div>
+        <span class="diff-tag diff-inter">🟡 Intermediate</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🏅</div>
+          <div class="use-card-title">Annual Sales Review</div>
+        </div>
+        <p class="use-card-desc">Sales performance presentation for leadership: key figures, performance vs targets, pipeline win/loss analysis, top clients, and N+1 strategy.</p>
+        <div class="skill-badge">⚡ /bilan-commercial</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are a Sales Director. Generate the annual sales review presentation: slide 1 – key figures for the year, slide 2 – performance vs targets by product/region, slide 3 – pipeline analysis and win/loss breakdown, slide 4 – top clients and new acquisitions, slide 5 – learnings and areas for improvement, slide 6 – N+1 objectives and strategy. Motivating and factual style.</div>
+        <span class="diff-tag diff-debutant">🟢 Beginner</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- IT -->
+  <div class="cat-section cat-it" data-cat="it">
+    <div class="cat-header">
+      <div class="cat-icon">⚙️</div>
+      <div class="cat-label">IT / Technical</div>
+      <span class="cat-count">3 skills</span>
+    </div>
+    <div class="cards-grid">
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🏗️</div>
+          <div class="use-card-title">Technical Architecture Presentation</div>
+        </div>
+        <p class="use-card-desc">Presents the system architecture: key components, main flows, technology choices and rationale, security, and scalability watch points.</p>
+        <div class="skill-badge">⚡ /archi-slides</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are a solutions architect. Generate the technical architecture presentation: slide 1 – system overview (description of components), slide 2 – main flows (integrations, data), slide 3 – technology choices and rationale, slide 4 – security and compliance, slide 5 – scalability and watch points. Technical style but accessible to non-experts.</div>
+        <span class="diff-tag diff-avance">🟣 Advanced</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🔄</div>
+          <div class="use-card-title">Sprint Review / Agile Demo</div>
+        </div>
+        <p class="use-card-desc">Sprint review deck: sprint goals recap, completed stories and value delivered, velocity metrics, quick retrospective, and next sprint objectives.</p>
+        <div class="skill-badge">⚡ /sprint-review</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are a Scrum Master. Generate the sprint review deck: slide 1 – sprint goals (recap), slide 2 – completed stories and value delivered, slide 3 – demo and key screenshots (placeholder), slide 4 – sprint metrics (velocity, bugs), slide 5 – retrospective points (3 points), slide 6 – next sprint objectives. Transparent and collaborative tone.</div>
+        <span class="diff-tag diff-debutant">🟢 Beginner</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🗺️</div>
+          <div class="use-card-title">Product / IT Roadmap</div>
+        </div>
+        <p class="use-card-desc">Roadmap presentation: strategic vision, next-quarter initiatives, 12-month roadmap by theme, dependencies, risks, and investments.</p>
+        <div class="skill-badge">⚡ /roadmap-it</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are a Product Manager or CTO. Generate the roadmap presentation: slide 1 – vision and strategic objectives, slide 2 – next-quarter initiatives (prioritized table), slide 3 – visual 12-month roadmap by theme, slide 4 – dependencies and risks, slide 5 – required resources and investments. Clear format, prioritization-oriented.</div>
+        <span class="diff-tag diff-inter">🟡 Intermediate</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MANAGEMENT -->
+  <div class="cat-section cat-direction" data-cat="direction">
+    <div class="cat-header">
+      <div class="cat-icon">🏆</div>
+      <div class="cat-label">Management / Leadership</div>
+      <span class="cat-count">3 skills</span>
+    </div>
+    <div class="cards-grid">
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">📊</div>
+          <div class="use-card-title">Executive Committee Deck</div>
+        </div>
+        <p class="use-card-desc">Monthly ExCom deck: highlights, results vs targets, strategic initiative status (RAG), decisions to be made, and next month's priorities.</p>
+        <div class="skill-badge">⚡ /comite-direction</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are a Chief of Staff. Generate the monthly executive committee deck: slide 1 – highlights and context, slide 2 – results vs targets (summary table), slide 3 – ongoing strategic initiatives (RAG status), slide 4 – decisions to be made (2-3 max, with recommendation), slide 5 – next month's priorities. Decision-oriented format, 30-minute time-boxed.</div>
+        <span class="diff-tag diff-inter">🟡 Intermediate</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">🚀</div>
+          <div class="use-card-title">Strategic Project Kickoff</div>
+        </div>
+        <p class="use-card-desc">Project launch deck: context, SMART objectives, scope, team and roles, macro timeline with milestones, risks, and critical success factors.</p>
+        <div class="skill-badge">⚡ /kickoff-projet</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are a project manager. Generate the kickoff deck: slide 1 – project context and rationale, slide 2 – SMART objectives and success KPIs, slide 3 – scope and out-of-scope, slide 4 – project team and roles, slide 5 – macro timeline and key milestones, slide 6 – risks and critical success factors, slide 7 – commitments and next steps. Clear and motivating.</div>
+        <span class="diff-tag diff-debutant">🟢 Beginner</span>
+      </div>
+
+      <div class="use-card">
+        <div class="use-card-top">
+          <div class="use-card-icon">📘</div>
+          <div class="use-card-title">Annual Stakeholder Report</div>
+        </div>
+        <p class="use-card-desc">Institutional annual report deck: chairman's message, highlights, financial results, strategic achievements, CSR, and N+1 outlook.</p>
+        <div class="skill-badge">⚡ /rapport-annuel</div>
+        <div class="prompt-label">Skill definition</div>
+        <div class="use-card-prompt" onclick="copyPrompt(this)">You are a Secretary General or CEO. Generate the annual report structure in slides: slide 1 – chairman's message, slide 2 – year highlights (4-5 points), slide 3 – financial results (key figures), slide 4 – strategic achievements by pillar, slide 5 – corporate social responsibility (CSR), slide 6 – N+1 outlook and ambitions, slide 7 – governance and acknowledgements. Institutional and clean format.</div>
+        <span class="diff-tag diff-avance">🟣 Advanced</span>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+function copyPrompt(el) {
+  const text = el.textContent.replace(/Copy|✓/g, '').trim();
+  navigator.clipboard.writeText(text).catch(() => {});
+  el.classList.add('copied');
+  setTimeout(() => el.classList.remove('copied'), 2000);
+}
+
+function filterAll(btn) {
+  document.querySelectorAll('.cat-section').forEach(s => s.style.display = '');
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function filterCat(cat, btn) {
+  document.querySelectorAll('.cat-section').forEach(s => {
+    s.style.display = s.dataset.cat === cat ? '' : 'none';
+  });
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
