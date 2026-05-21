@@ -449,6 +449,7 @@ body::before {
   <div class="tab-nav">
     <button class="tab-btn active" onclick="switchTab('ppt')">📑 PowerPoint</button>
     <button class="tab-btn" onclick="switchTab('excel')">📊 Excel</button>
+    <button class="tab-btn" onclick="switchTab('skills')">⚡ Skills</button>
     <button class="tab-btn" onclick="switchTab('claude')">🎓 Formations Claude</button>
   </div>
   <a href="ressources_aide-en.html" class="lang-toggle">🇬🇧 EN</a>
@@ -678,6 +679,111 @@ body::before {
     </div>
   </div>
 
+
+  <!-- TAB SKILLS -->
+  <div class="tab-panel" id="tab-skills">
+    <div class="panel-hero">
+      <div class="panel-eyebrow">// Workflows réutilisables</div>
+      <h1 class="panel-title">Skills Office</h1>
+      <p class="panel-desc">Les Skills sont des workflows que vous déclenchez en un clic dans Claude for Excel ou Claude for PowerPoint. Définissez-les une fois, utilisez-les partout.</p>
+    </div>
+
+    <div class="info-box" style="margin-bottom:2rem">
+      <div class="info-label">💡 Principe</div>
+      Une Skill, c'est comme une <strong>macro en langage naturel</strong> : vous décrivez une fois ce que Claude doit faire, puis vous l'invoquez d'un simple <strong>/</strong> dans le panneau, sans avoir à tout réécrire à chaque session.
+    </div>
+
+    <p class="section-label">Skills dans Excel</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Invoquer une Skill</div>
+          <div class="step-desc">Dans le panneau Claude for Excel, tapez <strong>/</strong> pour afficher la liste des Skills disponibles. Sélectionnez celle qui correspond à votre besoin.</div>
+          <div class="step-code">/ → liste des Skills disponibles</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Skills disponibles par défaut</div>
+          <div class="step-desc">Plusieurs Skills sont préinstallées : analyse de formules, audit de données, nettoyage de feuille, génération de rapport. Elles s'exécutent sur le classeur actuellement ouvert.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Combiner Skills et prompts</div>
+          <div class="step-desc">Après avoir invoqué une Skill, vous pouvez ajouter des instructions complémentaires pour affiner son comportement sur votre contexte spécifique.</div>
+          <div class="step-code">/audit puis : "concentre-toi sur l'onglet Budget Q2"</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="section-label" style="margin-top:2rem">Skills dans PowerPoint</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Invoquer une Skill</div>
+          <div class="step-desc">Dans le panneau Claude for PowerPoint, tapez <strong>/</strong> pour afficher les Skills disponibles. Les Skills disponibles dans Excel et PowerPoint sont les mêmes — définies une fois, accessibles dans les deux outils.</div>
+          <div class="step-code">/ → liste des Skills disponibles</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Skills utiles pour PowerPoint</div>
+          <div class="step-desc">Exemples courants : résumé de la présentation, simplification d'une slide chargée, vérification de la cohérence visuelle, réécriture orientée audience cible.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Appliquer sur une slide ou sur tout le deck</div>
+          <div class="step-desc">Précisez dans votre invocation si la Skill doit agir sur la slide active ou sur l'ensemble de la présentation. Claude adapte sa réponse en conséquence.</div>
+          <div class="step-code">/simplify : "applique seulement à la slide 4"</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="section-label" style="margin-top:2rem">Créer et partager une Skill</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Créer une Skill depuis claude.ai</div>
+          <div class="step-desc">Rendez-vous sur <strong>claude.ai → Paramètres → Skills</strong>. Donnez un nom à votre Skill, rédigez les instructions en langage naturel, et enregistrez. Elle devient immédiatement disponible dans tous vos plugins Office.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Rédiger des instructions efficaces</div>
+          <div class="step-desc">Soyez précis sur le contexte, le format de sortie attendu et les contraintes. Plus la Skill est bien décrite, plus Claude l'exécute de façon cohérente d'une session à l'autre.</div>
+          <div class="step-code">"Analyse les formules de ce classeur. Identifie les erreurs (#REF!, #VALUE!), les références circulaires et les cellules codées en dur. Génère un rapport structuré par onglet."</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Partager une Skill en équipe</div>
+          <div class="step-desc">Sur un compte <strong>Team ou Enterprise</strong>, les Skills peuvent être partagées à l'ensemble de l'équipe depuis les paramètres d'administration. Chaque membre les retrouve automatiquement dans ses plugins.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="warn-box" style="margin-top:2rem">
+      <div class="warn-label">⚠ Portée des Skills</div>
+      Les Skills n'accèdent qu'au fichier <strong>actuellement ouvert</strong> dans Excel ou PowerPoint. Elles ne peuvent pas lire d'autres documents ou données externes non ouvertes.
+    </div>
+
+    <div class="info-box" style="margin-top:1rem">
+      <div class="info-label">📚 Formation complète</div>
+      Pour aller plus loin : <a href="formation_agent_skills.html" style="color:var(--accent2);">Formation Skills Office</a> — 9 modules pour maîtriser la création, l'optimisation et le partage de Skills.
+    </div>
+
+  </div>
 
   <!-- TAB FORMATIONS CLAUDE -->
   <div class="tab-panel" id="tab-claude">

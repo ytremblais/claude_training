@@ -449,6 +449,7 @@ body::before {
   <div class="tab-nav">
     <button class="tab-btn active" onclick="switchTab('ppt')">📑 PowerPoint</button>
     <button class="tab-btn" onclick="switchTab('excel')">📊 Excel</button>
+    <button class="tab-btn" onclick="switchTab('skills')">⚡ Skills</button>
     <button class="tab-btn" onclick="switchTab('claude')">🎓 Claude Training</button>
   </div>
   <a href="ressources_aide.html" class="lang-toggle">🇫🇷 FR</a>
@@ -678,6 +679,111 @@ body::before {
     </div>
   </div>
 
+
+  <!-- TAB SKILLS -->
+  <div class="tab-panel" id="tab-skills">
+    <div class="panel-hero">
+      <div class="panel-eyebrow">// Reusable workflows</div>
+      <h1 class="panel-title">Office Skills</h1>
+      <p class="panel-desc">Skills are workflows you trigger in one click inside Claude for Excel or Claude for PowerPoint. Define them once, use them everywhere.</p>
+    </div>
+
+    <div class="info-box" style="margin-bottom:2rem">
+      <div class="info-label">💡 Concept</div>
+      A Skill is like a <strong>macro in plain language</strong>: describe once what Claude should do, then invoke it with a simple <strong>/</strong> in the panel — no need to retype instructions every session.
+    </div>
+
+    <p class="section-label">Skills in Excel</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Invoke a Skill</div>
+          <div class="step-desc">In the Claude for Excel panel, type <strong>/</strong> to display available Skills. Select the one matching your need.</div>
+          <div class="step-code">/ → list of available Skills</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Default Skills</div>
+          <div class="step-desc">Several Skills are pre-installed: formula analysis, data audit, sheet cleanup, report generation. They run on the currently open workbook.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Combine Skills with prompts</div>
+          <div class="step-desc">After invoking a Skill, you can add further instructions to refine its behaviour for your specific context.</div>
+          <div class="step-code">/audit then: "focus only on the Budget Q2 tab"</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="section-label" style="margin-top:2rem">Skills in PowerPoint</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Invoke a Skill</div>
+          <div class="step-desc">In the Claude for PowerPoint panel, type <strong>/</strong> to display available Skills. Skills defined in Excel are also available in PowerPoint — defined once, accessible in both tools.</div>
+          <div class="step-code">/ → list of available Skills</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Useful Skills for PowerPoint</div>
+          <div class="step-desc">Common examples: presentation summary, simplifying a busy slide, checking visual consistency, rewriting content for a target audience.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Apply to one slide or the full deck</div>
+          <div class="step-desc">Specify in your invocation whether the Skill should act on the active slide or the entire presentation. Claude adapts accordingly.</div>
+          <div class="step-code">/simplify: "apply only to slide 4"</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="section-label" style="margin-top:2rem">Create and share a Skill</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Create a Skill from claude.ai</div>
+          <div class="step-desc">Go to <strong>claude.ai → Settings → Skills</strong>. Give your Skill a name, write the instructions in plain language, and save. It becomes immediately available in all your Office plugins.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Write effective instructions</div>
+          <div class="step-desc">Be precise about the context, expected output format and constraints. The better the Skill is described, the more consistently Claude executes it from session to session.</div>
+          <div class="step-code">"Analyse the formulas in this workbook. Identify errors (#REF!, #VALUE!), circular references and hard-coded cells. Generate a structured report by tab."</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Share a Skill with your team</div>
+          <div class="step-desc">On a <strong>Team or Enterprise</strong> account, Skills can be shared across the team from the admin settings. Each member finds them automatically in their plugins.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="warn-box" style="margin-top:2rem">
+      <div class="warn-label">⚠ Skills scope</div>
+      Skills only access the file <strong>currently open</strong> in Excel or PowerPoint. They cannot read other documents or external data that is not open.
+    </div>
+
+    <div class="info-box" style="margin-top:1rem">
+      <div class="info-label">📚 Full training</div>
+      Go further: <a href="formation_agent_skills-en.html" style="color:var(--accent2);">Office Skills Training</a> — 9 modules to master creating, optimising and sharing Skills.
+    </div>
+
+  </div>
 
   <!-- TAB CLAUDE TRAINING -->
   <div class="tab-panel" id="tab-claude">
