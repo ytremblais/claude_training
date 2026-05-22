@@ -161,6 +161,24 @@ body::before {
 .module-complete-btn { padding: 11px 28px; background: linear-gradient(135deg, var(--accent), var(--blue)); border: none; border-radius: 10px; color: white; font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; box-shadow: 0 4px 20px rgba(124,106,247,0.3); }
 .module-complete-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(124,106,247,0.45); }
 .completion-screen { text-align: center; padding: 60px 0; }
+.res-link-card { display: flex; align-items: center; gap: 20px; background: rgba(124,106,247,0.08); border: 1px solid rgba(124,106,247,0.25); border-radius: 14px; padding: 20px 24px; margin-bottom: 28px; text-decoration: none; transition: border-color 0.15s, box-shadow 0.15s; }
+.res-link-card:hover { border-color: rgba(124,106,247,0.5); box-shadow: 0 6px 24px rgba(124,106,247,0.12); }
+.res-link-icon { font-size: 28px; flex-shrink: 0; }
+.res-link-body { flex: 1; }
+.res-link-label { font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent2); margin-bottom: 4px; }
+.res-link-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.res-link-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+.res-link-arrow { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent2); flex-shrink: 0; }
+.res-section-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); margin: 28px 0 14px; }
+.res-concept { display: flex; gap: 14px; margin-bottom: 16px; align-items: flex-start; }
+.res-concept-num { width: 28px; height: 28px; border-radius: 8px; background: rgba(124,106,247,0.12); color: var(--accent2); font-family: 'DM Mono', monospace; font-size: 11px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.res-concept-body { flex: 1; }
+.res-concept-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+.res-concept-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
+.res-concept-text code { font-family: 'DM Mono', monospace; font-size: 11px; background: rgba(255,255,255,0.06); padding: 1px 5px; border-radius: 4px; color: var(--accent2); }
+.res-checklist { list-style: none; display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; }
+.res-checklist li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--muted); line-height: 1.5; }
+.res-checklist li::before { content: '☐'; font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent2); flex-shrink: 0; }
 .completion-icon { font-size: 64px; margin-bottom: 24px; }
 .completion-title { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; margin-bottom: 12px; background: linear-gradient(135deg, var(--green), var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .completion-desc { font-size: 15px; color: var(--muted); line-height: 1.7; max-width: 480px; margin: 0 auto 32px; }
@@ -277,6 +295,10 @@ body::before {
     <div class="nav-item" onclick="showModule(7)" id="nav-m7"><span class="nav-dot"></span> Skills partagées en équipe <span class="nav-check">✓</span></div>
     <div class="nav-item" onclick="showModule(8)" id="nav-m8"><span class="nav-dot"></span> Intégration dans son flux de travail <span class="nav-check">✓</span></div>
   </div>
+  <div class="nav-section">
+    <div class="nav-section-label">Aller plus loin</div>
+    <div class="nav-item" onclick="showScreen('ressources')" id="nav-ressources"><span class="nav-dot"></span> Ressources officielles</div>
+  </div>
 </nav>
 
 <main class="main">
@@ -311,6 +333,138 @@ body::before {
 
   <div class="screen" id="screen-module">
     <div id="module-content"></div>
+  </div>
+
+  <div class="screen" id="screen-ressources">
+    <div class="module-header">
+      <div class="module-breadcrumb">
+        <span style="cursor:pointer;color:var(--accent)" onclick="showScreen('home')">Skills Office</span>
+        <span class="sep">/</span>
+        <span>Ressources officielles</span>
+      </div>
+      <h2 class="module-title">Documentation Anthropic</h2>
+      <p style="font-size:14px;color:var(--muted);line-height:1.6;margin-top:6px;">Synthèse des bonnes pratiques publiées par Anthropic — points complémentaires à cette formation.</p>
+    </div>
+
+    <a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices" target="_blank" class="res-link-card">
+      <div class="res-link-icon">📖</div>
+      <div class="res-link-body">
+        <div class="res-link-label">Documentation officielle · Anthropic</div>
+        <div class="res-link-title">Skill authoring best practices</div>
+        <div class="res-link-desc">Guide complet pour rédiger des Skills efficaces : structure, nommage, tests, évaluation itérative et anti-patterns à éviter.</div>
+      </div>
+      <div class="res-link-arrow">→</div>
+    </a>
+
+    <div class="green-box">
+      <div class="green-label">Ce que cette formation couvre déjà</div>
+      Les modules 6, 7 et 8 traitent la rédaction d'un prompt robuste, le partage en équipe et l'intégration dans le flux de travail — points également abordés dans la documentation Anthropic. Les concepts ci-dessous sont <strong>complémentaires</strong> et ne figurent pas dans les modules.
+    </div>
+
+    <div class="res-section-title">Concepts complémentaires à connaître</div>
+
+    <div class="res-concept">
+      <div class="res-concept-num">1</div>
+      <div class="res-concept-body">
+        <div class="res-concept-title">Concision et budget tokens</div>
+        <div class="res-concept-text">Le contexte est une ressource partagée. Anthropic recommande de garder le corps du fichier <code>SKILL.md</code> sous 500 lignes et de déporter les contenus longs (API, exemples, données de référence) dans des fichiers séparés chargés à la demande. Claude ne les lit que lorsqu'ils deviennent pertinents — zéro coût en tokens jusqu'à ce moment-là.</div>
+      </div>
+    </div>
+
+    <div class="res-concept">
+      <div class="res-concept-num">2</div>
+      <div class="res-concept-body">
+        <div class="res-concept-title">Degrés de liberté selon la fragilité de la tâche</div>
+        <div class="res-concept-text">
+          La documentation distingue trois niveaux selon le risque d'erreur :<br>
+          <strong>Haute liberté</strong> → instructions textuelles générales (plusieurs approches valides)<br>
+          <strong>Liberté moyenne</strong> → pseudo-code ou scripts paramétrés (préférence sans rigidité)<br>
+          <strong>Faible liberté</strong> → script exact à exécuter tel quel (opération fragile, séquence critique)<br>
+          Analogie : pont étroit avec falaises = instructions précises ; champ ouvert = direction générale.
+        </div>
+      </div>
+    </div>
+
+    <div class="res-concept">
+      <div class="res-concept-num">3</div>
+      <div class="res-concept-body">
+        <div class="res-concept-title">Tester avec tous les modèles cibles</div>
+        <div class="res-concept-text">Une Skill efficace sur Claude Opus peut être insuffisante sur Haiku (qui a besoin de plus de contexte) et sur-explicative sur Opus (qui sait déjà). Tester systématiquement avec chaque modèle prévu en production avant de déployer.</div>
+      </div>
+    </div>
+
+    <div class="res-concept">
+      <div class="res-concept-num">4</div>
+      <div class="res-concept-body">
+        <div class="res-concept-title">Convention de nommage des Skills</div>
+        <div class="res-concept-text">
+          Anthropic recommande la <strong>forme gérondive</strong> pour les noms de Skills : <code>analyzing-spreadsheets</code>, <code>processing-pdfs</code>, <code>generating-reports</code>.<br>
+          Règles techniques : minuscules, chiffres et tirets uniquement · max 64 caractères · pas de mots réservés (<code>anthropic</code>, <code>claude</code>) · pas de balises XML.<br>
+          Éviter les noms vagues : <code>helper</code>, <code>utils</code>, <code>data</code>.
+        </div>
+      </div>
+    </div>
+
+    <div class="res-concept">
+      <div class="res-concept-num">5</div>
+      <div class="res-concept-body">
+        <div class="res-concept-title">Description à la 3e personne (mécanisme de découverte)</div>
+        <div class="res-concept-text">
+          La description est injectée dans le system prompt de Claude. Elle doit décrire <em>ce que fait la Skill</em> et <em>quand l'utiliser</em>, toujours à la 3e personne.<br>
+          ✓ <em>"Analyzes Excel spreadsheets and generates pivot reports. Use when working with .xlsx files."</em><br>
+          ✗ <em>"Je peux vous aider à analyser vos fichiers Excel."</em><br>
+          Une description vague (<em>"Helps with documents"</em>) empêche Claude de sélectionner la bonne Skill parmi 100+ disponibles.
+        </div>
+      </div>
+    </div>
+
+    <div class="res-concept">
+      <div class="res-concept-num">6</div>
+      <div class="res-concept-body">
+        <div class="res-concept-title">Boucles de validation (feedback loops)</div>
+        <div class="res-concept-text">Pour les opérations critiques ou en lot (remplir un formulaire, migrer des données, modifier en masse), prévoir un cycle <strong>faire → valider → corriger → répéter</strong>. Exemple : générer un plan JSON → le valider avec un script → appliquer les changements → vérifier le résultat. Ce pattern intercepte les erreurs avant qu'elles ne se propagent.</div>
+      </div>
+    </div>
+
+    <div class="res-concept">
+      <div class="res-concept-num">7</div>
+      <div class="res-concept-body">
+        <div class="res-concept-title">Développement itératif avec Claude A/B</div>
+        <div class="res-concept-text">
+          La documentation recommande un double rôle :<br>
+          <strong>Claude A</strong> (expert) → aide à rédiger et améliorer la Skill<br>
+          <strong>Claude B</strong> (agent) → instance fraîche qui utilise la Skill sur de vraies tâches<br>
+          Observer comment Claude B navigue dans la Skill révèle les angles morts que l'auteur ne voit pas. Répéter le cycle observer → affiner → tester jusqu'à stabilisation.
+        </div>
+      </div>
+    </div>
+
+    <div class="res-section-title" style="margin-top:32px;">Checklist officielle avant de partager une Skill</div>
+    <div class="info-box">
+      <div class="info-label">Qualité du contenu</div>
+      <ul class="res-checklist">
+        <li>La description précise ce que fait la Skill ET quand l'invoquer</li>
+        <li>Le corps de SKILL.md fait moins de 500 lignes</li>
+        <li>Les détails longs sont dans des fichiers séparés référencés à un seul niveau de profondeur</li>
+        <li>Aucune information périmable (dates, versions) dans les instructions principales</li>
+        <li>Terminologie cohérente dans tout le fichier (un seul terme par concept)</li>
+        <li>Les exemples sont concrets, pas abstraits</li>
+      </ul>
+    </div>
+    <div class="green-box" style="margin-top:12px;">
+      <div class="green-label">Tests</div>
+      <ul class="res-checklist">
+        <li>Au moins 3 scénarios de test rédigés avant d'itérer sur la Skill</li>
+        <li>Testée sur Haiku, Sonnet et Opus si ces modèles sont utilisés en production</li>
+        <li>Testée sur des fichiers réels, pas uniquement le fichier de conception</li>
+        <li>Feedback d'au moins un collègue intégré</li>
+      </ul>
+    </div>
+
+    <div style="margin-top:32px;padding-top:24px;border-top:1px solid var(--border);display:flex;gap:12px;">
+      <button class="btn" onclick="showScreen('home')">← Retour à l'accueil</button>
+      <a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices" target="_blank" class="btn btn-primary" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">Lire la documentation complète →</a>
+    </div>
   </div>
 </main>
 </div>
@@ -799,6 +953,7 @@ function showScreen(name) {
   document.getElementById('screen-' + name).classList.add('active');
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   if (name === 'home') document.getElementById('nav-home').classList.add('active');
+  if (name === 'ressources') document.getElementById('nav-ressources').classList.add('active');
 }
 
 function showModule(id) {
