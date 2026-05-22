@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<base href="https://claude-training-gr.pages.dev/">
-<script>(function(){if(window.location.hostname!=="claude-training-gr.pages.dev"){var b="https://claude-training-gr.pages.dev/";document.addEventListener("click",function(e){var t=e.target,a=t&&t.closest?t.closest("a[href]"):null;if(!a)return;var h=a.getAttribute("href");if(!h||/^(https?:|#|mailto:)/.test(h))return;e.preventDefault();window.location.href=b+h;});}})();</script>
+<script>(function(){var p=window.location.pathname;if(p.indexOf("/SitePages/")>-1){var b=window.location.origin+p.replace(/\/SitePages\/.*/,"/Documents/");document.addEventListener("click",function(e){var a=e.target&&e.target.closest?e.target.closest("a[href]"):null;if(!a)return;var h=a.getAttribute("href");if(!h||h.charAt(0)==="#")return;e.preventDefault();if(h.indexOf("claude-training-gr.pages.dev/")>-1){window.location.href=b+h.replace(/.*pages\.dev\//,"");}else if(!/^https?:/.test(h)){window.location.href=b+h;}else{window.location.href=h;}});}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Claude Training – Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
@@ -216,10 +215,10 @@ h1 {
 <body>
 
 <div class="topbar">
-  <a href="https://claude-training-gr.pages.dev/index-en.html" class="back-link">← Home</a>
+  <a href="index-en.html" class="back-link">← Home</a>
   <span class="topbar-sep">/</span>
   <span class="topbar-title">Claude Training</span>
-  <a href="https://claude-training-gr.pages.dev/formations.html" class="lang-toggle">🇫🇷 FR</a>
+  <a href="formations.html" class="lang-toggle">🇫🇷 FR</a>
 </div>
 
 <div class="content">
@@ -237,7 +236,7 @@ h1 {
   </div>
 
   <div class="grid">
-    <a href="https://claude-training-gr.pages.dev/formation_claude_excel-en.html" class="card excel">
+    <a href="formation_claude_excel-en.html" class="card excel">
       <div class="card-header">
         <div class="card-icon icon-excel">📊</div>
         <div class="card-title">Claude for Excel</div>
@@ -253,7 +252,7 @@ h1 {
       <div class="card-cta">Access training →</div>
     </a>
 
-    <a href="https://claude-training-gr.pages.dev/formation_claude_powerpoint-en.html" class="card ppt">
+    <a href="formation_claude_powerpoint-en.html" class="card ppt">
       <div class="card-header">
         <div class="card-icon icon-ppt">📑</div>
         <div class="card-title">Claude for PowerPoint</div>
@@ -269,7 +268,7 @@ h1 {
       <div class="card-cta">Access training →</div>
     </a>
 
-    <a href="https://claude-training-gr.pages.dev/formation_agent_skills-en.html" class="card" style="border-color: rgba(124,106,247,0.3);">
+    <a href="formation_agent_skills-en.html" class="card" style="border-color: rgba(124,106,247,0.3);">
       <div class="card-header">
         <div class="card-icon" style="background:rgba(124,106,247,0.15);font-size:22px;">⚡</div>
         <div class="card-title">Office Skills</div>
