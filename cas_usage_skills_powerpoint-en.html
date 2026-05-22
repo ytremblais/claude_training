@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<script>(function(){var p=window.location.pathname;if(p.indexOf("/SitePages/")>-1){var b=window.location.origin+p.replace(/\/SitePages\/.*/,"/Documents/");document.addEventListener("click",function(e){var a=e.target&&e.target.closest?e.target.closest("a[href]"):null;if(!a)return;var h=a.getAttribute("href");if(!h||h.charAt(0)==="#")return;e.preventDefault();if(h.indexOf("claude-training-gr.pages.dev/")>-1){window.location.href=b+h.replace(/.*pages\.dev\//,"");}else if(!/^https?:/.test(h)){window.location.href=b+h;}else{window.location.href=h;}});}})();</script>
+<script>(function(){var loc=window.location;if(loc.hostname.indexOf("sharepoint.com")<0)return;var p=loc.pathname,base;if(p.indexOf("/Forms/")>-1){base=loc.origin+p.replace(/\/Forms(\/.*)?$/,"/");}else if(p.indexOf("/SitePages/")>-1){base=loc.origin+p.replace(/\/SitePages(\/.*)?$/,"/Documents%20partages/");}else{base=loc.origin+p.replace(/\/[^\/]+$/,"/");}document.addEventListener("click",function(e){var a=e.target&&e.target.closest?e.target.closest("a[href]"):null;if(!a)return;var h=a.getAttribute("href");if(!h||h.charAt(0)==="#"||/^(mailto:|https?:)/.test(h))return;e.preventDefault();window.location.href=base+h;});})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Skills Use Cases – Claude for PowerPoint</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
