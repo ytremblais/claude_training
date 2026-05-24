@@ -26,11 +26,11 @@
   </div>
 
   <div class="filters">
-    <button class="filter-btn active" onclick="filterAll(this)">Tout afficher</button>
-    <button class="filter-btn" onclick="filterCat('formules', this)">🟢 Formules & Calculs</button>
-    <button class="filter-btn" onclick="filterCat('donnees', this)">🔵 Données & Analyse</button>
-    <button class="filter-btn" onclick="filterCat('auto', this)">🟡 Automatisation</button>
-    <button class="filter-btn" onclick="filterCat('rapports', this)">🟣 Rapports & Visuels</button>
+    <button class="filter-btn active" data-action="filter-all">Tout afficher</button>
+    <button class="filter-btn" data-action="filter-cat" data-cat="formules">🟢 Formules & Calculs</button>
+    <button class="filter-btn" data-action="filter-cat" data-cat="donnees">🔵 Données & Analyse</button>
+    <button class="filter-btn" data-action="filter-cat" data-cat="auto">🟡 Automatisation</button>
+    <button class="filter-btn" data-action="filter-cat" data-cat="rapports">🟣 Rapports & Visuels</button>
   </div>
 
   <!-- FORMULES -->
@@ -48,7 +48,7 @@
           <div class="use-card-title">Générer une formule de recherche avancée</div>
         </div>
         <p class="use-card-desc">Créez des formules XLOOKUP, INDEX/MATCH ou RECHERCHEV adaptées à votre structure de données, sans connaître la syntaxe exacte.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Crée une formule pour rechercher la valeur de la colonne D correspondant à la valeur en A2, dans la plage A:D de la feuille "Référentiel". Utilise XLOOKUP si disponible, sinon INDEX/MATCH.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Crée une formule pour rechercher la valeur de la colonne D correspondant à la valeur en A2, dans la plage A:D de la feuille "Référentiel". Utilise XLOOKUP si disponible, sinon INDEX/MATCH.</div>
         <span class="diff-tag diff-debutant">🟢 Débutant</span>
       </div>
 
@@ -58,7 +58,7 @@
           <div class="use-card-title">Déboguer une formule en erreur</div>
         </div>
         <p class="use-card-desc">Identifiez la cause d'une erreur (#N/A, #VALEUR!, #REF!) et obtenez une formule corrigée avec une explication claire.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Cette formule retourne #N/A : =RECHERCHEV(A2;Feuil2!B:D;2;0). Explique pourquoi et propose une version corrigée.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Cette formule retourne #N/A : =RECHERCHEV(A2;Feuil2!B:D;2;0). Explique pourquoi et propose une version corrigée.</div>
         <span class="diff-tag diff-debutant">🟢 Débutant</span>
       </div>
 
@@ -68,7 +68,7 @@
           <div class="use-card-title">Construire des formules imbriquées complexes</div>
         </div>
         <p class="use-card-desc">Créez des formules combinant plusieurs fonctions (SI, ET, OU, SOMME.SI.ENS...) pour des règles métier complexes.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Crée une formule qui calcule une prime : si la valeur en B2 est supérieure à 100 ET que C2 est "Validé", alors 15% de B2, sinon si B2 > 50 alors 5% de B2, sinon 0.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Crée une formule qui calcule une prime : si la valeur en B2 est supérieure à 100 ET que C2 est "Validé", alors 15% de B2, sinon si B2 > 50 alors 5% de B2, sinon 0.</div>
         <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
       </div>
 
@@ -78,7 +78,7 @@
           <div class="use-card-title">Expliquer une formule complexe existante</div>
         </div>
         <p class="use-card-desc">Faites traduire en langage clair une formule héritée ou complexe que vous ne comprenez pas entièrement.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Explique cette formule en français simple, étape par étape : =SOMME.SI.ENS(D:D;A:A;"Paris";B:B;">="&DATE(2024;1;1);C:C;"Actif")</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Explique cette formule en français simple, étape par étape : =SOMME.SI.ENS(D:D;A:A;"Paris";B:B;">="&DATE(2024;1;1);C:C;"Actif")</div>
         <span class="diff-tag diff-debutant">🟢 Débutant</span>
       </div>
 
@@ -88,7 +88,7 @@
           <div class="use-card-title">Optimiser des formules lentes</div>
         </div>
         <p class="use-card-desc">Remplacez les formules volatiles ou inefficaces (INDIRECT, formules matricielles classiques) par des équivalents plus performants.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Ce classeur rame avec des RECHERCHEV sur 50 000 lignes. Propose une alternative plus rapide et explique comment la mettre en place.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Ce classeur rame avec des RECHERCHEV sur 50 000 lignes. Propose une alternative plus rapide et explique comment la mettre en place.</div>
         <span class="diff-tag diff-avance">🟣 Avancé</span>
       </div>
 
@@ -110,7 +110,7 @@
           <div class="use-card-title">Nettoyer et normaliser des données</div>
         </div>
         <p class="use-card-desc">Standardisez des formats incohérents (dates, noms, catégories), supprimez les espaces parasites et corrigez les valeurs aberrantes.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">La colonne A contient des noms de villes avec des casses incohérentes (PARIS, paris, Paris). Propose une formule pour tout normaliser en "Première lettre majuscule" et ajoute une colonne nettoyée.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">La colonne A contient des noms de villes avec des casses incohérentes (PARIS, paris, Paris). Propose une formule pour tout normaliser en "Première lettre majuscule" et ajoute une colonne nettoyée.</div>
         <span class="diff-tag diff-debutant">🟢 Débutant</span>
       </div>
 
@@ -120,7 +120,7 @@
           <div class="use-card-title">Analyser un tableau et extraire des insights</div>
         </div>
         <p class="use-card-desc">Demandez à Claude de lire vos données et de produire un résumé structuré : tendances, valeurs remarquables, anomalies.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Analyse le tableau de la feuille "Ventes 2024" et dis-moi : les 3 meilleures performances, les 3 pires, la tendance générale et les anomalies notables.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Analyse le tableau de la feuille "Ventes 2024" et dis-moi : les 3 meilleures performances, les 3 pires, la tendance générale et les anomalies notables.</div>
         <span class="diff-tag diff-debutant">🟢 Débutant</span>
       </div>
 
@@ -130,7 +130,7 @@
           <div class="use-card-title">Détecter des doublons et incohérences</div>
         </div>
         <p class="use-card-desc">Identifiez automatiquement les doublons, les valeurs manquantes et les incohérences logiques dans vos jeux de données.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Analyse la colonne ID (colonne A) et identifie tous les doublons. Pour chaque doublon, indique les numéros de lignes concernées. Propose ensuite une formule pour les signaler automatiquement.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Analyse la colonne ID (colonne A) et identifie tous les doublons. Pour chaque doublon, indique les numéros de lignes concernées. Propose ensuite une formule pour les signaler automatiquement.</div>
         <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
       </div>
 
@@ -140,7 +140,7 @@
           <div class="use-card-title">Transformer et restructurer des données</div>
         </div>
         <p class="use-card-desc">Convertissez un tableau de format large en format long (ou l'inverse), dépivotez des données, concaténez ou séparez des colonnes.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Mon tableau a une ligne par client avec 12 colonnes de chiffre mensuel (Jan à Déc). Je veux le transformer en format avec 3 colonnes : Client, Mois, Valeur. Propose la méthode la plus simple pour Excel 365.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Mon tableau a une ligne par client avec 12 colonnes de chiffre mensuel (Jan à Déc). Je veux le transformer en format avec 3 colonnes : Client, Mois, Valeur. Propose la méthode la plus simple pour Excel 365.</div>
         <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
       </div>
 
@@ -150,7 +150,7 @@
           <div class="use-card-title">Calculs statistiques et interprétation</div>
         </div>
         <p class="use-card-desc">Calculez des indicateurs statistiques (moyenne, médiane, écart-type, percentiles) et obtenez une interprétation en langage naturel.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Calcule la moyenne, la médiane, l'écart-type et les percentiles 25/75 des valeurs de la colonne B (B2:B500). Puis dis-moi en 3 phrases ce que ces chiffres indiquent sur la distribution.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Calcule la moyenne, la médiane, l'écart-type et les percentiles 25/75 des valeurs de la colonne B (B2:B500). Puis dis-moi en 3 phrases ce que ces chiffres indiquent sur la distribution.</div>
         <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
       </div>
 
@@ -172,7 +172,7 @@
           <div class="use-card-title">Générer du code VBA sur mesure</div>
         </div>
         <p class="use-card-desc">Créez des macros VBA pour automatiser des tâches répétitives : copie de données, mises en forme automatiques, exports, envois.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Écris une macro VBA qui : parcourt toutes les lignes de la feuille "Données", copie les lignes dont la colonne C vaut "À traiter" dans une nouvelle feuille nommée "En cours", puis supprime ces lignes de la feuille d'origine.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Écris une macro VBA qui : parcourt toutes les lignes de la feuille "Données", copie les lignes dont la colonne C vaut "À traiter" dans une nouvelle feuille nommée "En cours", puis supprime ces lignes de la feuille d'origine.</div>
         <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
       </div>
 
@@ -182,7 +182,7 @@
           <div class="use-card-title">Automatiser la mise en forme conditionnelle</div>
         </div>
         <p class="use-card-desc">Générez des règles de mise en forme conditionnelle complexes ou demandez à Claude de les appliquer directement via VBA.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Ajoute une mise en forme conditionnelle sur la plage B2:B100 : fond rouge si la valeur est inférieure à 0, fond orange si entre 0 et 50, fond vert si supérieure à 50.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Ajoute une mise en forme conditionnelle sur la plage B2:B100 : fond rouge si la valeur est inférieure à 0, fond orange si entre 0 et 50, fond vert si supérieure à 50.</div>
         <span class="diff-tag diff-debutant">🟢 Débutant</span>
       </div>
 
@@ -192,7 +192,7 @@
           <div class="use-card-title">Créer des listes déroulantes et validations</div>
         </div>
         <p class="use-card-desc">Configurez des validations de données (listes déroulantes, contraintes numériques, formats) pour sécuriser la saisie.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Ajoute une liste déroulante en colonne D pour les valeurs : "En cours", "Validé", "Refusé", "En attente". Ajoute aussi un message d'erreur si l'utilisateur tente de saisir autre chose.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Ajoute une liste déroulante en colonne D pour les valeurs : "En cours", "Validé", "Refusé", "En attente". Ajoute aussi un message d'erreur si l'utilisateur tente de saisir autre chose.</div>
         <span class="diff-tag diff-debutant">🟢 Débutant</span>
       </div>
 
@@ -202,7 +202,7 @@
           <div class="use-card-title">Documenter un fichier Excel complexe</div>
         </div>
         <p class="use-card-desc">Générez automatiquement une documentation des feuilles, formules clés et logiques métier d'un classeur complexe.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Documente ce classeur : liste toutes les feuilles, leur rôle apparent, les formules les plus complexes que tu identifies et les dépendances entre feuilles. Formate la réponse comme un guide de référence.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Documente ce classeur : liste toutes les feuilles, leur rôle apparent, les formules les plus complexes que tu identifies et les dépendances entre feuilles. Formate la réponse comme un guide de référence.</div>
         <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
       </div>
 
@@ -212,7 +212,7 @@
           <div class="use-card-title">Déboguer une macro VBA existante</div>
         </div>
         <p class="use-card-desc">Identifiez les erreurs dans un code VBA, comprenez ce qu'il fait et obtenez une version corrigée et commentée.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Cette macro VBA plante à la ligne 12 avec "Erreur 1004". Explique pourquoi et propose une version corrigée : [coller le code VBA ici]</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Cette macro VBA plante à la ligne 12 avec "Erreur 1004". Explique pourquoi et propose une version corrigée : [coller le code VBA ici]</div>
         <span class="diff-tag diff-avance">🟣 Avancé</span>
       </div>
 
@@ -234,7 +234,7 @@
           <div class="use-card-title">Créer un tableau de bord synthétique</div>
         </div>
         <p class="use-card-desc">Structurez un onglet de tableau de bord avec les KPIs clés, les formules associées et les recommandations de mise en forme.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Crée un onglet "Dashboard" dans ce classeur avec : le chiffre d'affaires total, la marge brute, le nombre de commandes et le panier moyen — calculés depuis la feuille "Données". Propose aussi la structure de mise en forme recommandée.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Crée un onglet "Dashboard" dans ce classeur avec : le chiffre d'affaires total, la marge brute, le nombre de commandes et le panier moyen — calculés depuis la feuille "Données". Propose aussi la structure de mise en forme recommandée.</div>
         <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
       </div>
 
@@ -244,7 +244,7 @@
           <div class="use-card-title">Recommander le bon type de graphique</div>
         </div>
         <p class="use-card-desc">Décrivez vos données et obtenez une recommandation argumentée sur le type de graphique le plus adapté à votre message.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">J'ai des données de ventes mensuelles sur 3 régions sur 2 ans. Je veux montrer à la fois l'évolution dans le temps ET la comparaison entre régions. Quel type de graphique recommandes-tu et pourquoi ?</div>
+        <div class="use-card-prompt" data-action="copy-prompt">J'ai des données de ventes mensuelles sur 3 régions sur 2 ans. Je veux montrer à la fois l'évolution dans le temps ET la comparaison entre régions. Quel type de graphique recommandes-tu et pourquoi ?</div>
         <span class="diff-tag diff-debutant">🟢 Débutant</span>
       </div>
 
@@ -254,7 +254,7 @@
           <div class="use-card-title">Générer un rapport de synthèse textuel</div>
         </div>
         <p class="use-card-desc">Transformez des données brutes en un résumé rédigé prêt à coller dans un email ou un document de reporting.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">À partir des données de la feuille "Résultats Q3", rédige un résumé de 5 lignes en français pour un reporting dirigeant : performance globale, point positif et point d'attention. Sois factuel et concis.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">À partir des données de la feuille "Résultats Q3", rédige un résumé de 5 lignes en français pour un reporting dirigeant : performance globale, point positif et point d'attention. Sois factuel et concis.</div>
         <span class="diff-tag diff-debutant">🟢 Débutant</span>
       </div>
 
@@ -264,7 +264,7 @@
           <div class="use-card-title">Structurer un tableau croisé dynamique</div>
         </div>
         <p class="use-card-desc">Obtenez des instructions pas à pas pour créer le TCD optimal selon votre question d'analyse.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Je veux analyser les ventes par région et par catégorie de produit, avec le CA et le volume en valeurs. Comment configurer le tableau croisé dynamique sur mes données (colonnes : Date, Région, Catégorie, Produit, CA, Volume) ?</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Je veux analyser les ventes par région et par catégorie de produit, avec le CA et le volume en valeurs. Comment configurer le tableau croisé dynamique sur mes données (colonnes : Date, Région, Catégorie, Produit, CA, Volume) ?</div>
         <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
       </div>
 
@@ -274,7 +274,7 @@
           <div class="use-card-title">Créer des prévisions et projections</div>
         </div>
         <p class="use-card-desc">Construisez des modèles de projection simples (tendance linéaire, saisonnalité) avec les formules Excel appropriées.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">J'ai 18 mois de données de ventes mensuelles en colonne B. Crée une projection pour les 6 prochains mois avec une tendance linéaire et indique l'intervalle de confiance. Utilise les fonctions Excel natives.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">J'ai 18 mois de données de ventes mensuelles en colonne B. Crée une projection pour les 6 prochains mois avec une tendance linéaire et indique l'intervalle de confiance. Utilise les fonctions Excel natives.</div>
         <span class="diff-tag diff-avance">🟣 Avancé</span>
       </div>
 

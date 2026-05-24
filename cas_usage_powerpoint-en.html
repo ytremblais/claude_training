@@ -26,11 +26,11 @@
   </div>
 
   <div class="filters">
-    <button class="filter-btn active" onclick="filterAll(this)">Show all</button>
-    <button class="filter-btn" onclick="filterCat('creation', this)">🟣 Content Creation</button>
-    <button class="filter-btn" onclick="filterCat('edition', this)">🔵 Editing & Optimization</button>
-    <button class="filter-btn" onclick="filterCat('visuel', this)">🟡 Visuals & Charts</button>
-    <button class="filter-btn" onclick="filterCat('productivite', this)">🟢 Productivity & Compliance</button>
+    <button class="filter-btn active" data-action="filter-all">Show all</button>
+    <button class="filter-btn" data-action="filter-cat" data-cat="creation">🟣 Content Creation</button>
+    <button class="filter-btn" data-action="filter-cat" data-cat="edition">🔵 Editing & Optimization</button>
+    <button class="filter-btn" data-action="filter-cat" data-cat="visuel">🟡 Visuals & Charts</button>
+    <button class="filter-btn" data-action="filter-cat" data-cat="productivite">🟢 Productivity & Compliance</button>
   </div>
 
   <!-- CONTENT CREATION -->
@@ -48,7 +48,7 @@
           <div class="use-card-title">Generate a complete deck from a brief</div>
         </div>
         <p class="use-card-desc">Create a presentation from scratch from a natural-language brief: structure, titles, content and narrative logic in seconds.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Create a 10-slide investor pitch deck for a B2B SaaS solution targeting HR Directors. Structure: problem, solution, market size (TAM/SAM/SOM), differentiation, business model, roadmap, team, next steps. Tone: concise and business-oriented.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Create a 10-slide investor pitch deck for a B2B SaaS solution targeting HR Directors. Structure: problem, solution, market size (TAM/SAM/SOM), differentiation, business model, roadmap, team, next steps. Tone: concise and business-oriented.</div>
         <span class="diff-tag diff-debutant">🟢 Beginner</span>
       </div>
 
@@ -58,7 +58,7 @@
           <div class="use-card-title">Create an executive summary</div>
         </div>
         <p class="use-card-desc">Condense the key points of a deck into 1 to 2 executive summary slides readable in 30 seconds.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Add a 1-slide executive summary at the beginning of this deck. It must contain: the 3 key messages as one-line bullets, the decision expected from the audience and the main impact figure. Maximum 80 words in total.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Add a 1-slide executive summary at the beginning of this deck. It must contain: the 3 key messages as one-line bullets, the decision expected from the audience and the main impact figure. Maximum 80 words in total.</div>
         <span class="diff-tag diff-debutant">🟢 Beginner</span>
       </div>
 
@@ -68,7 +68,7 @@
           <div class="use-card-title">Write speaker notes</div>
         </div>
         <p class="use-card-desc">Generate presentation notes for each slide: natural script, transition points and key messages not to forget.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">For each slide in this deck, write speaker notes of 4 to 6 lines. Tone: conversational but professional. Include for each slide: the main message, 2 points to develop verbally and the transition sentence to the next slide.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">For each slide in this deck, write speaker notes of 4 to 6 lines. Tone: conversational but professional. Include for each slide: the main message, 2 points to develop verbally and the transition sentence to the next slide.</div>
         <span class="diff-tag diff-inter">🟡 Intermediate</span>
       </div>
 
@@ -78,7 +78,7 @@
           <div class="use-card-title">Translate and localize a presentation</div>
         </div>
         <p class="use-card-desc">Translate an entire deck into another language while preserving the tone, structure and appropriate cultural nuances.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Translate all slides of this deck into English. Adapt idiomatic expressions for an international English-speaking audience (avoid expressions that are too French). Maintain the professional and concise tone.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Translate all slides of this deck into English. Adapt idiomatic expressions for an international English-speaking audience (avoid expressions that are too French). Maintain the professional and concise tone.</div>
         <span class="diff-tag diff-inter">🟡 Intermediate</span>
       </div>
 
@@ -88,7 +88,7 @@
           <div class="use-card-title">Adapt content for a specific audience</div>
         </div>
         <p class="use-card-desc">Rewrite the content of a deck for a different audience: non-technical decision-makers, operational teams, customers, investors...</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">This deck is currently written for technical teams. Rewrite the content for non-technical executives: remove jargon, replace implementation details with business impacts, and rephrase slide titles in results-oriented mode.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">This deck is currently written for technical teams. Rewrite the content for non-technical executives: remove jargon, replace implementation details with business impacts, and rephrase slide titles in results-oriented mode.</div>
         <span class="diff-tag diff-inter">🟡 Intermediate</span>
       </div>
 
@@ -110,7 +110,7 @@
           <div class="use-card-title">Simplify overloaded slides</div>
         </div>
         <p class="use-card-desc">Reduce overly dense slides while keeping the 3 key messages, with a precise length constraint.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Simplify this slide: reduce it to 3 bullet points maximum, each fewer than 12 words. Keep the 3 most important strategic messages and remove everything secondary.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Simplify this slide: reduce it to 3 bullet points maximum, each fewer than 12 words. Keep the 3 most important strategic messages and remove everything secondary.</div>
         <span class="diff-tag diff-debutant">🟢 Beginner</span>
       </div>
 
@@ -120,7 +120,7 @@
           <div class="use-card-title">Restructure using the Pyramid Principle</div>
         </div>
         <p class="use-card-desc">Reorganize your deck so recommendations appear first, followed by context and supporting data.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Reorganize the slides in this deck according to the Pyramid Principle: recommendations first (slides 12-15), then analysis (6-11), then supporting data (1-5). Then update the agenda slide to reflect the new order.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Reorganize the slides in this deck according to the Pyramid Principle: recommendations first (slides 12-15), then analysis (6-11), then supporting data (1-5). Then update the agenda slide to reflect the new order.</div>
         <span class="diff-tag diff-inter">🟡 Intermediate</span>
       </div>
 
@@ -130,7 +130,7 @@
           <div class="use-card-title">Rephrase titles in action mode</div>
         </div>
         <p class="use-card-desc">Transform passive descriptive titles into action- or result-oriented titles, more impactful for a decision-making audience.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Rephrase all slide titles in this deck in "action-oriented" or "result-oriented" mode. Maximum 6 words per title. Titles should answer the question "Why is this slide important for my audience?"</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Rephrase all slide titles in this deck in "action-oriented" or "result-oriented" mode. Maximum 6 words per title. Titles should answer the question "Why is this slide important for my audience?"</div>
         <span class="diff-tag diff-debutant">🟢 Beginner</span>
       </div>
 
@@ -140,7 +140,7 @@
           <div class="use-card-title">Add transition slides</div>
         </div>
         <p class="use-card-desc">Create section slides to smooth navigation between the main parts of your presentation.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Add transition slides between each main section of this deck. Each transition slide should indicate the section name, a descriptive one-line subtitle, and remind the audience where we are in the agenda.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Add transition slides between each main section of this deck. Each transition slide should indicate the section name, a descriptive one-line subtitle, and remind the audience where we are in the agenda.</div>
         <span class="diff-tag diff-inter">🟡 Intermediate</span>
       </div>
 
@@ -150,7 +150,7 @@
           <div class="use-card-title">Proofread and correct content</div>
         </div>
         <p class="use-card-desc">Identify errors, inconsistencies, awkward phrasing and claims to verify before sharing the deck.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Carefully proofread all slides in this deck and flag: spelling or grammar mistakes, unclear phrasing, unsupported claims, and inconsistencies between slides. Give your feedback slide by slide.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Carefully proofread all slides in this deck and flag: spelling or grammar mistakes, unclear phrasing, unsupported claims, and inconsistencies between slides. Give your feedback slide by slide.</div>
         <span class="diff-tag diff-debutant">🟢 Beginner</span>
       </div>
 
@@ -172,7 +172,7 @@
           <div class="use-card-title">Create a native editable chart</div>
         </div>
         <p class="use-card-desc">Generate data charts directly in PowerPoint, editable via the integrated Excel — not just images.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Create a native PowerPoint line chart (not an image, must be editable) showing quarterly growth: Q1=+12%, Q2=+18%, Q3=-4%, Q4=+22%. Highlight Q3 in red as the negative quarter.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Create a native PowerPoint line chart (not an image, must be editable) showing quarterly growth: Q1=+12%, Q2=+18%, Q3=-4%, Q4=+22%. Highlight Q3 in red as the negative quarter.</div>
         <span class="diff-tag diff-inter">🟡 Intermediate</span>
       </div>
 
@@ -182,7 +182,7 @@
           <div class="use-card-title">Transform bullets into a process diagram</div>
         </div>
         <p class="use-card-desc">Convert a list of text steps into a native SmartArt diagram or visual process flow.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Transform these 5 text steps into a native PowerPoint process flow diagram: Needs gathering → Budget approval → Request for proposals → Supplier selection → Contract signing. Use directional arrows and distinct colors per step.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Transform these 5 text steps into a native PowerPoint process flow diagram: Needs gathering → Budget approval → Request for proposals → Supplier selection → Contract signing. Use directional arrows and distinct colors per step.</div>
         <span class="diff-tag diff-inter">🟡 Intermediate</span>
       </div>
 
@@ -192,7 +192,7 @@
           <div class="use-card-title">Create a distribution chart</div>
         </div>
         <p class="use-card-desc">Visualize market shares, budgets or allocations with a native pie or donut chart.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Create a native PowerPoint donut chart showing budget allocation: Product 40%, Marketing 25%, R&D 20%, Support 10%, Overhead 5%. Add percentages on each segment and a title "2024 Budget".</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Create a native PowerPoint donut chart showing budget allocation: Product 40%, Marketing 25%, R&D 20%, Support 10%, Overhead 5%. Add percentages on each segment and a title "2024 Budget".</div>
         <span class="diff-tag diff-debutant">🟢 Beginner</span>
       </div>
 
@@ -202,7 +202,7 @@
           <div class="use-card-title">Create a visual comparison table</div>
         </div>
         <p class="use-card-desc">Generate a structured comparison table (competitors, options, scenarios) with visually clear conditional formatting.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Create a comparison table on this slide for 4 competing solutions across 5 criteria: Price, Ease of use, Support, Integrations, Security. Rate each criterion from 1 to 5. Highlight top scores in green and lowest scores in red.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Create a comparison table on this slide for 4 competing solutions across 5 criteria: Price, Ease of use, Support, Integrations, Security. Rate each criterion from 1 to 5. Highlight top scores in green and lowest scores in red.</div>
         <span class="diff-tag diff-inter">🟡 Intermediate</span>
       </div>
 
@@ -212,7 +212,7 @@
           <div class="use-card-title">Create a visual roadmap (timeline)</div>
         </div>
         <p class="use-card-desc">Generate a clear, readable product/project timeline or roadmap directly in PowerPoint.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Create a roadmap on one slide with a horizontal timeline in 4 quarters (Q1 to Q4 2025). Place these milestones: Q1 - Beta launch, Q2 - First 100 customers, Q3 - Fundraising round, Q4 - Europe expansion. Use different colors per phase.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Create a roadmap on one slide with a horizontal timeline in 4 quarters (Q1 to Q4 2025). Place these milestones: Q1 - Beta launch, Q2 - First 100 customers, Q3 - Fundraising round, Q4 - Europe expansion. Use different colors per phase.</div>
         <span class="diff-tag diff-avance">🟣 Advanced</span>
       </div>
 
@@ -234,7 +234,7 @@
           <div class="use-card-title">Check brand guidelines compliance</div>
         </div>
         <p class="use-card-desc">Audit your presentation to identify elements outside the template: fonts, colors, non-compliant layouts.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Check the brand guidelines compliance of this deck. Identify: slides not using the correct template layouts, colors that don't match the palette (accent #0070C0, black text, white background), non-standard fonts. Give a slide-by-slide report.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Check the brand guidelines compliance of this deck. Identify: slides not using the correct template layouts, colors that don't match the palette (accent #0070C0, black text, white background), non-standard fonts. Give a slide-by-slide report.</div>
         <span class="diff-tag diff-inter">🟡 Intermediate</span>
       </div>
 
@@ -244,7 +244,7 @@
           <div class="use-card-title">Enrich a deck with Google Drive data</div>
         </div>
         <p class="use-card-desc">Connect to your Drive documents to automatically enrich your slides with up-to-date data, without copy-pasting.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Based on the document "Market Watch Q3 2025" in my Google Drive, create 3 slides on the identified market trends. Use only data explicitly mentioned in the document, without adding invented information.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Based on the document "Market Watch Q3 2025" in my Google Drive, create 3 slides on the identified market trends. Use only data explicitly mentioned in the document, without adding invented information.</div>
         <span class="diff-tag diff-avance">🟣 Advanced</span>
       </div>
 
@@ -254,7 +254,7 @@
           <div class="use-card-title">Configure persistent instructions</div>
         </div>
         <p class="use-card-desc">Define your style, tone and vocabulary constraints once and have them applied automatically.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">I want to configure persistent instructions for my client decks. Help me write an instructions block covering: bullet format (one line max), title length (6 words max), accent color (#C8102E), target audience (senior decision-makers) and a mandatory "So what?" on recommendation slides.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">I want to configure persistent instructions for my client decks. Help me write an instructions block covering: bullet format (one line max), title length (6 words max), accent color (#C8102E), target audience (senior decision-makers) and a mandatory "So what?" on recommendation slides.</div>
         <span class="diff-tag diff-inter">🟡 Intermediate</span>
       </div>
 
@@ -264,7 +264,7 @@
           <div class="use-card-title">Generate meeting minutes as slides</div>
         </div>
         <p class="use-card-desc">Transform raw meeting notes into a structured presentation: decisions made, actions and owners.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">I'm giving you my raw executive committee meeting notes. Create 3 slides: 1) Decisions made (bullets), 2) Actions and owners (table: Action / Owner / Deadline), 3) Next steps and open items. [Paste notes here]</div>
+        <div class="use-card-prompt" data-action="copy-prompt">I'm giving you my raw executive committee meeting notes. Create 3 slides: 1) Decisions made (bullets), 2) Actions and owners (table: Action / Owner / Deadline), 3) Next steps and open items. [Paste notes here]</div>
         <span class="diff-tag diff-debutant">🟢 Beginner</span>
       </div>
 
@@ -274,7 +274,7 @@
           <div class="use-card-title">Analyze the narrative structure of a deck</div>
         </div>
         <p class="use-card-desc">Get a diagnostic of your presentation's narrative logic: flow, message consistency, gaps.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Analyze the narrative structure of this deck. Tell me: is the storyline clear and logical? Are there missing transitions? Are the slides in the right order? Which slides are redundant or could be merged? Answer in a structured way.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Analyze the narrative structure of this deck. Tell me: is the storyline clear and logical? Are there missing transitions? Are the slides in the right order? Which slides are redundant or could be merged? Answer in a structured way.</div>
         <span class="diff-tag diff-inter">🟡 Intermediate</span>
       </div>
 

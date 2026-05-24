@@ -15,10 +15,10 @@
   <span class="topbar-sep">/</span>
   <span class="topbar-title">Ressources & Aide</span>
   <div class="tab-nav">
-    <button class="tab-btn active" onclick="switchTab('ppt')">📑 PowerPoint</button>
-    <button class="tab-btn" onclick="switchTab('excel')">📊 Excel</button>
-    <button class="tab-btn" onclick="switchTab('skills')">⚡ Skills</button>
-    <button class="tab-btn" onclick="switchTab('claude')">🎓 Formations Claude</button>
+    <button class="tab-btn active" data-action="switch-tab" data-tab="ppt">📑 PowerPoint</button>
+    <button class="tab-btn" data-action="switch-tab" data-tab="excel">📊 Excel</button>
+    <button class="tab-btn" data-action="switch-tab" data-tab="skills">⚡ Skills</button>
+    <button class="tab-btn" data-action="switch-tab" data-tab="claude">🎓 Formations Claude</button>
   </div>
   <a href="ressources_aide-en.html" class="lang-toggle">🇬🇧 EN</a>
 </div>
@@ -94,7 +94,7 @@
     <p class="section-label">Questions fréquentes</p>
     <div class="faq">
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
+        <div class="faq-q" data-action="toggle-faq">
           <span class="faq-q-icon">Q</span>
           Le panneau Claude n'apparaît pas dans mon ruban. Que faire ?
           <span class="faq-toggle">▼</span>
@@ -102,7 +102,7 @@
         <div class="faq-a">Vérifiez d'abord que le complément est bien activé : Accueil → Compléments (Windows) ou Outils → Compléments (Mac). Si "Claude by Anthropic" est absent de la liste, relancez l'installation depuis le Microsoft AppSource. Assurez-vous que votre version PowerPoint est compatible (build 16.0.13127+ sur Windows, 16.46+ sur Mac).</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
+        <div class="faq-q" data-action="toggle-faq">
           <span class="faq-q-icon">Q</span>
           Claude a modifié mes slides sans que je valide. Est-ce normal ?
           <span class="faq-toggle">▼</span>
@@ -110,7 +110,7 @@
         <div class="faq-a">Le plugin dispose d'une <strong>protection contre les écrasements accidentels</strong> : il vous prévient avant d'écraser du contenu existant. Lisez toujours cet avertissement. En cas d'erreur, utilisez <strong>Ctrl+Z / Cmd+Z</strong> pour annuler — PowerPoint conserve tout l'historique d'annulation.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
+        <div class="faq-q" data-action="toggle-faq">
           <span class="faq-q-icon">Q</span>
           Mes données sont-elles conservées par Anthropic ?
           <span class="faq-toggle">▼</span>
@@ -118,7 +118,7 @@
         <div class="faq-a">Selon la documentation officielle Anthropic, les inputs et outputs sont <strong>supprimés dans les 30 jours</strong>. Aucun historique n'est conservé entre les sessions. Les logs d'audit Enterprise ne couvrent pas encore Claude for PowerPoint.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
+        <div class="faq-q" data-action="toggle-faq">
           <span class="faq-q-icon">Q</span>
           Puis-je utiliser Claude avec un template téléchargé depuis internet ?
           <span class="faq-toggle">▼</span>
@@ -126,7 +126,7 @@
         <div class="faq-a"><strong>Déconseillé.</strong> Les fichiers externes non vérifiés peuvent contenir des instructions malveillantes (prompt injection) que Claude exécuterait sur votre deck. Utilisez uniquement des templates internes validés ou des fichiers dont vous contrôlez intégralement le contenu.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
+        <div class="faq-q" data-action="toggle-faq">
           <span class="faq-q-icon">Q</span>
           Comment configurer des instructions qui s'appliquent automatiquement à chaque session ?
           <span class="faq-toggle">▼</span>
@@ -205,7 +205,7 @@
     <p class="section-label">Questions fréquentes</p>
     <div class="faq">
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
+        <div class="faq-q" data-action="toggle-faq">
           <span class="faq-q-icon">Q</span>
           Claude peut-il lire toutes les feuilles de mon classeur ?
           <span class="faq-toggle">▼</span>
@@ -213,7 +213,7 @@
         <div class="faq-a">Oui, Claude a accès à toutes les feuilles du classeur ouvert. Pour les classeurs volumineux, précisez dans votre prompt la feuille et la plage de données concernées pour obtenir des réponses plus précises. Exemple : <strong>"Sur la feuille 'Ventes', analyse les données de la plage A1:F200."</strong></div>
       </div>
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
+        <div class="faq-q" data-action="toggle-faq">
           <span class="faq-q-icon">Q</span>
           Claude peut-il modifier directement mes données Excel ?
           <span class="faq-toggle">▼</span>
@@ -221,7 +221,7 @@
         <div class="faq-a">Oui, Claude peut écrire des données, générer des formules et créer des structures directement dans votre classeur. Il vous avertit avant d'<strong>écraser du contenu existant</strong>. Utilisez <strong>Ctrl+Z / Cmd+Z</strong> pour annuler une action non souhaitée.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
+        <div class="faq-q" data-action="toggle-faq">
           <span class="faq-q-icon">Q</span>
           Les formules générées par Claude fonctionnent-elles dans toutes les versions d'Excel ?
           <span class="faq-toggle">▼</span>
@@ -229,7 +229,7 @@
         <div class="faq-a">Claude génère des formules adaptées à Excel Microsoft 365. Certaines fonctions récentes (XLOOKUP, FILTER, SORT, formules dynamiques) ne sont pas disponibles dans Excel 2016 ou 2019. Précisez dans votre prompt : <strong>"génère une formule compatible avec Excel 2019"</strong> si nécessaire.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
+        <div class="faq-q" data-action="toggle-faq">
           <span class="faq-q-icon">Q</span>
           Mes données confidentielles sont-elles en sécurité ?
           <span class="faq-toggle">▼</span>
@@ -237,7 +237,7 @@
         <div class="faq-a">Les données envoyées à Claude sont traitées selon la politique de confidentialité Anthropic. Les inputs et outputs sont <strong>supprimés dans les 30 jours</strong>. Pour des données sensibles (données clients, données RH, données financières réglementées), vérifiez préalablement que votre politique data interne autorise l'usage du plugin.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
+        <div class="faq-q" data-action="toggle-faq">
           <span class="faq-q-icon">Q</span>
           Comment donner des instructions qui s'appliquent à toutes mes sessions Excel ?
           <span class="faq-toggle">▼</span>

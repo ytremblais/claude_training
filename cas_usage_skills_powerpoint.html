@@ -28,13 +28,13 @@
   </div>
 
   <div class="filters">
-    <button class="filter-btn active" onclick="filterAll(this)">Tout afficher</button>
-    <button class="filter-btn" onclick="filterCat('finance', this)">💰 Finance</button>
-    <button class="filter-btn" onclick="filterCat('marketing', this)">📣 Marketing</button>
-    <button class="filter-btn" onclick="filterCat('rh', this)">👥 RH</button>
-    <button class="filter-btn" onclick="filterCat('commercial', this)">🤝 Commercial</button>
-    <button class="filter-btn" onclick="filterCat('it', this)">⚙️ IT</button>
-    <button class="filter-btn" onclick="filterCat('direction', this)">🏆 Direction</button>
+    <button class="filter-btn active" data-action="filter-all">Tout afficher</button>
+    <button class="filter-btn" data-action="filter-cat" data-cat="finance">💰 Finance</button>
+    <button class="filter-btn" data-action="filter-cat" data-cat="marketing">📣 Marketing</button>
+    <button class="filter-btn" data-action="filter-cat" data-cat="rh">👥 RH</button>
+    <button class="filter-btn" data-action="filter-cat" data-cat="commercial">🤝 Commercial</button>
+    <button class="filter-btn" data-action="filter-cat" data-cat="it">⚙️ IT</button>
+    <button class="filter-btn" data-action="filter-cat" data-cat="direction">🏆 Direction</button>
   </div>
 
   <!-- FINANCE -->
@@ -54,7 +54,7 @@
         <p class="use-card-desc">Génère les slides de résultats financiers : P&amp;L de synthèse, graphique d'évolution du CA, comparaison N vs N-1 et indicateurs de trésorerie.</p>
         <div class="skill-badge">⚡ /slides-resultats</div>
         <div class="prompt-label">Définition du skill</div>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Tu es un directeur financier. À partir des chiffres fournis (CA, charges, résultat, trésorerie), génère une présentation de résultats financiers : slide de synthèse P&L, graphique d'évolution du CA, comparaison N vs N-1, slide de trésorerie. Utilise un format sobre et professionnel. Mets en vert les indicateurs positifs, en rouge les négatifs.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Tu es un directeur financier. À partir des chiffres fournis (CA, charges, résultat, trésorerie), génère une présentation de résultats financiers : slide de synthèse P&L, graphique d'évolution du CA, comparaison N vs N-1, slide de trésorerie. Utilise un format sobre et professionnel. Mets en vert les indicateurs positifs, en rouge les négatifs.</div>
         <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
       </div>
 
@@ -66,7 +66,7 @@
         <p class="use-card-desc">Prépare le deck de présentation du budget annuel : hypothèses, 3 scénarios (pessimiste/réaliste/optimiste), investissements clés, recommandation.</p>
         <div class="skill-badge">⚡ /budget-board</div>
         <div class="prompt-label">Définition du skill</div>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Tu es un CFO. Génère le deck de présentation du budget N+1 : slide de contexte macro, hypothèses clés (3-5 points), tableau du budget par grande catégorie, comparaison des 3 scénarios (pessimiste/réaliste/optimiste), investissements prioritaires, slide de synthèse et recommandation. Format Board-ready, concis, orienté décision.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Tu es un CFO. Génère le deck de présentation du budget N+1 : slide de contexte macro, hypothèses clés (3-5 points), tableau du budget par grande catégorie, comparaison des 3 scénarios (pessimiste/réaliste/optimiste), investissements prioritaires, slide de synthèse et recommandation. Format Board-ready, concis, orienté décision.</div>
         <span class="diff-tag diff-avance">🟣 Avancé</span>
       </div>
 
@@ -78,7 +78,7 @@
         <p class="use-card-desc">2 slides de synthèse financière pour la réunion de direction : 4 KPIs clés avec évolution vs objectif et M-1, points d'attention et actions correctives.</p>
         <div class="skill-badge">⚡ /flash-financier</div>
         <div class="prompt-label">Définition du skill</div>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Tu es un contrôleur de gestion. Génère 2 slides de flash financier mensuel : slide 1 – les 4 KPIs clés (CA, marge, charges, trésorerie) avec leur évolution vs objectif et vs M-1, slide 2 – 3 points d'attention et 2 actions correctives. Style épuré, chiffres mis en avant, commentaires courts.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Tu es un contrôleur de gestion. Génère 2 slides de flash financier mensuel : slide 1 – les 4 KPIs clés (CA, marge, charges, trésorerie) avec leur évolution vs objectif et vs M-1, slide 2 – 3 points d'attention et 2 actions correctives. Style épuré, chiffres mis en avant, commentaires courts.</div>
         <span class="diff-tag diff-debutant">🟢 Débutant</span>
       </div>
 
@@ -102,7 +102,7 @@
         <p class="use-card-desc">Présentation des résultats de campagne : objectifs vs réalisé, performance par canal, insights clés et recommandations pour la prochaine campagne.</p>
         <div class="skill-badge">⚡ /bilan-campagne</div>
         <div class="prompt-label">Définition du skill</div>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Tu es un directeur marketing. Génère le bilan de campagne en slides : slide 1 – objectifs vs résultats (tableau comparatif), slide 2 – analyse de la performance par canal (graphique), slide 3 – insights et learnings clés (3 points), slide 4 – recommandations pour la prochaine campagne. Style moderne, visuel, données mises en avant.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Tu es un directeur marketing. Génère le bilan de campagne en slides : slide 1 – objectifs vs résultats (tableau comparatif), slide 2 – analyse de la performance par canal (graphique), slide 3 – insights et learnings clés (3 points), slide 4 – recommandations pour la prochaine campagne. Style moderne, visuel, données mises en avant.</div>
         <span class="diff-tag diff-debutant">🟢 Débutant</span>
       </div>
 
@@ -114,7 +114,7 @@
         <p class="use-card-desc">Deck de présentation d'un nouveau produit : problème client, solution, positionnement vs concurrents, go-to-market et métriques de succès.</p>
         <div class="skill-badge">⚡ /pitch-produit</div>
         <div class="prompt-label">Définition du skill</div>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Tu es un Product Marketing Manager. Génère un pitch deck produit : slide 1 – le problème client (1 insight fort), slide 2 – notre solution (headline + 3 bénéfices), slide 3 – positionnement et différenciation vs concurrents, slide 4 – go-to-market (cible, canaux, timing), slide 5 – métriques de succès. Accrocheur, orienté bénéfices client.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Tu es un Product Marketing Manager. Génère un pitch deck produit : slide 1 – le problème client (1 insight fort), slide 2 – notre solution (headline + 3 bénéfices), slide 3 – positionnement et différenciation vs concurrents, slide 4 – go-to-market (cible, canaux, timing), slide 5 – métriques de succès. Accrocheur, orienté bénéfices client.</div>
         <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
       </div>
 
@@ -126,7 +126,7 @@
         <p class="use-card-desc">Présentation de l'état de la marque : notoriété, image perçue, évolution sur 12 mois, comparaison concurrentielle et plan d'actions brand.</p>
         <div class="skill-badge">⚡ /revue-marque</div>
         <div class="prompt-label">Définition du skill</div>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Tu es un directeur de la marque. Génère une revue de marque : slide 1 – indicateurs de notoriété (spontanée et assistée), slide 2 – image de marque (attributs positifs et négatifs), slide 3 – évolution sur 12 mois, slide 4 – comparaison concurrentielle, slide 5 – plan d'actions brand. Format institutionnel, sobre et factuel.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Tu es un directeur de la marque. Génère une revue de marque : slide 1 – indicateurs de notoriété (spontanée et assistée), slide 2 – image de marque (attributs positifs et négatifs), slide 3 – évolution sur 12 mois, slide 4 – comparaison concurrentielle, slide 5 – plan d'actions brand. Format institutionnel, sobre et factuel.</div>
         <span class="diff-tag diff-avance">🟣 Avancé</span>
       </div>
 
@@ -150,7 +150,7 @@
         <p class="use-card-desc">Support d'accueil pour les nouveaux employés : histoire et valeurs de l'entreprise, organigramme, plan des 30 premiers jours, outils et contacts utiles.</p>
         <div class="skill-badge">⚡ /onboarding-deck</div>
         <div class="prompt-label">Définition du skill</div>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Tu es un DRH. Génère le deck d'onboarding : slide 1 – bienvenue et histoire de l'entreprise, slide 2 – nos valeurs et culture (3-4 piliers), slide 3 – l'organigramme simplifié, slide 4 – les 30 premiers jours (roadmap), slide 5 – les ressources et outils clés, slide 6 – Q&A et contacts utiles. Ton chaleureux et inspirant.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Tu es un DRH. Génère le deck d'onboarding : slide 1 – bienvenue et histoire de l'entreprise, slide 2 – nos valeurs et culture (3-4 piliers), slide 3 – l'organigramme simplifié, slide 4 – les 30 premiers jours (roadmap), slide 5 – les ressources et outils clés, slide 6 – Q&A et contacts utiles. Ton chaleureux et inspirant.</div>
         <span class="diff-tag diff-debutant">🟢 Débutant</span>
       </div>
 
@@ -162,7 +162,7 @@
         <p class="use-card-desc">Génère un support pédagogique structuré : objectifs, contenu en 3 parties, cas pratique, points clés à retenir et ressources complémentaires.</p>
         <div class="skill-badge">⚡ /formation-slides</div>
         <div class="prompt-label">Définition du skill</div>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Tu es un formateur expert. À partir du sujet de formation fourni, génère un support pédagogique : slide 1 – objectifs de la formation, slides 2-4 – contenu structuré en 3 parties (10 min chacune), slide 5 – cas pratique ou exercice, slide 6 – points clés à retenir, slide 7 – ressources complémentaires. Format clair, pédagogique, avec exemples concrets.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Tu es un formateur expert. À partir du sujet de formation fourni, génère un support pédagogique : slide 1 – objectifs de la formation, slides 2-4 – contenu structuré en 3 parties (10 min chacune), slide 5 – cas pratique ou exercice, slide 6 – points clés à retenir, slide 7 – ressources complémentaires. Format clair, pédagogique, avec exemples concrets.</div>
         <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
       </div>
 
@@ -174,7 +174,7 @@
         <p class="use-card-desc">Présentation RH pour le conseil d'administration : effectifs, indicateurs clés, développement des compétences, plan de succession et risques RH.</p>
         <div class="skill-badge">⚡ /revue-rh-board</div>
         <div class="prompt-label">Définition du skill</div>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Tu es un DRH. Génère la présentation RH pour le conseil : slide 1 – effectifs et évolution (graphique), slide 2 – indicateurs clés (turnover, absentéisme, satisfaction), slide 3 – formation et développement des compétences, slide 4 – plan de succession pour les postes clés, slide 5 – points d'attention et risques RH. Format Board-ready, factuel et stratégique.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Tu es un DRH. Génère la présentation RH pour le conseil : slide 1 – effectifs et évolution (graphique), slide 2 – indicateurs clés (turnover, absentéisme, satisfaction), slide 3 – formation et développement des compétences, slide 4 – plan de succession pour les postes clés, slide 5 – points d'attention et risques RH. Format Board-ready, factuel et stratégique.</div>
         <span class="diff-tag diff-avance">🟣 Avancé</span>
       </div>
 
@@ -198,7 +198,7 @@
         <p class="use-card-desc">Deck de présentation commerciale adapté au client : compréhension de ses enjeux, proposition de valeur sur mesure, références sectorielles et prochaines étapes.</p>
         <div class="skill-badge">⚡ /pitch-client</div>
         <div class="prompt-label">Définition du skill</div>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Tu es un commercial expert. À partir du briefing client fourni (secteur, enjeux, interlocuteur), génère un pitch personnalisé : slide 1 – compréhension des enjeux client, slide 2 – notre proposition de valeur adaptée, slide 3 – références dans leur secteur, slide 4 – notre solution et ses bénéfices concrets, slide 5 – prochaines étapes proposées. Ton consultatif, orienté ROI client.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Tu es un commercial expert. À partir du briefing client fourni (secteur, enjeux, interlocuteur), génère un pitch personnalisé : slide 1 – compréhension des enjeux client, slide 2 – notre proposition de valeur adaptée, slide 3 – références dans leur secteur, slide 4 – notre solution et ses bénéfices concrets, slide 5 – prochaines étapes proposées. Ton consultatif, orienté ROI client.</div>
         <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
       </div>
 
@@ -210,7 +210,7 @@
         <p class="use-card-desc">Présentation de revue trimestrielle client : résumé exécutif, KPIs vs objectifs, incidents résolus, nouveautés pertinentes et objectifs mutuels du prochain trimestre.</p>
         <div class="skill-badge">⚡ /qbr-slides</div>
         <div class="prompt-label">Définition du skill</div>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Tu es un Customer Success Manager. Génère le deck QBR : slide 1 – résumé exécutif du trimestre, slide 2 – KPIs et résultats vs objectifs (tableau), slide 3 – incidents et résolutions, slide 4 – innovations et nouveautés produit pertinentes, slide 5 – roadmap et prochaines étapes, slide 6 – objectifs mutuels pour le prochain trimestre. Professionnel et co-construit.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Tu es un Customer Success Manager. Génère le deck QBR : slide 1 – résumé exécutif du trimestre, slide 2 – KPIs et résultats vs objectifs (tableau), slide 3 – incidents et résolutions, slide 4 – innovations et nouveautés produit pertinentes, slide 5 – roadmap et prochaines étapes, slide 6 – objectifs mutuels pour le prochain trimestre. Professionnel et co-construit.</div>
         <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
       </div>
 
@@ -222,7 +222,7 @@
         <p class="use-card-desc">Présentation du bilan des ventes pour la direction : chiffres clés, performance vs objectifs, analyse du pipeline win/loss, top clients et stratégie N+1.</p>
         <div class="skill-badge">⚡ /bilan-commercial</div>
         <div class="prompt-label">Définition du skill</div>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Tu es un directeur commercial. Génère la présentation du bilan commercial annuel : slide 1 – chiffres clés de l'année, slide 2 – performance vs objectifs par produit/région, slide 3 – analyse du pipeline et des win/loss, slide 4 – top clients et nouvelles acquisitions, slide 5 – enseignements et axes d'amélioration, slide 6 – objectifs et stratégie N+1. Style motivant et factuel.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Tu es un directeur commercial. Génère la présentation du bilan commercial annuel : slide 1 – chiffres clés de l'année, slide 2 – performance vs objectifs par produit/région, slide 3 – analyse du pipeline et des win/loss, slide 4 – top clients et nouvelles acquisitions, slide 5 – enseignements et axes d'amélioration, slide 6 – objectifs et stratégie N+1. Style motivant et factuel.</div>
         <span class="diff-tag diff-debutant">🟢 Débutant</span>
       </div>
 
@@ -246,7 +246,7 @@
         <p class="use-card-desc">Présente l'architecture système : composants clés, flux principaux, choix technologiques et justifications, sécurité et points d'attention scalabilité.</p>
         <div class="skill-badge">⚡ /archi-slides</div>
         <div class="prompt-label">Définition du skill</div>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Tu es un architecte solutions. Génère la présentation de l'architecture technique : slide 1 – vue d'ensemble du système (description des composants), slide 2 – les flux principaux (intégrations, données), slide 3 – choix technologiques et justifications, slide 4 – sécurité et conformité, slide 5 – scalabilité et points d'attention. Style technique mais accessible aux non-experts.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Tu es un architecte solutions. Génère la présentation de l'architecture technique : slide 1 – vue d'ensemble du système (description des composants), slide 2 – les flux principaux (intégrations, données), slide 3 – choix technologiques et justifications, slide 4 – sécurité et conformité, slide 5 – scalabilité et points d'attention. Style technique mais accessible aux non-experts.</div>
         <span class="diff-tag diff-avance">🟣 Avancé</span>
       </div>
 
@@ -258,7 +258,7 @@
         <p class="use-card-desc">Support de sprint review : rappel des objectifs, stories complétées et valeur livrée, métriques de vélocité, retrospective rapide et objectifs du sprint suivant.</p>
         <div class="skill-badge">⚡ /sprint-review</div>
         <div class="prompt-label">Définition du skill</div>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Tu es un Scrum Master. Génère le support de sprint review : slide 1 – objectifs du sprint (rappel), slide 2 – stories complétées et valeur livrée, slide 3 – demo et captures clés (espace réservé), slide 4 – métriques du sprint (vélocité, bugs), slide 5 – points de retrospective (3 points), slide 6 – objectifs du prochain sprint. Ton transparent et collaboratif.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Tu es un Scrum Master. Génère le support de sprint review : slide 1 – objectifs du sprint (rappel), slide 2 – stories complétées et valeur livrée, slide 3 – demo et captures clés (espace réservé), slide 4 – métriques du sprint (vélocité, bugs), slide 5 – points de retrospective (3 points), slide 6 – objectifs du prochain sprint. Ton transparent et collaboratif.</div>
         <span class="diff-tag diff-debutant">🟢 Débutant</span>
       </div>
 
@@ -270,7 +270,7 @@
         <p class="use-card-desc">Présentation de la roadmap : vision stratégique, initiatives du prochain trimestre, roadmap 12 mois par thème, dépendances, risques et investissements.</p>
         <div class="skill-badge">⚡ /roadmap-it</div>
         <div class="prompt-label">Définition du skill</div>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Tu es un Product Manager ou CTO. Génère la présentation de la roadmap : slide 1 – vision et objectifs stratégiques, slide 2 – initiatives du prochain trimestre (tableau priorisé), slide 3 – roadmap visuelle sur 12 mois par thème, slide 4 – dépendances et risques, slide 5 – ressources et investissements nécessaires. Format clair, orienté priorisation.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Tu es un Product Manager ou CTO. Génère la présentation de la roadmap : slide 1 – vision et objectifs stratégiques, slide 2 – initiatives du prochain trimestre (tableau priorisé), slide 3 – roadmap visuelle sur 12 mois par thème, slide 4 – dépendances et risques, slide 5 – ressources et investissements nécessaires. Format clair, orienté priorisation.</div>
         <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
       </div>
 
@@ -294,7 +294,7 @@
         <p class="use-card-desc">Deck mensuel du CODIR : faits marquants, résultats vs objectifs, statut des initiatives stratégiques (RAG), décisions à prendre et priorités du mois suivant.</p>
         <div class="skill-badge">⚡ /comite-direction</div>
         <div class="prompt-label">Définition du skill</div>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Tu es le Chief of Staff. Génère le support du comité de direction mensuel : slide 1 – faits marquants et contexte, slide 2 – résultats vs objectifs (tableau synthétique), slide 3 – initiatives stratégiques en cours (statut RAG), slide 4 – décisions à prendre (2-3 max, avec recommandation), slide 5 – priorités du mois suivant. Format orienté décision, 30 min chrono.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Tu es le Chief of Staff. Génère le support du comité de direction mensuel : slide 1 – faits marquants et contexte, slide 2 – résultats vs objectifs (tableau synthétique), slide 3 – initiatives stratégiques en cours (statut RAG), slide 4 – décisions à prendre (2-3 max, avec recommandation), slide 5 – priorités du mois suivant. Format orienté décision, 30 min chrono.</div>
         <span class="diff-tag diff-inter">🟡 Intermédiaire</span>
       </div>
 
@@ -306,7 +306,7 @@
         <p class="use-card-desc">Deck de lancement de projet : contexte, objectifs SMART, périmètre, équipe et rôles, planning macro avec jalons, risques et facteurs critiques de succès.</p>
         <div class="skill-badge">⚡ /kickoff-projet</div>
         <div class="prompt-label">Définition du skill</div>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Tu es un chef de projet. Génère le deck de kickoff : slide 1 – contexte et raison d'être du projet, slide 2 – objectifs SMART et KPIs de succès, slide 3 – périmètre et hors-périmètre, slide 4 – équipe projet et rôles, slide 5 – planning macro et jalons clés, slide 6 – risques et facteurs critiques de succès, slide 7 – engagements et prochaines étapes. Clair et mobilisateur.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Tu es un chef de projet. Génère le deck de kickoff : slide 1 – contexte et raison d'être du projet, slide 2 – objectifs SMART et KPIs de succès, slide 3 – périmètre et hors-périmètre, slide 4 – équipe projet et rôles, slide 5 – planning macro et jalons clés, slide 6 – risques et facteurs critiques de succès, slide 7 – engagements et prochaines étapes. Clair et mobilisateur.</div>
         <span class="diff-tag diff-debutant">🟢 Débutant</span>
       </div>
 
@@ -318,7 +318,7 @@
         <p class="use-card-desc">Deck de rapport annuel institutionnel : message du président, faits marquants, résultats financiers, réalisations stratégiques, RSE et perspectives N+1.</p>
         <div class="skill-badge">⚡ /rapport-annuel</div>
         <div class="prompt-label">Définition du skill</div>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Tu es un Secrétaire Général ou DG. Génère la structure du rapport annuel en slides : slide 1 – message du président, slide 2 – faits marquants de l'année (4-5 points), slide 3 – résultats financiers (chiffres clés), slide 4 – réalisations stratégiques par axe, slide 5 – responsabilité sociétale (RSE), slide 6 – perspectives et ambitions N+1, slide 7 – gouvernance et remerciements. Format institutionnel et sobre.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Tu es un Secrétaire Général ou DG. Génère la structure du rapport annuel en slides : slide 1 – message du président, slide 2 – faits marquants de l'année (4-5 points), slide 3 – résultats financiers (chiffres clés), slide 4 – réalisations stratégiques par axe, slide 5 – responsabilité sociétale (RSE), slide 6 – perspectives et ambitions N+1, slide 7 – gouvernance et remerciements. Format institutionnel et sobre.</div>
         <span class="diff-tag diff-avance">🟣 Avancé</span>
       </div>
 

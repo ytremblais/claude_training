@@ -40,29 +40,29 @@
   </div>
   <div class="nav-section">
     <div class="nav-section-label">Home</div>
-    <div class="nav-item active" onclick="showScreen('home')" id="nav-home"><span class="nav-dot"></span> Overview</div>
+    <div class="nav-item active" data-action="show-screen" data-screen="home" id="nav-home"><span class="nav-dot"></span> Overview</div>
   </div>
   <div class="nav-section">
     <div class="nav-section-label" style="color:var(--debutant)">🟢 Beginner</div>
-    <div class="nav-item" onclick="showModule(0)" id="nav-m0"><span class="nav-dot"></span> What is a Skill? <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(1)" id="nav-m1"><span class="nav-dot"></span> Skills in Excel <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(2)" id="nav-m2"><span class="nav-dot"></span> Skills in PowerPoint <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="0" id="nav-m0"><span class="nav-dot"></span> What is a Skill? <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="1" id="nav-m1"><span class="nav-dot"></span> Skills in Excel <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="2" id="nav-m2"><span class="nav-dot"></span> Skills in PowerPoint <span class="nav-check">✓</span></div>
   </div>
   <div class="nav-section">
     <div class="nav-section-label" style="color:var(--intermediaire)">🟡 Intermediate</div>
-    <div class="nav-item" onclick="showModule(3)" id="nav-m3"><span class="nav-dot"></span> Default available Skills <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(4)" id="nav-m4"><span class="nav-dot"></span> Create your first Skill <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(5)" id="nav-m5"><span class="nav-dot"></span> Skills + combined prompts <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="3" id="nav-m3"><span class="nav-dot"></span> Default available Skills <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="4" id="nav-m4"><span class="nav-dot"></span> Create your first Skill <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="5" id="nav-m5"><span class="nav-dot"></span> Skills + combined prompts <span class="nav-check">✓</span></div>
   </div>
   <div class="nav-section">
     <div class="nav-section-label" style="color:var(--avance)">🔴 Advanced</div>
-    <div class="nav-item" onclick="showModule(6)" id="nav-m6"><span class="nav-dot"></span> Writing an effective Skill <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(7)" id="nav-m7"><span class="nav-dot"></span> Team-shared Skills <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(8)" id="nav-m8"><span class="nav-dot"></span> Integrating Skills into your workflow <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="6" id="nav-m6"><span class="nav-dot"></span> Writing an effective Skill <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="7" id="nav-m7"><span class="nav-dot"></span> Team-shared Skills <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="8" id="nav-m8"><span class="nav-dot"></span> Integrating Skills into your workflow <span class="nav-check">✓</span></div>
   </div>
   <div class="nav-section">
     <div class="nav-section-label">Go further</div>
-    <div class="nav-item" onclick="showScreen('ressources')" id="nav-ressources"><span class="nav-dot"></span> Official resources</div>
+    <div class="nav-item" data-action="show-screen" data-screen="ressources" id="nav-ressources"><span class="nav-dot"></span> Official resources</div>
   </div>
 </nav>
 
@@ -77,21 +77,21 @@
         <div class="lc-name">Beginner</div>
         <div class="lc-desc">Understand what Skills are and how to invoke them in Excel and PowerPoint.</div>
         <div class="lc-modules">3 modules · ~1h</div>
-        <button class="start-btn" onclick="showModule(0)">Start →</button>
+        <button class="start-btn" data-action="show-module" data-module="0">Start →</button>
       </div>
       <div class="level-card inter">
         <div class="lc-icon">🟡</div>
         <div class="lc-name">Intermediate</div>
         <div class="lc-desc">Discover available Skills, create your own and combine them with prompts.</div>
         <div class="lc-modules">3 modules · ~1h30</div>
-        <button class="start-btn" onclick="showModule(3)">Start →</button>
+        <button class="start-btn" data-action="show-module" data-module="3">Start →</button>
       </div>
       <div class="level-card avance">
         <div class="lc-icon">🔴</div>
         <div class="lc-name">Advanced</div>
         <div class="lc-desc">Write robust Skills, share them with your team and integrate them into your workflow.</div>
         <div class="lc-modules">3 modules · ~1h30</div>
-        <button class="start-btn" onclick="showModule(6)">Start →</button>
+        <button class="start-btn" data-action="show-module" data-module="6">Start →</button>
       </div>
     </div>
   </div>
@@ -103,7 +103,7 @@
   <div class="screen" id="screen-ressources">
     <div class="module-header">
       <div class="module-breadcrumb">
-        <span style="cursor:pointer;color:var(--accent)" onclick="showScreen('home')">Office Skills</span>
+        <span style="cursor:pointer;color:var(--accent)" data-action="show-screen" data-screen="home">Office Skills</span>
         <span class="sep">/</span>
         <span>Official resources</span>
       </div>
@@ -227,7 +227,7 @@
     </div>
 
     <div style="margin-top:32px;padding-top:24px;border-top:1px solid var(--border);display:flex;gap:12px;">
-      <button class="btn" onclick="showScreen('home')">← Back to home</button>
+      <button class="btn" data-action="show-screen" data-screen="home">← Back to home</button>
       <a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices" target="_blank" class="btn btn-primary" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">Read the full documentation →</a>
     </div>
   </div>

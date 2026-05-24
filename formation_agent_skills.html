@@ -40,29 +40,29 @@
   </div>
   <div class="nav-section">
     <div class="nav-section-label">Accueil</div>
-    <div class="nav-item active" onclick="showScreen('home')" id="nav-home"><span class="nav-dot"></span> Vue d'ensemble</div>
+    <div class="nav-item active" data-action="show-screen" data-screen="home" id="nav-home"><span class="nav-dot"></span> Vue d'ensemble</div>
   </div>
   <div class="nav-section">
     <div class="nav-section-label" style="color:var(--debutant)">🟢 Débutant</div>
-    <div class="nav-item" onclick="showModule(0)" id="nav-m0"><span class="nav-dot"></span> Qu'est-ce qu'une Skill ? <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(1)" id="nav-m1"><span class="nav-dot"></span> Skills dans Excel <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(2)" id="nav-m2"><span class="nav-dot"></span> Skills dans PowerPoint <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="0" id="nav-m0"><span class="nav-dot"></span> Qu'est-ce qu'une Skill ? <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="1" id="nav-m1"><span class="nav-dot"></span> Skills dans Excel <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="2" id="nav-m2"><span class="nav-dot"></span> Skills dans PowerPoint <span class="nav-check">✓</span></div>
   </div>
   <div class="nav-section">
     <div class="nav-section-label" style="color:var(--intermediaire)">🟡 Intermédiaire</div>
-    <div class="nav-item" onclick="showModule(3)" id="nav-m3"><span class="nav-dot"></span> Skills disponibles par défaut <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(4)" id="nav-m4"><span class="nav-dot"></span> Créer sa première Skill <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(5)" id="nav-m5"><span class="nav-dot"></span> Skills + prompts combinés <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="3" id="nav-m3"><span class="nav-dot"></span> Skills disponibles par défaut <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="4" id="nav-m4"><span class="nav-dot"></span> Créer sa première Skill <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="5" id="nav-m5"><span class="nav-dot"></span> Skills + prompts combinés <span class="nav-check">✓</span></div>
   </div>
   <div class="nav-section">
     <div class="nav-section-label" style="color:var(--avance)">🔴 Avancé</div>
-    <div class="nav-item" onclick="showModule(6)" id="nav-m6"><span class="nav-dot"></span> Rédiger une Skill efficace <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(7)" id="nav-m7"><span class="nav-dot"></span> Skills partagées en équipe <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(8)" id="nav-m8"><span class="nav-dot"></span> Intégration dans son flux de travail <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="6" id="nav-m6"><span class="nav-dot"></span> Rédiger une Skill efficace <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="7" id="nav-m7"><span class="nav-dot"></span> Skills partagées en équipe <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="8" id="nav-m8"><span class="nav-dot"></span> Intégration dans son flux de travail <span class="nav-check">✓</span></div>
   </div>
   <div class="nav-section">
     <div class="nav-section-label">Aller plus loin</div>
-    <div class="nav-item" onclick="showScreen('ressources')" id="nav-ressources"><span class="nav-dot"></span> Ressources officielles</div>
+    <div class="nav-item" data-action="show-screen" data-screen="ressources" id="nav-ressources"><span class="nav-dot"></span> Ressources officielles</div>
   </div>
 </nav>
 
@@ -77,21 +77,21 @@
         <div class="lc-name">Débutant</div>
         <div class="lc-desc">Comprendre ce que sont les Skills et comment les invoquer dans Excel et PowerPoint.</div>
         <div class="lc-modules">3 modules · ~1h</div>
-        <button class="start-btn" onclick="showModule(0)">Commencer →</button>
+        <button class="start-btn" data-action="show-module" data-module="0">Commencer →</button>
       </div>
       <div class="level-card inter">
         <div class="lc-icon">🟡</div>
         <div class="lc-name">Intermédiaire</div>
         <div class="lc-desc">Découvrir les Skills disponibles, en créer et les combiner avec des prompts.</div>
         <div class="lc-modules">3 modules · ~1h30</div>
-        <button class="start-btn" onclick="showModule(3)">Commencer →</button>
+        <button class="start-btn" data-action="show-module" data-module="3">Commencer →</button>
       </div>
       <div class="level-card avance">
         <div class="lc-icon">🔴</div>
         <div class="lc-name">Avancé</div>
         <div class="lc-desc">Rédiger des Skills robustes, les partager en équipe et les intégrer dans son flux de travail.</div>
         <div class="lc-modules">3 modules · ~1h30</div>
-        <button class="start-btn" onclick="showModule(6)">Commencer →</button>
+        <button class="start-btn" data-action="show-module" data-module="6">Commencer →</button>
       </div>
     </div>
   </div>
@@ -103,7 +103,7 @@
   <div class="screen" id="screen-ressources">
     <div class="module-header">
       <div class="module-breadcrumb">
-        <span style="cursor:pointer;color:var(--accent)" onclick="showScreen('home')">Skills Office</span>
+        <span style="cursor:pointer;color:var(--accent)" data-action="show-screen" data-screen="home">Skills Office</span>
         <span class="sep">/</span>
         <span>Ressources officielles</span>
       </div>
@@ -227,7 +227,7 @@
     </div>
 
     <div style="margin-top:32px;padding-top:24px;border-top:1px solid var(--border);display:flex;gap:12px;">
-      <button class="btn" onclick="showScreen('home')">← Retour à l'accueil</button>
+      <button class="btn" data-action="show-screen" data-screen="home">← Retour à l'accueil</button>
       <a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices" target="_blank" class="btn btn-primary" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">Lire la documentation complète →</a>
     </div>
   </div>

@@ -42,35 +42,35 @@
 
   <div class="nav-section">
     <div class="nav-section-label">Home</div>
-    <div class="nav-item active" onclick="showScreen('home')" id="nav-home">
+    <div class="nav-item active" data-action="show-screen" data-screen="home" id="nav-home">
       <span class="nav-dot"></span> Overview
     </div>
   </div>
 
   <div class="nav-section">
     <div class="nav-section-label" style="color:var(--debutant)">🟢 Beginner</div>
-    <div class="nav-item" onclick="showModule(0)" id="nav-m0"><span class="nav-dot"></span> Installation <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(1)" id="nav-m1"><span class="nav-dot"></span> Asking questions <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(2)" id="nav-m2"><span class="nav-dot"></span> Fixing errors <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(3)" id="nav-m3"><span class="nav-dot"></span> Cleaning data <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="0" id="nav-m0"><span class="nav-dot"></span> Installation <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="1" id="nav-m1"><span class="nav-dot"></span> Asking questions <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="2" id="nav-m2"><span class="nav-dot"></span> Fixing errors <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="3" id="nav-m3"><span class="nav-dot"></span> Cleaning data <span class="nav-check">✓</span></div>
   </div>
 
   <div class="nav-section">
     <div class="nav-section-label" style="color:var(--intermediaire)">🟡 Intermediate</div>
-    <div class="nav-item" onclick="showModule(4)" id="nav-m4"><span class="nav-dot"></span> Complex formulas <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(5)" id="nav-m5"><span class="nav-dot"></span> Analyzing data <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(6)" id="nav-m6"><span class="nav-dot"></span> Dashboards <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(7)" id="nav-m7"><span class="nav-dot"></span> Persistent instructions <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(8)" id="nav-m8"><span class="nav-dot"></span> Context &amp; sessions <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="4" id="nav-m4"><span class="nav-dot"></span> Complex formulas <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="5" id="nav-m5"><span class="nav-dot"></span> Analyzing data <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="6" id="nav-m6"><span class="nav-dot"></span> Dashboards <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="7" id="nav-m7"><span class="nav-dot"></span> Persistent instructions <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="8" id="nav-m8"><span class="nav-dot"></span> Context &amp; sessions <span class="nav-check">✓</span></div>
   </div>
 
   <div class="nav-section">
     <div class="nav-section-label" style="color:var(--avance)">🔴 Advanced</div>
-    <div class="nav-item" onclick="showModule(9)" id="nav-m9"><span class="nav-dot"></span> Financial models <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(10)" id="nav-m10"><span class="nav-dot"></span> Model audit <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(11)" id="nav-m11"><span class="nav-dot"></span> Skills <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(12)" id="nav-m12"><span class="nav-dot"></span> External connectors <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(13)" id="nav-m13"><span class="nav-dot"></span> Security <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="9" id="nav-m9"><span class="nav-dot"></span> Financial models <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="10" id="nav-m10"><span class="nav-dot"></span> Model audit <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="11" id="nav-m11"><span class="nav-dot"></span> Skills <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="12" id="nav-m12"><span class="nav-dot"></span> External connectors <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="13" id="nav-m13"><span class="nav-dot"></span> Security <span class="nav-check">✓</span></div>
   </div>
 </nav>
 
@@ -91,21 +91,21 @@
         <div class="lc-name">Beginner</div>
         <div class="lc-desc">Getting started, first interactions, error corrections and data cleaning.</div>
         <div class="lc-modules">4 modules · ~2h</div>
-        <button class="start-btn" onclick="showModule(0)">Start →</button>
+        <button class="start-btn" data-action="show-module" data-module="0">Start →</button>
       </div>
       <div class="level-card inter">
         <div class="lc-icon">🟡</div>
         <div class="lc-name">Intermediate</div>
         <div class="lc-desc">Complex formulas, analyses, dashboards and advanced add-in configuration.</div>
         <div class="lc-modules">5 modules · ~3h</div>
-        <button class="start-btn" onclick="showModule(4)">Start →</button>
+        <button class="start-btn" data-action="show-module" data-module="4">Start →</button>
       </div>
       <div class="level-card avance">
         <div class="lc-icon">🔴</div>
         <div class="lc-name">Advanced</div>
         <div class="lc-desc">Financial modelling, audit, Skills, MCP connectors and security.</div>
         <div class="lc-modules">5 modules · ~3h</div>
-        <button class="start-btn" onclick="showModule(9)">Start →</button>
+        <button class="start-btn" data-action="show-module" data-module="9">Start →</button>
       </div>
     </div>
   </div>

@@ -610,7 +610,7 @@ function renderModule(m) {
   const html = `
     <div class="module-header">
       <div class="module-breadcrumb">
-        <span onclick="showScreen('home')" style="cursor:pointer;color:var(--accent2)">Training</span>
+        <span data-action="show-screen" data-screen="home" style="cursor:pointer;color:var(--accent2)">Training</span>
         <span class="sep">›</span>
         <span style="color:${levelDot[m.levelColor]}">${levelLabel[m.levelColor]}</span>
         <span class="sep">›</span>
@@ -625,7 +625,7 @@ function renderModule(m) {
 
     <!-- THEORY -->
     <div class="lesson-section open" id="sec-theory">
-      <div class="lesson-section-header" onclick="toggleSection('sec-theory')">
+      <div class="lesson-section-header" data-action="toggle-section" data-section="sec-theory">
         <div class="section-icon icon-theory">📖</div>
         <div class="section-title">Theory &amp; key concepts</div>
         <span class="meta-pill" style="font-size:10px;padding:2px 8px;margin-left:auto;margin-right:8px;">⏱ ${m.timing.theory}</span>
@@ -638,7 +638,7 @@ function renderModule(m) {
 
     <!-- PROMPTS -->
     <div class="lesson-section" id="sec-prompts">
-      <div class="lesson-section-header" onclick="toggleSection('sec-prompts')">
+      <div class="lesson-section-header" data-action="toggle-section" data-section="sec-prompts">
         <div class="section-icon icon-prompt">💬</div>
         <div class="section-title">Prompts to practise</div>
         <span class="meta-pill" style="font-size:10px;padding:2px 8px;margin-left:auto;margin-right:8px;">⏱ ${m.timing.prompts}</span>
@@ -647,7 +647,7 @@ function renderModule(m) {
       <div class="section-body">
         <div class="prompt-list">
           ${m.prompts.map((p, i) => `
-            <div class="prompt-card" onclick="copyPrompt(this, '${p.replace(/'/g, "\\'")}')" id="pc-${m.id}-${i}">
+            <div class="prompt-card" data-action="copy-prompt" id="pc-${m.id}-${i}">
               <span class="prompt-icon">›</span>
               <span class="prompt-text">"${p}"</span>
               <span class="copy-hint">Copy</span>
@@ -660,7 +660,7 @@ function renderModule(m) {
 
     <!-- EXERCISE -->
     <div class="lesson-section" id="sec-exercise">
-      <div class="lesson-section-header" onclick="toggleSection('sec-exercise')">
+      <div class="lesson-section-header" data-action="toggle-section" data-section="sec-exercise">
         <div class="section-icon icon-exercise">🎯</div>
         <div class="section-title">Interactive exercise</div>
         <span class="meta-pill" style="font-size:10px;padding:2px 8px;margin-left:auto;margin-right:8px;">⏱ ${m.timing.exercise}</span>
@@ -675,7 +675,7 @@ function renderModule(m) {
           <div class="exercise-question">${m.exercise.question}</div>
           <div class="choices" id="choices-${m.id}">
             ${m.exercise.choices.map((c, i) => `
-              <div class="choice" onclick="selectChoice(${m.id}, ${i}, ${c.correct})" id="choice-${m.id}-${i}">
+              <div class="choice" data-action="select-choice" data-modid="${m.id}" data-idx="${i}" data-correct="${c.correct}" id="choice-${m.id}-${i}">
                 <span class="choice-letter">${String.fromCharCode(65+i)}</span>
                 ${c.text}
               </div>
@@ -684,8 +684,8 @@ function renderModule(m) {
           <div class="feedback-box correct" id="fb-correct-${m.id}">${m.exercise.feedbackCorrect}</div>
           <div class="feedback-box wrong" id="fb-wrong-${m.id}">${m.exercise.feedbackWrong}</div>
           <div class="exercise-actions">
-            <button class="btn btn-primary" id="btn-validate-${m.id}" onclick="validateExercise(${m.id})" disabled>Submit</button>
-            <button class="btn" id="btn-reset-${m.id}" onclick="resetExercise(${m.id})" style="display:none">Try again</button>
+            <button class="btn btn-primary" id="btn-validate-${m.id}" data-action="validate" data-modid="${m.id}" disabled>Submit</button>
+            <button class="btn" id="btn-reset-${m.id}" data-action="reset" data-modid="${m.id}" style="display:none">Try again</button>
           </div>
         </div>
       </div>
@@ -693,7 +693,7 @@ function renderModule(m) {
 
     <!-- CORRECTED -->
     <div class="lesson-section" id="sec-corrected">
-      <div class="lesson-section-header" onclick="toggleSection('sec-corrected')">
+      <div class="lesson-section-header" data-action="toggle-section" data-section="sec-corrected">
         <div class="section-icon icon-corrected">✅</div>
         <div class="section-title">Detailed answer key</div>
         <span class="meta-pill" style="font-size:10px;padding:2px 8px;margin-left:auto;margin-right:8px;">⏱ ${m.timing.corrected}</span>
@@ -718,10 +718,10 @@ function renderModule(m) {
 
     <!-- NAV -->
     <div class="module-nav">
-      <button class="btn" onclick="${m.id > 0 ? 'showModule(' + (m.id-1) + ')' : "showScreen('home')"}" >
+      <button class="btn" data-action="prev" data-modid="${m.id}" >
         ← ${m.id > 0 ? 'Previous module' : 'Home'}
       </button>
-      <button class="module-complete-btn" onclick="completeModule(${m.id})">
+      <button class="module-complete-btn" data-action="complete" data-modid="${m.id}">
         ${completed.has(m.id) ? '✓ Module completed' : 'Mark as complete →'}
       </button>
     </div>
@@ -739,6 +739,10 @@ function toggleSection(id) {
 }
 
 function copyPrompt(el, text) {
+  if (text === undefined) {
+    const pt = el.querySelector('.prompt-text');
+    text = pt ? pt.textContent.replace(/^"|"$/g, '').trim() : el.textContent.replace(/Copier|✓/g,'').trim();
+  }
   navigator.clipboard.writeText(text).catch(() => {
     el.querySelector('.copy-hint').textContent = '⚠ Manual copy';
   });
@@ -820,3 +824,18 @@ function updateProgress() {
   document.getElementById('globalProg').style.width = pct + '%';
   document.getElementById('globalProgText').textContent = completed.size + ' / ' + MODULES.length + ' modules';
 }
+
+document.addEventListener('click', function (e) {
+  const el = e.target.closest('[data-action]');
+  if (!el) return;
+  const action = el.dataset.action;
+  if (action === 'show-screen') showScreen(el.dataset.screen);
+  else if (action === 'show-module') showModule(+el.dataset.module);
+  else if (action === 'toggle-section') toggleSection(el.dataset.section);
+  else if (action === 'copy-prompt') copyPrompt(el);
+  else if (action === 'select-choice') selectChoice(+el.dataset.modid, +el.dataset.idx, el.dataset.correct === 'true');
+  else if (action === 'validate') validateExercise(+el.dataset.modid);
+  else if (action === 'reset') resetExercise(+el.dataset.modid);
+  else if (action === 'prev') { const id = +el.dataset.modid; id > 0 ? showModule(id - 1) : showScreen('home'); }
+  else if (action === 'complete') completeModule(+el.dataset.modid);
+});

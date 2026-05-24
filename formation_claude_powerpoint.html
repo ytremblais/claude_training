@@ -42,30 +42,30 @@
 
   <div class="nav-section">
     <div class="nav-section-label">Accueil</div>
-    <div class="nav-item active" onclick="showScreen('home')" id="nav-home">
+    <div class="nav-item active" data-action="show-screen" data-screen="home" id="nav-home">
       <span class="nav-dot"></span> Vue d'ensemble
     </div>
   </div>
 
   <div class="nav-section">
     <div class="nav-section-label" style="color:var(--debutant)">🟢 Débutant · 1h30</div>
-    <div class="nav-item" onclick="showModule(0)" id="nav-m0"><span class="nav-dot"></span> Installation &amp; connexion <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(1)" id="nav-m1"><span class="nav-dot"></span> Générer un deck complet <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(2)" id="nav-m2"><span class="nav-dot"></span> Modifier une slide <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="0" id="nav-m0"><span class="nav-dot"></span> Installation &amp; connexion <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="1" id="nav-m1"><span class="nav-dot"></span> Générer un deck complet <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="2" id="nav-m2"><span class="nav-dot"></span> Modifier une slide <span class="nav-check">✓</span></div>
   </div>
 
   <div class="nav-section">
     <div class="nav-section-label" style="color:var(--intermediaire)">🟡 Intermédiaire · 2h30</div>
-    <div class="nav-item" onclick="showModule(3)" id="nav-m3"><span class="nav-dot"></span> Templates corporate <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(4)" id="nav-m4"><span class="nav-dot"></span> Graphiques natifs <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(5)" id="nav-m5"><span class="nav-dot"></span> Restructurer un deck <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="3" id="nav-m3"><span class="nav-dot"></span> Templates corporate <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="4" id="nav-m4"><span class="nav-dot"></span> Graphiques natifs <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="5" id="nav-m5"><span class="nav-dot"></span> Restructurer un deck <span class="nav-check">✓</span></div>
   </div>
 
   <div class="nav-section">
     <div class="nav-section-label" style="color:var(--avance)">🔴 Avancé · 3h00</div>
-    <div class="nav-item" onclick="showModule(6)" id="nav-m6"><span class="nav-dot"></span> Instructions persistantes <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(7)" id="nav-m7"><span class="nav-dot"></span> Connecteurs &amp; données <span class="nav-check">✓</span></div>
-    <div class="nav-item" onclick="showModule(8)" id="nav-m8"><span class="nav-dot"></span> Sécurité &amp; bonnes pratiques <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="6" id="nav-m6"><span class="nav-dot"></span> Instructions persistantes <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="7" id="nav-m7"><span class="nav-dot"></span> Connecteurs &amp; données <span class="nav-check">✓</span></div>
+    <div class="nav-item" data-action="show-module" data-module="8" id="nav-m8"><span class="nav-dot"></span> Sécurité &amp; bonnes pratiques <span class="nav-check">✓</span></div>
   </div>
 </nav>
 
@@ -86,21 +86,21 @@
         <div class="lc-name">Débutant</div>
         <div class="lc-desc">Installation, première génération de slides et modifications ciblées.</div>
         <div class="lc-modules">3 modules · ~1h30</div>
-        <button class="start-btn" onclick="showModule(0)">Commencer →</button>
+        <button class="start-btn" data-action="show-module" data-module="0">Commencer →</button>
       </div>
       <div class="level-card inter">
         <div class="lc-icon">🟡</div>
         <div class="lc-name">Intermédiaire</div>
         <div class="lc-desc">Templates corporate, graphiques natifs et restructuration de decks.</div>
         <div class="lc-modules">3 modules · ~2h30</div>
-        <button class="start-btn" onclick="showModule(3)">Commencer →</button>
+        <button class="start-btn" data-action="show-module" data-module="3">Commencer →</button>
       </div>
       <div class="level-card avance">
         <div class="lc-icon">🔴</div>
         <div class="lc-name">Avancé</div>
         <div class="lc-desc">Instructions persistantes, connecteurs MCP et gestion des risques.</div>
         <div class="lc-modules">3 modules · ~3h00</div>
-        <button class="start-btn" onclick="showModule(6)">Commencer →</button>
+        <button class="start-btn" data-action="show-module" data-module="6">Commencer →</button>
       </div>
     </div>
   </div>

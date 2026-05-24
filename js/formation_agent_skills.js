@@ -509,14 +509,14 @@ function showModule(id) {
   `).join('');
 
   const choicesHTML = m.exercise.choices.map((c, i) => `
-    <div class="choice" onclick="answerExercise(${id}, ${i}, ${c.correct})">
+    <div class="choice" data-action="answer" data-modid="${id}" data-idx="${i}" data-correct="${c.correct}">
       <span class="choice-letter">${String.fromCharCode(65 + i)}</span>
       ${escHtml(c.text)}
     </div>
   `).join('');
 
   const promptsHTML = m.prompts.map(p => `
-    <div class="prompt-card" onclick="copyPrompt(this)">
+    <div class="prompt-card" data-action="copy-prompt">
       <span class="prompt-icon">→</span>
       <span class="prompt-text">${escHtml(p)}</span>
       <span class="copy-hint">copier</span>
@@ -526,7 +526,7 @@ function showModule(id) {
   document.getElementById('module-content').innerHTML = `
     <div class="module-header">
       <div class="module-breadcrumb">
-        <span style="cursor:pointer;color:var(--accent)" onclick="showScreen('home')">Skills Office</span>
+        <span style="cursor:pointer;color:var(--accent)" data-action="show-screen" data-screen="home">Skills Office</span>
         <span class="sep">/</span>
         <span style="color:${color}">${m.level}</span>
         <span class="sep">/</span>
@@ -541,7 +541,7 @@ function showModule(id) {
     </div>
 
     <div class="lesson-section open">
-      <div class="lesson-section-header" onclick="toggleSection(this)">
+      <div class="lesson-section-header" data-action="toggle-section">
         <div class="section-icon icon-theory">📖</div>
         <span class="section-title">Théorie</span>
         <span class="section-toggle">▾</span>
@@ -552,7 +552,7 @@ function showModule(id) {
     </div>
 
     <div class="lesson-section">
-      <div class="lesson-section-header" onclick="toggleSection(this)">
+      <div class="lesson-section-header" data-action="toggle-section">
         <div class="section-icon icon-prompt">→</div>
         <span class="section-title">Prompts à essayer</span>
         <span class="section-toggle">▾</span>
@@ -563,7 +563,7 @@ function showModule(id) {
     </div>
 
     <div class="lesson-section">
-      <div class="lesson-section-header" onclick="toggleSection(this)">
+      <div class="lesson-section-header" data-action="toggle-section">
         <div class="section-icon icon-exercise">✏</div>
         <span class="section-title">Exercice interactif</span>
         <span class="section-toggle">▾</span>
@@ -579,14 +579,14 @@ function showModule(id) {
           <div class="feedback-box correct" id="feedback-correct-${id}">${m.exercise.feedbackCorrect}</div>
           <div class="feedback-box wrong" id="feedback-wrong-${id}">${m.exercise.feedbackWrong}</div>
           <div class="exercise-actions">
-            <button class="btn btn-primary" onclick="completeModule(${id})" id="btn-complete-${id}" disabled>Marquer comme terminé</button>
+            <button class="btn btn-primary" data-action="complete" data-modid="${id}" id="btn-complete-${id}" disabled>Marquer comme terminé</button>
           </div>
         </div>
       </div>
     </div>
 
     <div class="lesson-section">
-      <div class="lesson-section-header" onclick="toggleSection(this)">
+      <div class="lesson-section-header" data-action="toggle-section">
         <div class="section-icon icon-corrected">✓</div>
         <span class="section-title">Corrigé détaillé</span>
         <span class="section-toggle">▾</span>
@@ -597,10 +597,10 @@ function showModule(id) {
     </div>
 
     <div class="module-nav">
-      ${id > 0 ? `<button class="btn" onclick="showModule(${id - 1})">← Précédent</button>` : '<div></div>'}
+      ${id > 0 ? `<button class="btn" data-action="show-module" data-module="${id - 1}">← Précédent</button>` : '<div></div>'}
       ${id < MODULES.length - 1
-        ? `<button class="btn btn-primary" onclick="showModule(${id + 1})">Suivant →</button>`
-        : `<button class="btn btn-primary" onclick="showCompletion()">Terminer la formation →</button>`
+        ? `<button class="btn btn-primary" data-action="show-module" data-module="${id + 1}">Suivant →</button>`
+        : `<button class="btn btn-primary" data-action="completion">Terminer la formation →</button>`
       }
     </div>
   `;
@@ -645,7 +645,7 @@ function showCompletion() {
       <div class="completion-icon">🏆</div>
       <div class="completion-title">Formation complétée !</div>
       <p class="completion-desc">Vous savez maintenant utiliser, créer, partager et intégrer les Skills dans vos plugins Claude for Excel et Claude for PowerPoint. Moins de répétition, plus d'efficacité.</p>
-      <button class="btn btn-primary" onclick="showScreen('home')">Retour à l'accueil</button>
+      <button class="btn btn-primary" data-action="show-screen" data-screen="home">Retour à l'accueil</button>
     </div>
   `;
 }
@@ -668,3 +668,16 @@ function escHtml(str) {
 }
 
 updateProgressBar();
+
+document.addEventListener('click', function (e) {
+  const el = e.target.closest('[data-action]');
+  if (!el) return;
+  const action = el.dataset.action;
+  if (action === 'show-screen') showScreen(el.dataset.screen);
+  else if (action === 'show-module') showModule(+el.dataset.module);
+  else if (action === 'toggle-section') toggleSection(el);
+  else if (action === 'copy-prompt') copyPrompt(el);
+  else if (action === 'answer') answerExercise(+el.dataset.modid, +el.dataset.idx, el.dataset.correct === 'true');
+  else if (action === 'complete') completeModule(+el.dataset.modid);
+  else if (action === 'completion') showCompletion();
+});

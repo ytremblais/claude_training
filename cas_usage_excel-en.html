@@ -26,11 +26,11 @@
   </div>
 
   <div class="filters">
-    <button class="filter-btn active" onclick="filterAll(this)">Show all</button>
-    <button class="filter-btn" onclick="filterCat('formules', this)">🟢 Formulas & Calculations</button>
-    <button class="filter-btn" onclick="filterCat('donnees', this)">🔵 Data & Analysis</button>
-    <button class="filter-btn" onclick="filterCat('auto', this)">🟡 Automation</button>
-    <button class="filter-btn" onclick="filterCat('rapports', this)">🟣 Reports & Visuals</button>
+    <button class="filter-btn active" data-action="filter-all">Show all</button>
+    <button class="filter-btn" data-action="filter-cat" data-cat="formules">🟢 Formulas & Calculations</button>
+    <button class="filter-btn" data-action="filter-cat" data-cat="donnees">🔵 Data & Analysis</button>
+    <button class="filter-btn" data-action="filter-cat" data-cat="auto">🟡 Automation</button>
+    <button class="filter-btn" data-action="filter-cat" data-cat="rapports">🟣 Reports & Visuals</button>
   </div>
 
   <!-- FORMULAS -->
@@ -48,7 +48,7 @@
           <div class="use-card-title">Generate an advanced lookup formula</div>
         </div>
         <p class="use-card-desc">Create XLOOKUP, INDEX/MATCH or VLOOKUP formulas adapted to your data structure, without knowing the exact syntax.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Create a formula to look up the value in column D corresponding to the value in A2, in the range A:D of the "Reference" sheet. Use XLOOKUP if available, otherwise INDEX/MATCH.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Create a formula to look up the value in column D corresponding to the value in A2, in the range A:D of the "Reference" sheet. Use XLOOKUP if available, otherwise INDEX/MATCH.</div>
         <span class="diff-tag diff-debutant">🟢 Beginner</span>
       </div>
 
@@ -58,7 +58,7 @@
           <div class="use-card-title">Debug a formula with an error</div>
         </div>
         <p class="use-card-desc">Identify the cause of an error (#N/A, #VALUE!, #REF!) and get a corrected formula with a clear explanation.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">This formula returns #N/A: =VLOOKUP(A2,Sheet2!B:D,2,0). Explain why and suggest a corrected version.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">This formula returns #N/A: =VLOOKUP(A2,Sheet2!B:D,2,0). Explain why and suggest a corrected version.</div>
         <span class="diff-tag diff-debutant">🟢 Beginner</span>
       </div>
 
@@ -68,7 +68,7 @@
           <div class="use-card-title">Build complex nested formulas</div>
         </div>
         <p class="use-card-desc">Create formulas combining multiple functions (IF, AND, OR, SUMIFS...) for complex business rules.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Create a formula that calculates a bonus: if the value in B2 is greater than 100 AND C2 is "Approved", then 15% of B2; otherwise if B2 > 50 then 5% of B2, otherwise 0.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Create a formula that calculates a bonus: if the value in B2 is greater than 100 AND C2 is "Approved", then 15% of B2; otherwise if B2 > 50 then 5% of B2, otherwise 0.</div>
         <span class="diff-tag diff-inter">🟡 Intermediate</span>
       </div>
 
@@ -78,7 +78,7 @@
           <div class="use-card-title">Explain an existing complex formula</div>
         </div>
         <p class="use-card-desc">Have a legacy or complex formula that you don't fully understand translated into plain language.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Explain this formula in plain English, step by step: =SUMIFS(D:D,A:A,"Paris",B:B,">="&DATE(2024,1,1),C:C,"Active")</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Explain this formula in plain English, step by step: =SUMIFS(D:D,A:A,"Paris",B:B,">="&DATE(2024,1,1),C:C,"Active")</div>
         <span class="diff-tag diff-debutant">🟢 Beginner</span>
       </div>
 
@@ -88,7 +88,7 @@
           <div class="use-card-title">Optimize slow formulas</div>
         </div>
         <p class="use-card-desc">Replace volatile or inefficient formulas (INDIRECT, classic array formulas) with higher-performance equivalents.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">This workbook is slow with VLOOKUPs across 50,000 rows. Suggest a faster alternative and explain how to implement it.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">This workbook is slow with VLOOKUPs across 50,000 rows. Suggest a faster alternative and explain how to implement it.</div>
         <span class="diff-tag diff-avance">🟣 Advanced</span>
       </div>
 
@@ -110,7 +110,7 @@
           <div class="use-card-title">Clean and normalize data</div>
         </div>
         <p class="use-card-desc">Standardize inconsistent formats (dates, names, categories), remove extra spaces and fix outliers.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Column A contains city names with inconsistent casing (PARIS, paris, Paris). Suggest a formula to normalize everything to "Title Case" and add a cleaned column.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Column A contains city names with inconsistent casing (PARIS, paris, Paris). Suggest a formula to normalize everything to "Title Case" and add a cleaned column.</div>
         <span class="diff-tag diff-debutant">🟢 Beginner</span>
       </div>
 
@@ -120,7 +120,7 @@
           <div class="use-card-title">Analyze a table and extract insights</div>
         </div>
         <p class="use-card-desc">Ask Claude to read your data and produce a structured summary: trends, notable values, anomalies.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Analyze the table on the "Sales 2024" sheet and tell me: the top 3 performances, the bottom 3, the overall trend and any notable anomalies.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Analyze the table on the "Sales 2024" sheet and tell me: the top 3 performances, the bottom 3, the overall trend and any notable anomalies.</div>
         <span class="diff-tag diff-debutant">🟢 Beginner</span>
       </div>
 
@@ -130,7 +130,7 @@
           <div class="use-card-title">Detect duplicates and inconsistencies</div>
         </div>
         <p class="use-card-desc">Automatically identify duplicates, missing values and logical inconsistencies in your datasets.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Analyze the ID column (column A) and identify all duplicates. For each duplicate, indicate the row numbers involved. Then suggest a formula to flag them automatically.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Analyze the ID column (column A) and identify all duplicates. For each duplicate, indicate the row numbers involved. Then suggest a formula to flag them automatically.</div>
         <span class="diff-tag diff-inter">🟡 Intermediate</span>
       </div>
 
@@ -140,7 +140,7 @@
           <div class="use-card-title">Transform and restructure data</div>
         </div>
         <p class="use-card-desc">Convert a wide-format table to long format (or vice versa), unpivot data, concatenate or split columns.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">My table has one row per customer with 12 columns of monthly figures (Jan to Dec). I want to transform it into a format with 3 columns: Customer, Month, Value. Suggest the simplest method for Excel 365.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">My table has one row per customer with 12 columns of monthly figures (Jan to Dec). I want to transform it into a format with 3 columns: Customer, Month, Value. Suggest the simplest method for Excel 365.</div>
         <span class="diff-tag diff-inter">🟡 Intermediate</span>
       </div>
 
@@ -150,7 +150,7 @@
           <div class="use-card-title">Statistical calculations and interpretation</div>
         </div>
         <p class="use-card-desc">Calculate statistical indicators (mean, median, standard deviation, percentiles) and get a plain-language interpretation.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Calculate the mean, median, standard deviation and 25th/75th percentiles of the values in column B (B2:B500). Then tell me in 3 sentences what these figures indicate about the distribution.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Calculate the mean, median, standard deviation and 25th/75th percentiles of the values in column B (B2:B500). Then tell me in 3 sentences what these figures indicate about the distribution.</div>
         <span class="diff-tag diff-inter">🟡 Intermediate</span>
       </div>
 
@@ -172,7 +172,7 @@
           <div class="use-card-title">Generate custom VBA code</div>
         </div>
         <p class="use-card-desc">Create VBA macros to automate repetitive tasks: copying data, automatic formatting, exports, sends.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Write a VBA macro that: loops through all rows in the "Data" sheet, copies rows where column C equals "To process" into a new sheet named "In progress", then deletes those rows from the original sheet.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Write a VBA macro that: loops through all rows in the "Data" sheet, copies rows where column C equals "To process" into a new sheet named "In progress", then deletes those rows from the original sheet.</div>
         <span class="diff-tag diff-inter">🟡 Intermediate</span>
       </div>
 
@@ -182,7 +182,7 @@
           <div class="use-card-title">Automate conditional formatting</div>
         </div>
         <p class="use-card-desc">Generate complex conditional formatting rules or ask Claude to apply them directly via VBA.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Add conditional formatting to the range B2:B100: red background if the value is below 0, orange background if between 0 and 50, green background if above 50.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Add conditional formatting to the range B2:B100: red background if the value is below 0, orange background if between 0 and 50, green background if above 50.</div>
         <span class="diff-tag diff-debutant">🟢 Beginner</span>
       </div>
 
@@ -192,7 +192,7 @@
           <div class="use-card-title">Create drop-down lists and validations</div>
         </div>
         <p class="use-card-desc">Set up data validations (drop-down lists, numeric constraints, formats) to secure data entry.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Add a drop-down list in column D with the values: "In progress", "Approved", "Rejected", "Pending". Also add an error message if the user tries to enter something else.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Add a drop-down list in column D with the values: "In progress", "Approved", "Rejected", "Pending". Also add an error message if the user tries to enter something else.</div>
         <span class="diff-tag diff-debutant">🟢 Beginner</span>
       </div>
 
@@ -202,7 +202,7 @@
           <div class="use-card-title">Document a complex Excel file</div>
         </div>
         <p class="use-card-desc">Automatically generate documentation for the sheets, key formulas and business logic of a complex workbook.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Document this workbook: list all sheets, their apparent purpose, the most complex formulas you identify, and the dependencies between sheets. Format the response as a reference guide.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Document this workbook: list all sheets, their apparent purpose, the most complex formulas you identify, and the dependencies between sheets. Format the response as a reference guide.</div>
         <span class="diff-tag diff-inter">🟡 Intermediate</span>
       </div>
 
@@ -212,7 +212,7 @@
           <div class="use-card-title">Debug an existing VBA macro</div>
         </div>
         <p class="use-card-desc">Identify errors in VBA code, understand what it does and get a corrected and commented version.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">This VBA macro crashes at line 12 with "Error 1004". Explain why and suggest a corrected version: [paste the VBA code here]</div>
+        <div class="use-card-prompt" data-action="copy-prompt">This VBA macro crashes at line 12 with "Error 1004". Explain why and suggest a corrected version: [paste the VBA code here]</div>
         <span class="diff-tag diff-avance">🟣 Advanced</span>
       </div>
 
@@ -234,7 +234,7 @@
           <div class="use-card-title">Create a summary dashboard</div>
         </div>
         <p class="use-card-desc">Structure a dashboard tab with key KPIs, associated formulas and formatting recommendations.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Create a "Dashboard" tab in this workbook with: total revenue, gross margin, number of orders and average order value — calculated from the "Data" sheet. Also suggest the recommended formatting structure.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Create a "Dashboard" tab in this workbook with: total revenue, gross margin, number of orders and average order value — calculated from the "Data" sheet. Also suggest the recommended formatting structure.</div>
         <span class="diff-tag diff-inter">🟡 Intermediate</span>
       </div>
 
@@ -244,7 +244,7 @@
           <div class="use-card-title">Recommend the right chart type</div>
         </div>
         <p class="use-card-desc">Describe your data and get a well-argued recommendation on the chart type best suited to your message.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">I have monthly sales data across 3 regions over 2 years. I want to show both the trend over time AND the comparison between regions. What chart type do you recommend and why?</div>
+        <div class="use-card-prompt" data-action="copy-prompt">I have monthly sales data across 3 regions over 2 years. I want to show both the trend over time AND the comparison between regions. What chart type do you recommend and why?</div>
         <span class="diff-tag diff-debutant">🟢 Beginner</span>
       </div>
 
@@ -254,7 +254,7 @@
           <div class="use-card-title">Generate a written summary report</div>
         </div>
         <p class="use-card-desc">Transform raw data into a written summary ready to paste into an email or a reporting document.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">Based on the data in the "Q3 Results" sheet, write a 5-line summary in English for an executive report: overall performance, one positive point and one area of concern. Be factual and concise.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">Based on the data in the "Q3 Results" sheet, write a 5-line summary in English for an executive report: overall performance, one positive point and one area of concern. Be factual and concise.</div>
         <span class="diff-tag diff-debutant">🟢 Beginner</span>
       </div>
 
@@ -264,7 +264,7 @@
           <div class="use-card-title">Structure a pivot table</div>
         </div>
         <p class="use-card-desc">Get step-by-step instructions to create the optimal pivot table for your analysis question.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">I want to analyze sales by region and product category, with revenue and volume as values. How should I configure the pivot table on my data (columns: Date, Region, Category, Product, Revenue, Volume)?</div>
+        <div class="use-card-prompt" data-action="copy-prompt">I want to analyze sales by region and product category, with revenue and volume as values. How should I configure the pivot table on my data (columns: Date, Region, Category, Product, Revenue, Volume)?</div>
         <span class="diff-tag diff-inter">🟡 Intermediate</span>
       </div>
 
@@ -274,7 +274,7 @@
           <div class="use-card-title">Create forecasts and projections</div>
         </div>
         <p class="use-card-desc">Build simple projection models (linear trend, seasonality) with the appropriate Excel formulas.</p>
-        <div class="use-card-prompt" onclick="copyPrompt(this)">I have 18 months of monthly sales data in column B. Create a projection for the next 6 months using a linear trend and indicate the confidence interval. Use native Excel functions.</div>
+        <div class="use-card-prompt" data-action="copy-prompt">I have 18 months of monthly sales data in column B. Create a projection for the next 6 months using a linear trend and indicate the confidence interval. Use native Excel functions.</div>
         <span class="diff-tag diff-avance">🟣 Advanced</span>
       </div>
 
