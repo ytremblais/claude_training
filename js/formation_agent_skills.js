@@ -1,0 +1,670 @@
+const MODULES = [
+
+  // ── M0 ─────────────────────────────────────────────────────────────────────
+  {
+    id: 0, level: "Débutant", levelColor: "debutant", duration: "20 min",
+    title: "Qu'est-ce qu'une Skill ?",
+    theory: `
+      <p>Une <strong>Skill</strong> est un workflow réutilisable que vous pouvez déclencher en un clic dans les plugins Claude for Excel ou Claude for PowerPoint. Plutôt que de retaper les mêmes instructions à chaque session, une Skill les exécute instantanément, de façon identique, à chaque fois.</p>
+      <div class="info-box">
+        <div class="info-label">Analogie simple</div>
+        Une Skill, c'est comme une <strong>macro</strong> — mais en langage naturel. Vous décrivez une fois ce que Claude doit faire, et ensuite vous l'appelez d'un simple <code>/</code> dans le panneau, sans avoir à tout réécrire.
+      </div>
+      <p>La différence fondamentale avec un prompt ordinaire :</p>
+      <div class="compare-grid">
+        <div class="compare-col bad">
+          <div class="col-label">Prompt classique</div>
+          <ul>
+            <li>Retaper les instructions à chaque session</li>
+            <li>Formulation différente = résultat variable</li>
+            <li>Impossible à partager facilement</li>
+            <li>Temps perdu sur les tâches répétitives</li>
+          </ul>
+        </div>
+        <div class="compare-col good">
+          <div class="col-label">Skill</div>
+          <ul>
+            <li>Déclenché en une frappe (<code>/nom</code>)</li>
+            <li>Résultat constant et reproductible</li>
+            <li>Partageable avec toute l'équipe</li>
+            <li>Applicable à n'importe quel fichier ouvert</li>
+          </ul>
+        </div>
+      </div>
+      <p>Les Skills sont configurées une seule fois dans vos <strong>paramètres Claude</strong> (web ou desktop) et deviennent automatiquement disponibles dans les plugins Excel et PowerPoint.</p>
+    `,
+    prompts: [
+      "Quelles Skills sont disponibles pour ce fichier ?",
+      "Explique-moi ce que fait la Skill /audit avant que je la lance",
+      "Y a-t-il une Skill adaptée pour analyser ce type de données ?"
+    ],
+    exercise: {
+      scenario: "Chaque lundi matin, vous ouvrez un nouveau rapport Excel et effectuez les mêmes vérifications : erreurs de formules, cellules codées en dur, cohérence des totaux. Cela vous prend 20 minutes à chaque fois.",
+      question: "Pourquoi créer une Skill est plus pertinent qu'un prompt sauvegardé dans un fichier texte ?",
+      choices: [
+        { text: "Les Skills sont plus puissantes que les prompts", correct: false },
+        { text: "Une Skill s'invoque directement dans le plugin en une frappe, s'applique au fichier ouvert, et produit un résultat structuré identique à chaque fois — sans copier-coller depuis un fichier externe", correct: true },
+        { text: "Les Skills peuvent modifier Excel directement, pas les prompts", correct: false },
+        { text: "Les Skills sont gratuites contrairement aux prompts", correct: false }
+      ],
+      feedbackCorrect: "✓ Exactement ! La Skill s'exécute directement dans le contexte du fichier ouvert, sans friction. Pas de copier-coller depuis un fichier texte, pas de reformulation — et le résultat est toujours structuré de la même façon, ce qui facilite la comparaison d'une semaine à l'autre.",
+      feedbackWrong: "Pas tout à fait. La vraie valeur d'une Skill n'est pas technique (Claude a les mêmes capacités dans les deux cas) — c'est la fluidité d'utilisation : invocation directe dans le plugin, application au fichier courant, et reproductibilité du résultat."
+    },
+    corrected: [
+      { title: "Comprendre le déclenchement", desc: "Dans le panneau Claude, taper / affiche la liste des Skills disponibles. Sélectionner une Skill ou taper son nom complet.", prompt: "/", result: "La liste de toutes les Skills configurées pour ce plugin s'affiche. Les Skills non pertinentes pour le contexte actuel peuvent être filtrées automatiquement." },
+      { title: "Identifier le bon cas d'usage", desc: "Une Skill vaut la peine si vous répétez la même tâche plus de 2-3 fois par semaine, ou si vous devez garantir un résultat identique à chaque exécution.", prompt: null, result: null }
+    ]
+  },
+
+  // ── M1 ─────────────────────────────────────────────────────────────────────
+  {
+    id: 1, level: "Débutant", levelColor: "debutant", duration: "25 min",
+    title: "Les Skills dans Excel",
+    theory: `
+      <p>Dans <strong>Claude for Excel</strong>, les Skills s'invoquent avec <code>/</code> dans le panneau latéral. Claude analyse le classeur actuellement ouvert et applique le workflow de la Skill à son contenu.</p>
+      <div class="info-box">
+        <div class="info-label">Comment invoquer une Skill dans Excel</div>
+        1. Ouvrir le panneau Claude (ruban Accueil ou Outils > Compléments)<br>
+        2. Taper <strong>/</strong> dans la zone de saisie<br>
+        3. La liste des Skills disponibles apparaît<br>
+        4. Sélectionner la Skill ou continuer à taper son nom pour filtrer<br>
+        5. Appuyer sur Entrée — Claude l'exécute sur le classeur ouvert
+      </div>
+      <p>Les Skills Excel les plus utiles portent sur des tâches <strong>structurelles et récurrentes</strong> : audit de modèle, nettoyage de données, vérification de cohérence, génération de rapports dans un format standardisé.</p>
+      <div class="warn-box">
+        <div class="warn-label">⚠ Contexte limité au classeur ouvert</div>
+        Une Skill s'applique uniquement au fichier actuellement ouvert dans Excel. Si vous voulez l'appliquer à un autre classeur, fermez l'actuel et ouvrez le nouveau avant de lancer la Skill.
+      </div>
+      <p>Vous pouvez <strong>préciser le périmètre</strong> après le nom de la Skill : <code>/audit onglet Résultats uniquement</code> ou <code>/clean-up colonnes A à D</code>.</p>
+    `,
+    prompts: [
+      "/audit — Lance un audit complet du classeur ouvert",
+      "/clean-up colonnes B à F — Nettoie uniquement les colonnes sélectionnées",
+      "/audit onglet Résultats — Applique l'audit à un onglet spécifique"
+    ],
+    exercise: {
+      scenario: "Vous recevez chaque semaine un export CSV de votre ERP, importé dans Excel. Il contient systématiquement des doublons, des espaces parasites dans les noms et des dates au mauvais format. Vous avez créé une Skill /clean-erp pour gérer ces cas.",
+      question: "Comment appliquer cette Skill uniquement à la colonne Client (colonne C) sans toucher aux autres données ?",
+      choices: [
+        { text: "Lancer /clean-erp et laisser Claude deviner la portée", correct: false },
+        { text: "Taper /clean-erp colonne C uniquement dans le panneau avant de valider", correct: true },
+        { text: "Sélectionner la colonne C dans Excel puis lancer /clean-erp", correct: false },
+        { text: "Il est impossible de limiter une Skill à une colonne", correct: false }
+      ],
+      feedbackCorrect: "✓ Correct ! En précisant le périmètre directement après le nom de la Skill, vous guidez Claude sur la portée de l'action. La Skill applique son workflow uniquement là où vous l'indiquez.",
+      feedbackWrong: "Pas tout à fait. La façon la plus directe est de préciser le périmètre dans le texte après le nom de la Skill. Claude lit cette précision et adapte son action en conséquence."
+    },
+    corrected: [
+      { title: "Invoquer avec précision de périmètre", desc: "Ajouter des précisions après le nom de la Skill pour cibler une zone.", prompt: "/clean-erp colonne C uniquement — doublons, espaces, format dates", result: "Claude applique le nettoyage uniquement à la colonne C sans modifier le reste du classeur." },
+      { title: "Enchaîner plusieurs Skills", desc: "Lancer une Skill, examiner le résultat, puis lancer une seconde Skill complémentaire.", prompt: "/clean-erp\n(vérifier le résultat)\n/audit onglet Données", result: "Workflow complet en deux étapes : nettoyage puis audit de contrôle." }
+    ]
+  },
+
+  // ── M2 ─────────────────────────────────────────────────────────────────────
+  {
+    id: 2, level: "Débutant", levelColor: "debutant", duration: "20 min",
+    title: "Les Skills dans PowerPoint",
+    theory: `
+      <p>Dans <strong>Claude for PowerPoint</strong>, les Skills fonctionnent sur le principe identique — <code>/</code> dans le panneau latéral — mais s'appliquent à la présentation ouverte. Elles sont particulièrement utiles pour les vérifications de conformité et les refontes structurelles.</p>
+      <div class="info-box">
+        <div class="info-label">Skills particulièrement utiles en PowerPoint</div>
+        <span class="skill-tag">/deck-check</span> Vérifie la conformité charte (couleurs, police, densité)<br>
+        <span class="skill-tag">/executive-summary</span> Génère un résumé exécutif depuis le contenu<br>
+        <span class="skill-tag">/storyline</span> Vérifie la logique narrative du deck<br>
+        <span class="skill-tag">/slide-audit</span> Identifie les slides trop chargées ou hors format
+      </div>
+      <p>Les Skills PowerPoint sont particulièrement puissantes combinées aux <strong>Instructions persistantes</strong> du plugin. Une Skill /deck-check appliquée à un deck dont Claude connaît déjà la charte graphique via les Instructions sera bien plus précise qu'une Skill générique.</p>
+      <div class="warn-box">
+        <div class="warn-label">⚠ Skills Excel ≠ Skills PowerPoint</div>
+        Les Skills configurées dans vos paramètres s'affichent dans les deux plugins. Mais certaines Skills conçues pour Excel n'ont pas de sens dans PowerPoint (et vice versa). Nommez vos Skills de façon à indiquer leur contexte : /audit-excel, /check-ppt.
+      </div>
+    `,
+    prompts: [
+      "/deck-check — Vérifie la conformité charte de la présentation ouverte",
+      "/storyline — Analyse la logique narrative du deck et propose des améliorations",
+      "/executive-summary — Génère un résumé exécutif en 3 slides depuis le contenu"
+    ],
+    exercise: {
+      scenario: "Vous avez une réunion dans 2 heures. Votre deck est presque prêt mais vous devez vérifier qu'il respecte la charte : pas plus de 5 bullets par slide, titres d'action en 6 mots max, couleur accent #0070C0.",
+      question: "Quelle est la façon la plus rapide de faire cette vérification avec une Skill ?",
+      choices: [
+        { text: "Demander à Claude de lire le deck et de lister tous les problèmes prompt par prompt", correct: false },
+        { text: "Lancer /deck-check depuis le panneau — Claude audite toutes les slides en une seule passe et liste les non-conformités", correct: true },
+        { text: "Vérifier manuellement chaque slide avant la réunion", correct: false },
+        { text: "Utiliser le /audit d'Excel (même Skill, contexte différent)", correct: false }
+      ],
+      feedbackCorrect: "✓ Exactement ! Une Skill /deck-check conçue avec les bonnes règles de charte vérifie l'intégralité du deck en une seule passe et retourne un rapport structuré : nombre de violations par règle, numéros de slides concernées, corrections suggérées.",
+      feedbackWrong: "Pas la bonne approche. La vérification manuelle ou prompt-par-prompt prend du temps. La Skill /deck-check fait tout en une passe et structure son rapport pour que vous puissiez corriger directement."
+    },
+    corrected: [
+      { title: "Lancer /deck-check", desc: "La Skill vérifie l'intégralité du deck en une passe.", prompt: "/deck-check", result: "Rapport structuré : slide 4 (7 bullets > 5 max), slide 8 (titre 9 mots > 6 max), slide 12 (couleur #FF0000 au lieu de #0070C0). 3 violations sur 18 slides." },
+      { title: "Corriger avec Claude", desc: "Utiliser Claude pour corriger directement les violations identifiées.", prompt: "Corrige les violations identifiées par /deck-check : réduis les bullets des slides 4 et 8, et remplace la couleur de la slide 12", result: "Claude applique les corrections directement dans la présentation ouverte." }
+    ]
+  },
+
+  // ── M3 ─────────────────────────────────────────────────────────────────────
+  {
+    id: 3, level: "Intermédiaire", levelColor: "intermediaire", duration: "25 min",
+    title: "Les Skills disponibles par défaut",
+    theory: `
+      <p>Claude for Excel et Claude for PowerPoint proposent un ensemble de <strong>Skills prédéfinies</strong> disponibles dès l'installation, sans configuration. Elles couvrent les cas d'usage les plus fréquents.</p>
+      <div class="info-box">
+        <div class="info-label">Skills Excel disponibles par défaut</div>
+        <span class="skill-tag">/audit</span> Audit complet : erreurs, hardcodes, références brisées<br>
+        <span class="skill-tag">/clean-up</span> Nettoyage : doublons, espaces, formats incohérents<br>
+        <span class="skill-tag">/debug</span> Diagnostic d'une formule ou d'une erreur spécifique<br>
+        <span class="skill-tag">/financial-model</span> Vérification d'un modèle financier (DCF, LBO, 3-statement)<br>
+        <span class="skill-tag">/summarize</span> Résumé structuré du contenu du classeur
+      </div>
+      <div class="info-box">
+        <div class="info-label">Skills PowerPoint disponibles par défaut</div>
+        <span class="skill-tag">/deck-check</span> Audit de conformité charte et structure<br>
+        <span class="skill-tag">/storyline</span> Vérification de la logique narrative<br>
+        <span class="skill-tag">/executive-summary</span> Génération d'un résumé exécutif<br>
+        <span class="skill-tag">/translate</span> Traduction du deck dans une autre langue<br>
+        <span class="skill-tag">/slide-audit</span> Audit densité et lisibilité de chaque slide
+      </div>
+      <p>Ces Skills par défaut sont des <strong>points de départ</strong>. Vous pouvez les invoquer telles quelles, ou les adapter en ajoutant des précisions après le nom (<code>/audit modèle LBO uniquement</code>). Elles ne remplacent pas des Skills personnalisées adaptées à vos processus spécifiques.</p>
+    `,
+    prompts: [
+      "/audit — Quelle est la couverture exacte de cet audit ?",
+      "/financial-model — Adapté à un modèle de valorisation par comparables ?",
+      "/deck-check — Quelles règles de charte vérifie cette Skill ?"
+    ],
+    exercise: {
+      scenario: "Vous venez de recevoir un modèle Excel de prévisions de trésorerie d'un collègue. Avant de valider les hypothèses, vous voulez une vue d'ensemble rapide : structure, erreurs éventuelles, cellules codées en dur.",
+      question: "Quelle Skill par défaut couvre le mieux ce besoin ?",
+      choices: [
+        { text: "/debug — pour trouver les erreurs de formule", correct: false },
+        { text: "/audit — analyse complète : structure, erreurs, hardcodes et cohérence des références", correct: true },
+        { text: "/summarize — pour avoir un résumé du contenu", correct: false },
+        { text: "/financial-model — spécialisée pour les modèles LBO/DCF", correct: false }
+      ],
+      feedbackCorrect: "✓ Correct ! /audit est la Skill la plus complète pour une première analyse. Elle couvre : cartographie des onglets, erreurs de formule (#REF, #VALUE...), cellules codées en dur, références circulaires et cohérence des liens entre onglets. /debug est plus ciblé sur une formule précise, /financial-model est spécialisé pour les structures DCF/LBO.",
+      feedbackWrong: "Pas le choix le plus adapté. /debug cible une formule spécifique. /summarize résume le contenu mais ne vérifie pas l'intégrité. /financial-model est optimisé pour les structures DCF/LBO, pas pour une trésorerie générique. /audit est le bon point d'entrée pour une première analyse complète."
+    },
+    corrected: [
+      { title: "Lancer /audit", desc: "Audit complet sur le modèle de trésorerie reçu.", prompt: "/audit", result: "Rapport : 3 onglets (Hypothèses, Calculs, Synthèse). 2 erreurs #REF en colonne F. 7 hardcodes identifiés (taux d'intérêt figés). Référence circulaire probable entre B12 et D8." },
+      { title: "Affiner avec /debug", desc: "Une fois l'audit fait, cibler l'erreur la plus critique.", prompt: "/debug erreur #REF colonne F", result: "Claude identifie la source : suppression d'une ligne dans l'onglet Hypothèses a cassé la référence. Propose la correction." }
+    ]
+  },
+
+  // ── M4 ─────────────────────────────────────────────────────────────────────
+  {
+    id: 4, level: "Intermédiaire", levelColor: "intermediaire", duration: "45 min",
+    title: "Créer, importer et tester une Skill",
+    theory: `
+      <p>Ce module couvre les trois opérations fondamentales : <strong>créer une Skill de zéro</strong>, <strong>en importer une partagée par un collègue</strong>, puis <strong>la tester dans le plugin</strong> pour vérifier qu'elle produit le résultat attendu.</p>
+
+      <div class="info-box">
+        <div class="info-label">Où se trouvent les paramètres Skills ?</div>
+        <strong>Sur claude.ai :</strong> icône de votre profil (en bas à gauche) → Paramètres → Skills<br>
+        <strong>Application desktop :</strong> menu Claude → Préférences → Skills<br>
+        <strong>Dans le plugin Office :</strong> les Skills sont en lecture seule — la création et l'édition se font uniquement depuis claude.ai ou le desktop.
+      </div>
+
+      <p>Une Skill est définie par trois champs :</p>
+      <div class="compare-grid">
+        <div class="compare-col good">
+          <div class="col-label">Nom</div>
+          <ul>
+            <li>Mot-clé court, en minuscules</li>
+            <li>Tirets autorisés (pas d'espaces)</li>
+            <li>Ex : rapport-ventes, audit-hebdo</li>
+            <li>C'est ce que vous taperez après /</li>
+          </ul>
+        </div>
+        <div class="compare-col good">
+          <div class="col-label">Description</div>
+          <ul>
+            <li>1 à 2 lignes maximum</li>
+            <li>Visible dans la liste après /</li>
+            <li>Indiquer le contexte (Excel, PPT)</li>
+            <li>Ex : "Rapport ventes hebdo – Excel"</li>
+          </ul>
+        </div>
+      </div>
+      <p>Le troisième champ, <strong>Instructions</strong>, est le prompt complet que Claude exécutera. Il doit être autonome : Claude s'appuie sur le fichier ouvert dans le plugin et applique les instructions telles qu'elles sont rédigées, sans rien demander en plus.</p>
+
+      <div class="warn-box">
+        <div class="warn-label">⚠ Les Skills apparaissent dans Excel ET PowerPoint</div>
+        Une Skill créée dans les paramètres est disponible dans les deux plugins. Si elle est spécifique à l'un, précisez-le dans la description (ex : "Excel uniquement") pour éviter de la lancer au mauvais endroit.
+      </div>
+    `,
+    prompts: [
+      "Aide-moi à rédiger le prompt de ma Skill /rapport-ventes pour qu'il soit autonome et précis",
+      "Quels champs sont obligatoires quand je crée une nouvelle Skill dans les paramètres ?",
+      "Comment vérifier qu'une Skill importée fonctionnera sur mes fichiers avant de la diffuser ?"
+    ],
+    exercise: {
+      scenario: "Un collègue vous partage le prompt de sa Skill /revue-offre par email. Vous copiez le texte, créez la Skill dans vos paramètres, et vous lancez /revue-offre dans PowerPoint. Le résultat est en anglais alors que vos decks sont en français.",
+      question: "Quelle est la bonne marche à suivre ?",
+      choices: [
+        { text: "Supprimer la Skill et demander à votre collègue de refaire une version française", correct: false },
+        { text: "Retourner dans les paramètres, ouvrir la Skill, ajouter 'Réponds toujours en français.' au début des Instructions, sauvegarder et relancer", correct: true },
+        { text: "Ajouter 'en français' après /revue-offre dans le panneau à chaque utilisation", correct: false },
+        { text: "Créer une nouvelle Skill /revue-offre-fr en copiant les instructions et en les traduisant entièrement", correct: false }
+      ],
+      feedbackCorrect: "✓ Exactement ! L'ajout d'une seule ligne au début des Instructions règle le problème définitivement, sans recréer de zéro. La Skill importée est votre base — vous l'adaptez à votre contexte. Inutile de dupliquer ou de retraduire tout le prompt.",
+      feedbackWrong: "Il y a plus simple. Retourner dans les paramètres et ajouter 'Réponds toujours en français.' en tête du prompt existant suffit. Pas besoin de supprimer, recréer ou dupliquer — juste adapter le prompt importé à votre contexte."
+    },
+    corrected: [
+      {
+        title: "OPÉRATION 1 — Créer une Skill de zéro",
+        desc: "Démarche complète depuis les paramètres Claude.",
+        prompt: "1. Ouvrir claude.ai dans votre navigateur\n2. Cliquer sur l'icône de votre profil (bas gauche) → Paramètres\n3. Sélectionner l'onglet « Skills » dans le menu latéral\n4. Cliquer sur « Nouvelle Skill » (bouton en haut à droite)\n5. Renseigner le champ Nom : rapport-ventes\n   (minuscules, tirets, pas d'espaces)\n6. Renseigner la Description : Rapport ventes hebdo – Excel\n   (visible dans la liste après /)\n7. Rédiger les Instructions dans le grand champ texte :\n   ────────────────────────────\n   Analyse ce classeur Excel de données de vente.\n   Calcule et affiche :\n   1. CA total (somme de la colonne dont l'en-tête contient \"CA\" ou \"Chiffre\")\n   2. CA par commercial (groupe par colonne Nom, trié décroissant)\n   3. Top 5 clients par CA\n   4. Variation vs semaine précédente si une colonne \"Semaine préc.\" existe\n   Format : tableau structuré. Variations négatives signalées avec ⚠.\n   ────────────────────────────\n8. Cliquer sur Enregistrer\n9. La Skill apparaît dans la liste — disponible immédiatement dans Excel et PowerPoint",
+        result: "La Skill /rapport-ventes est créée. Elle sera visible dès que vous taperez / dans le panneau Claude d'un plugin Office."
+      },
+      {
+        title: "OPÉRATION 2 — Importer une Skill partagée par un collègue",
+        desc: "Votre collègue vous envoie par email ou Confluence le nom, la description et le prompt de sa Skill. Démarche pour l'importer.",
+        prompt: "1. Copier le texte du prompt envoyé par votre collègue\n   (sélectionner tout le texte des Instructions, Ctrl+C)\n2. Ouvrir claude.ai → Paramètres → Skills → Nouvelle Skill\n3. Renseigner le Nom indiqué par votre collègue : revue-offre\n   (utiliser exactement le même nom pour cohérence d'équipe)\n4. Renseigner la Description : Audit propositions commerciales – PowerPoint\n5. Cliquer dans le champ Instructions et coller (Ctrl+V)\n6. Lire rapidement le prompt collé — vérifier :\n   • Pas de références à des chemins de fichiers locaux\n   • Pas de noms de colonnes trop spécifiques au fichier du collègue\n   • La langue correspond à votre usage\n7. Adapter si nécessaire (ex : ajouter \"Réponds en français.\" en première ligne)\n8. Cliquer sur Enregistrer",
+        result: "La Skill /revue-offre est disponible dans vos deux plugins. Vous utilisez le même workflow que votre collègue, adapté à votre contexte."
+      },
+      {
+        title: "OPÉRATION 3 — Tester la Skill dans le plugin et lire le résultat",
+        desc: "Vérifier que la Skill fonctionne comme prévu avant de l'utiliser en production.",
+        prompt: "1. Ouvrir Excel (ou PowerPoint) avec un fichier de test représentatif\n   → Idéalement un vrai fichier, pas un fichier vide\n2. Ouvrir le panneau Claude (ruban Accueil ou Outils > Compléments)\n3. Taper / dans la zone de saisie\n   → La liste des Skills disponibles s'affiche\n   → Vérifier que votre nouvelle Skill apparaît dans la liste\n   → Si elle n'apparaît pas : attendre 30 secondes et réessayer (synchronisation)\n4. Cliquer sur la Skill ou continuer à taper son nom pour filtrer\n5. Appuyer sur Entrée pour lancer\n6. Lire le résultat produit par Claude\n\nCe qu'il faut évaluer dans le résultat :\n• Les indicateurs demandés sont-ils tous présents ?\n• Le format de sortie correspond-il à ce qui était décrit ?\n• Les valeurs calculées semblent-elles correctes ?\n• La langue est-elle correcte ?\n• Y a-t-il des erreurs ou des mentions \"colonne introuvable\" ?",
+        result: "Si le résultat est conforme → Skill prête à l'usage.\nSi quelque chose manque ou est incorrect → retourner dans Paramètres → Skills → cliquer sur la Skill → modifier les Instructions → Enregistrer → relancer dans le plugin."
+      }
+    ]
+  },
+
+  // ── M5 ─────────────────────────────────────────────────────────────────────
+  {
+    id: 5, level: "Intermédiaire", levelColor: "intermediaire", duration: "25 min",
+    title: "Skills et prompts combinés",
+    theory: `
+      <p>Une Skill n'est pas un terminal — c'est un <strong>point de départ</strong> de conversation. Après avoir lancé une Skill, vous pouvez continuer à interagir avec Claude pour affiner, compléter ou rediriger l'analyse.</p>
+      <div class="info-box">
+        <div class="info-label">Patterns de combinaison courants</div>
+        <strong>Skill → question de suivi :</strong> /audit puis "quel est le hardcode le plus risqué ?"<br>
+        <strong>Skill → action corrective :</strong> /deck-check puis "corrige les slides 4 et 7"<br>
+        <strong>Skill → nouvelle Skill :</strong> /clean-up puis /audit pour vérifier après nettoyage<br>
+        <strong>Skill + contexte :</strong> /rapport-ventes région Nord uniquement
+      </div>
+      <p>Vous pouvez aussi <strong>passer du contexte supplémentaire</strong> lors du déclenchement de la Skill en ajoutant du texte après le nom : <code>/audit en ignorant les onglets Helper et Paramètres</code>. Claude intègre ce contexte en plus des instructions de la Skill.</p>
+      <p>Les Skills sont <strong>sans mémoire entre sessions</strong>. Si vous fermez le panneau et le rouvrez, vous repartez d'une conversation vierge. Mais dans la même session, les résultats d'une Skill restent accessibles pour les prompts suivants.</p>
+    `,
+    prompts: [
+      "/audit — puis : concentre-toi sur les 3 problèmes les plus critiques à corriger en priorité",
+      "/deck-check — puis : corrige automatiquement toutes les violations de densité de bullets",
+      "/rapport-ventes région Sud — puis : compare avec la région Nord du rapport de la semaine dernière"
+    ],
+    exercise: {
+      scenario: "Vous lancez /audit sur un modèle financier. Claude identifie 12 problèmes : 3 erreurs critiques, 5 hardcodes, 4 suggestions d'amélioration. Vous avez 15 minutes avant votre réunion.",
+      question: "Comment utiliser Claude efficacement dans ce contexte après la Skill ?",
+      choices: [
+        { text: "Fermer le panneau et corriger manuellement les 12 problèmes", correct: false },
+        { text: "Demander à Claude de corriger uniquement les 3 erreurs critiques maintenant, et de lister les hardcodes à traiter après la réunion", correct: true },
+        { text: "Relancer /audit pour avoir un rapport plus détaillé", correct: false },
+        { text: "Envoyer le rapport d'audit au collègue et lui demander de corriger", correct: false }
+      ],
+      feedbackCorrect: "✓ Parfait ! La combinaison Skill + prompt de suivi vous permet de prioriser. Claude a déjà le contexte complet du fichier et des 12 problèmes — vous guidez simplement l'action vers ce qui est urgent. La liste des hardcodes pour après la réunion reste accessible dans la même session.",
+      feedbackWrong: "Pas optimal. La vraie puissance est d'utiliser la Skill comme diagnostic, puis de dialoguer avec Claude pour prioriser et corriger directement. Claude a déjà tout le contexte — exploitez-le dans la même session."
+    },
+    corrected: [
+      { title: "Prioriser après la Skill", desc: "Demander à Claude de trier les résultats selon l'urgence.", prompt: "/audit\n→ Sur ces 12 problèmes, quels sont les 3 à corriger absolument avant une réunion de validation ?", result: "Claude identifie les 3 erreurs critiques (référence brisée, division par zéro, total incohérent) et les présente avec leur impact." },
+      { title: "Corriger à la volée", desc: "Enchaîner directement la correction sur les éléments prioritaires.", prompt: "Corrige maintenant ces 3 erreurs critiques.", result: "Claude applique les corrections directement dans le fichier ouvert. Les hardcodes restent listés dans la conversation pour traitement ultérieur." }
+    ]
+  },
+
+  // ── M6 ─────────────────────────────────────────────────────────────────────
+  {
+    id: 6, level: "Avancé", levelColor: "avance", duration: "30 min",
+    title: "Rédiger une Skill efficace",
+    theory: `
+      <p>La qualité d'une Skill dépend entièrement de la qualité de ses instructions. Un prompt de Skill mal rédigé produit des résultats incohérents ou inutilisables — exactement ce qu'on cherche à éviter.</p>
+      <div class="info-box">
+        <div class="info-label">Anatomie d'un bon prompt de Skill</div>
+        <strong>1. Contexte d'application</strong> : "Analyse ce classeur de données RH..."<br>
+        <strong>2. Actions précises</strong> : liste numérotée de ce que Claude doit faire<br>
+        <strong>3. Références concrètes</strong> : nommer les colonnes, onglets, formats<br>
+        <strong>4. Format de sortie</strong> : tableau, liste, rapport, résumé en X lignes<br>
+        <strong>5. Règles métier</strong> : seuils, exceptions, définitions spécifiques
+      </div>
+      <div class="compare-grid">
+        <div class="compare-col bad">
+          <div class="col-label">Skill inefficace</div>
+          <ul>
+            <li>Analyse les données et fais un rapport</li>
+            <li>Vérifie que tout est correct</li>
+            <li>Nettoie le fichier</li>
+          </ul>
+        </div>
+        <div class="compare-col good">
+          <div class="col-label">Skill efficace</div>
+          <ul>
+            <li>Calcule le CA par région (colonne D), trié décroissant</li>
+            <li>Identifie les lignes où Marge (col. F) &lt; 10%</li>
+            <li>Supprime les doublons sur la clé ID client (col. A)</li>
+          </ul>
+        </div>
+      </div>
+      <p>Testez vos Skills sur <strong>plusieurs fichiers différents</strong> avant de les diffuser à l'équipe. Une Skill peut fonctionner parfaitement sur le fichier sur lequel vous l'avez conçue, mais échouer sur des fichiers avec des structures légèrement différentes.</p>
+    `,
+    prompts: [
+      "Aide-moi à améliorer ce prompt de Skill pour qu'il soit plus précis et reproductible",
+      "Quelles informations manquent dans ce prompt pour que la Skill fonctionne sur n'importe quel fichier ?",
+      "Comment rendre cette Skill plus robuste si la structure du fichier change ?"
+    ],
+    exercise: {
+      scenario: "Vous avez rédigé la Skill /controle-budget avec ce prompt : 'Analyse le budget et dis-moi si tout va bien.' Sur votre fichier, ça fonctionne. Sur celui de votre collègue, le résultat est vague et inutilisable.",
+      question: "Quelle reformulation rend cette Skill robuste pour différentes structures de fichiers ?",
+      choices: [
+        { text: "Analyse le budget en détail et donne un rapport complet.", correct: false },
+        { text: "Analyse ce classeur de suivi budgétaire. Identifie : 1) les lignes où le Réalisé dépasse le Budget de plus de 10% (colonnes Budget et Réalisé — cherche ces en-têtes), 2) le total des écarts en valeur absolue, 3) le top 3 des postes les plus hors budget. Format : tableau avec colonnes Poste, Budget, Réalisé, Écart%, Alerte.", correct: true },
+        { text: "Contrôle le budget du classeur et signale les anomalies.", correct: false },
+        { text: "Lis le fichier budget et liste les problèmes.", correct: false }
+      ],
+      feedbackCorrect: "✓ Parfait ! Ce prompt cherche les colonnes par leur en-tête (pas par lettre), définit le seuil d'alerte (10%), liste 3 indicateurs précis et impose un format de sortie structuré. Il fonctionnera même si la colonne Budget est en C sur un fichier et en E sur un autre.",
+      feedbackWrong: "Encore trop vague. La robustesse d'une Skill vient de l'utilisation des en-têtes de colonnes (pas des lettres), de seuils définis explicitement, et d'un format de sortie précis. Sans ça, le résultat dépend de l'interprétation de Claude et varie d'un fichier à l'autre."
+    },
+    corrected: [
+      { title: "Référencer par en-tête, pas par lettre", desc: "Cherche la colonne 'Budget' plutôt que la colonne D — plus robuste si la structure change.", prompt: "Identifie les colonnes avec les en-têtes 'Budget' et 'Réalisé'. Si elles n'existent pas, signale-le plutôt que de deviner.", result: "La Skill fonctionne même si les colonnes sont réorganisées d'un fichier à l'autre." },
+      { title: "Définir les seuils et exceptions", desc: "Préciser les règles métier directement dans la Skill.", prompt: "Seuil d'alerte : écart > 10% ET valeur absolue > 5 000€. Exclure les lignes avec la mention 'Hors périmètre' dans la colonne Statut.", result: "La Skill applique les mêmes règles métier à chaque exécution, sans dépendre de l'interprétation de Claude." },
+      { title: "Spécifier le format de sortie", desc: "Imposer une structure de résultat réutilisable.", prompt: "Format de sortie : tableau Markdown avec colonnes Poste | Budget | Réalisé | Écart% | Alerte (✓/⚠). Suivi d'un résumé en 2 lignes.", result: "Résultat identique à chaque exécution — facilement comparable d'une semaine à l'autre." }
+    ]
+  },
+
+  // ── M7 ─────────────────────────────────────────────────────────────────────
+  {
+    id: 7, level: "Avancé", levelColor: "avance", duration: "30 min",
+    title: "Skills partagées en équipe",
+    theory: `
+      <p>Les Skills prennent toute leur valeur quand elles sont <strong>partagées à l'échelle d'une équipe</strong>. Chaque membre travaille avec les mêmes workflows standardisés, ce qui garantit des résultats cohérents et comparables.</p>
+      <div class="info-box">
+        <div class="info-label">Comment partager une Skill</div>
+        Les Skills sont configurées dans les paramètres Claude de chaque utilisateur. Pour partager une Skill en équipe :<br>
+        1. Exporter les instructions de la Skill (copier le prompt)<br>
+        2. Diffuser via votre canal habituel (email, Confluence, SharePoint, Notion...)<br>
+        3. Chaque membre crée la Skill dans ses propres paramètres avec le même prompt<br>
+        En contexte Enterprise, les Skills peuvent être déployées centralement via l'admin console.
+      </div>
+      <p>Pour qu'une Skill fonctionne pour toute l'équipe, ses instructions doivent être <strong>indépendantes de la machine et du compte</strong> : pas de chemins de fichiers locaux, pas de références à des données qui n'existent que chez vous.</p>
+      <div class="green-box">
+        <div class="green-label">Bonne pratique équipe</div>
+        Maintenir un <strong>registre des Skills d'équipe</strong> : nom, description, responsable, date de dernière révision. Une Skill non maintenue peut devenir obsolète si les processus ou les structures de fichiers évoluent.
+      </div>
+    `,
+    prompts: [
+      "Comment documenter cette Skill pour que mes collègues sachent quand l'utiliser ?",
+      "Quelles précisions ajouter au prompt pour qu'il fonctionne sur les fichiers de toute l'équipe ?",
+      "Aide-moi à rédiger la description courte de cette Skill pour le registre d'équipe"
+    ],
+    exercise: {
+      scenario: "Vous avez créé une Skill /revue-offre qui audite vos propositions commerciales PowerPoint. Elle fonctionne parfaitement sur vos fichiers. Vous voulez la diffuser aux 8 commerciaux de votre équipe.",
+      question: "Quel est le risque principal avant de diffuser cette Skill à l'équipe ?",
+      choices: [
+        { text: "La Skill pourrait être trop lente sur les ordinateurs des collègues", correct: false },
+        { text: "Le prompt référence peut-être des éléments spécifiques à votre usage (vos noms de slides, votre charte spécifique, vos critères personnels) qui ne correspondent pas aux fichiers des autres commerciaux", correct: true },
+        { text: "Une Skill ne peut être utilisée que par son créateur", correct: false },
+        { text: "Les autres commerciaux auraient besoin d'un accès administrateur pour ajouter la Skill", correct: false }
+      ],
+      feedbackCorrect: "✓ Exact ! Avant de diffuser, vérifiez que le prompt ne contient pas de références à votre usage personnel : noms de slides spécifiques à vos propres decks, critères qui reflètent votre façon de travailler plutôt que le standard équipe, structures de fichiers qui ne correspondent qu'aux vôtres.",
+      feedbackWrong: "Non. La performance et les droits ne sont pas des problèmes. Le vrai risque est la généricité : une Skill conçue sur vos propres fichiers peut échouer ou produire des résultats inadaptés sur les fichiers de vos collègues si elle est trop spécifique à votre usage."
+    },
+    corrected: [
+      { title: "Généraliser le prompt", desc: "Supprimer les références spécifiques à votre usage.", prompt: "Avant diffusion, relire le prompt et remplacer :\n- Noms de slides spécifiques → descriptions génériques ('slide d'introduction', 'slide de pricing')\n- Critères personnels → standards équipe documentés\n- Formats propres → formats standards de l'équipe", result: "Le prompt fonctionne pour tous les types de propositions commerciales de l'équipe." },
+      { title: "Créer une fiche Skill", desc: "Documenter la Skill pour le registre équipe.", prompt: "Nom : /revue-offre\nContexte : PowerPoint — Propositions commerciales\nUtilisation : Avant envoi à un client. Vérifie : structure narrative, pricing visible, next steps clairs, conformité charte.\nResponsable : [nom] — Révision : [date]\nPrompt complet : [coller le prompt]", result: "Les commerciaux savent quand l'utiliser et le responsable maintient le prompt à jour." }
+    ]
+  },
+
+  // ── M8 ─────────────────────────────────────────────────────────────────────
+  {
+    id: 8, level: "Avancé", levelColor: "avance", duration: "25 min",
+    title: "Intégrer les Skills dans son flux de travail",
+    theory: `
+      <p>L'objectif final est que les Skills deviennent des <strong>réflexes naturels</strong> dans votre flux de travail — aussi automatiques que d'appuyer sur Ctrl+S avant de fermer un fichier.</p>
+      <div class="info-box">
+        <div class="info-label">Exemples de flux de travail avec Skills</div>
+        <strong>Avant envoi (Excel) :</strong> /audit → corriger les erreurs → /clean-up → envoyer<br>
+        <strong>Vendredi soir (Excel) :</strong> /rapport-hebdo → copier le résultat → coller dans le mail de synthèse<br>
+        <strong>Avant réunion (PPT) :</strong> /deck-check → corriger violations → /storyline → finaliser<br>
+        <strong>À réception (Excel) :</strong> /audit fichier reçu → évaluer les risques → répondre au collègue
+      </div>
+      <p>Construisez vos flux progressivement. Commencez par <strong>une seule Skill</strong> sur la tâche la plus répétitive. Une fois qu'elle est intégrée dans votre réflexe, ajoutez-en une deuxième. Trop de Skills nouvelles en même temps brouillent les habitudes.</p>
+      <div class="green-box">
+        <div class="green-label">Indicateur de succès</div>
+        Une Skill est bien intégrée quand vous la lancez <strong>avant même d'y penser consciemment</strong> — comme vous mettez un casque avant d'écouter de la musique. Si vous devez encore chercher son nom ou hésiter sur le bon moment, continuez à l'utiliser quotidiennement pendant une semaine.
+      </div>
+    `,
+    prompts: [
+      "Pour quel type de tâche hebdomadaire est-il le plus pertinent de créer une Skill ?",
+      "Comment savoir si une Skill me fait réellement gagner du temps ?",
+      "Aide-moi à identifier les 3 tâches répétitives de ma semaine qui méritent une Skill"
+    ],
+    exercise: {
+      scenario: "Vous avez maintenant 7 Skills configurées dans vos plugins. Certaines vous font gagner beaucoup de temps, d'autres que vous avez créées 'au cas où' n'ont jamais été utilisées.",
+      question: "Comment décider lesquelles conserver et lesquelles supprimer ?",
+      choices: [
+        { text: "Conserver toutes les Skills — elles ne coûtent rien à avoir", correct: false },
+        { text: "Supprimer les Skills non utilisées depuis 30 jours : une liste trop longue ralentit la sélection et dilue l'attention sur les Skills vraiment utiles", correct: true },
+        { text: "Conserver uniquement les Skills créées par l'équipe, supprimer les personnelles", correct: false },
+        { text: "Demander à Claude quelle Skill est la plus utile", correct: false }
+      ],
+      feedbackCorrect: "✓ Exact ! Une liste de Skills surchargée crée de la friction : trouver la bonne Skill prend du temps, ce qui annule le gain. Garder uniquement les Skills utilisées régulièrement — 5 Skills très utilisées valent mieux que 20 Skills dont 15 ne servent jamais.",
+      feedbackWrong: "L'encombrement a un coût réel. Quand vous tapez / dans le panneau, une liste longue ralentit la sélection. Des Skills inutilisées créent du bruit et diluent l'attention. Un portefeuille de Skills resserré est plus efficace."
+    },
+    corrected: [
+      { title: "Auditer son portefeuille de Skills", desc: "Passer en revue ses Skills une fois par mois.", prompt: "Liste de mes Skills :\n/audit → utilisé 4x/semaine → À conserver\n/rapport-ventes → utilisé 1x/semaine → À conserver\n/clean-erp → utilisé 2x/semaine → À conserver\n/analyse-concurrence → utilisé 0x → À supprimer\n/traduction → utilisé 1x il y a 2 mois → À supprimer", result: "Portefeuille réduit de 7 à 3 Skills — la liste / est plus rapide à parcourir." },
+      { title: "Identifier la prochaine Skill à créer", desc: "Repérer la tâche répétitive qui consomme le plus de temps sans Skill dédiée.", prompt: "Réfléchis aux tâches que tu répètes chaque semaine dans Excel ou PowerPoint sans Skill dédiée. Laquelle te prend le plus de temps à chaque fois ?", result: "Identification de la prochaine Skill à créer pour maximiser le gain de temps." }
+    ]
+  }
+];
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let _savedProgress = [];
+try { _savedProgress = JSON.parse(localStorage.getItem('skills_office_completed') || '[]'); if (!Array.isArray(_savedProgress)) _savedProgress = []; } catch(e) { _savedProgress = []; }
+const completed = new Set(_savedProgress);
+let currentModuleId = null;
+let exerciseAnswered = false;
+
+function saveProgress() {
+  localStorage.setItem('skills_office_completed', JSON.stringify([...completed]));
+  updateProgressBar();
+}
+
+function updateProgressBar() {
+  const pct = (completed.size / MODULES.length) * 100;
+  document.getElementById('globalProg').style.width = pct + '%';
+  document.getElementById('globalProgText').textContent = `${completed.size} / ${MODULES.length} modules`;
+  MODULES.forEach(m => {
+    const nav = document.getElementById('nav-m' + m.id);
+    if (!nav) return;
+    nav.classList.toggle('completed', completed.has(m.id));
+  });
+}
+
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + name).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (name === 'home') document.getElementById('nav-home').classList.add('active');
+  if (name === 'ressources') document.getElementById('nav-ressources').classList.add('active');
+}
+
+function showModule(id) {
+  currentModuleId = id;
+  exerciseAnswered = false;
+  const m = MODULES[id];
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('nav-m' + id).classList.add('active');
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-module').classList.add('active');
+
+  const levelColors = { debutant: 'var(--debutant)', intermediaire: 'var(--intermediaire)', avance: 'var(--avance)' };
+  const color = levelColors[m.levelColor];
+
+  const correctedHTML = m.corrected.map((step, i) => `
+    <div class="corrected-step">
+      <div class="corrected-num">${i + 1}</div>
+      <div class="corrected-content">
+        <div class="step-title">${step.title}</div>
+        <div class="step-desc">${step.desc}</div>
+        ${step.prompt ? `<div class="corrected-prompt">${escHtml(step.prompt)}</div>` : ''}
+        ${step.result ? `<div class="result-preview">${escHtml(step.result)}</div>` : ''}
+      </div>
+    </div>
+  `).join('');
+
+  const choicesHTML = m.exercise.choices.map((c, i) => `
+    <div class="choice" onclick="answerExercise(${id}, ${i}, ${c.correct})">
+      <span class="choice-letter">${String.fromCharCode(65 + i)}</span>
+      ${escHtml(c.text)}
+    </div>
+  `).join('');
+
+  const promptsHTML = m.prompts.map(p => `
+    <div class="prompt-card" onclick="copyPrompt(this)">
+      <span class="prompt-icon">→</span>
+      <span class="prompt-text">${escHtml(p)}</span>
+      <span class="copy-hint">copier</span>
+    </div>
+  `).join('');
+
+  document.getElementById('module-content').innerHTML = `
+    <div class="module-header">
+      <div class="module-breadcrumb">
+        <span style="cursor:pointer;color:var(--accent)" onclick="showScreen('home')">Skills Office</span>
+        <span class="sep">/</span>
+        <span style="color:${color}">${m.level}</span>
+        <span class="sep">/</span>
+        <span>${m.title}</span>
+      </div>
+      <h2 class="module-title">${m.title}</h2>
+      <div class="module-meta">
+        <span class="meta-pill" style="border-color:${color};color:${color}">${m.level}</span>
+        <span class="meta-pill">⏱ ${m.duration}</span>
+        <span class="meta-pill">Module ${m.id + 1} / ${MODULES.length}</span>
+      </div>
+    </div>
+
+    <div class="lesson-section open">
+      <div class="lesson-section-header" onclick="toggleSection(this)">
+        <div class="section-icon icon-theory">📖</div>
+        <span class="section-title">Théorie</span>
+        <span class="section-toggle">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="theory-content">${m.theory}</div>
+      </div>
+    </div>
+
+    <div class="lesson-section">
+      <div class="lesson-section-header" onclick="toggleSection(this)">
+        <div class="section-icon icon-prompt">→</div>
+        <span class="section-title">Prompts à essayer</span>
+        <span class="section-toggle">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="prompt-list">${promptsHTML}</div>
+      </div>
+    </div>
+
+    <div class="lesson-section">
+      <div class="lesson-section-header" onclick="toggleSection(this)">
+        <div class="section-icon icon-exercise">✏</div>
+        <span class="section-title">Exercice interactif</span>
+        <span class="section-toggle">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="exercise-wrapper">
+          <div class="exercise-scenario">
+            <div class="scenario-label">Scénario</div>
+            ${escHtml(m.exercise.scenario)}
+          </div>
+          <div class="exercise-question">${escHtml(m.exercise.question)}</div>
+          <div class="choices" id="choices-${id}">${choicesHTML}</div>
+          <div class="feedback-box correct" id="feedback-correct-${id}">${m.exercise.feedbackCorrect}</div>
+          <div class="feedback-box wrong" id="feedback-wrong-${id}">${m.exercise.feedbackWrong}</div>
+          <div class="exercise-actions">
+            <button class="btn btn-primary" onclick="completeModule(${id})" id="btn-complete-${id}" disabled>Marquer comme terminé</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson-section">
+      <div class="lesson-section-header" onclick="toggleSection(this)">
+        <div class="section-icon icon-corrected">✓</div>
+        <span class="section-title">Corrigé détaillé</span>
+        <span class="section-toggle">▾</span>
+      </div>
+      <div class="section-body">
+        <div class="corrected-wrapper">${correctedHTML}</div>
+      </div>
+    </div>
+
+    <div class="module-nav">
+      ${id > 0 ? `<button class="btn" onclick="showModule(${id - 1})">← Précédent</button>` : '<div></div>'}
+      ${id < MODULES.length - 1
+        ? `<button class="btn btn-primary" onclick="showModule(${id + 1})">Suivant →</button>`
+        : `<button class="btn btn-primary" onclick="showCompletion()">Terminer la formation →</button>`
+      }
+    </div>
+  `;
+
+  if (completed.has(id)) {
+    document.getElementById('btn-complete-' + id).disabled = false;
+    document.getElementById('btn-complete-' + id).textContent = '✓ Terminé';
+  }
+
+  window.scrollTo(0, 0);
+}
+
+function answerExercise(moduleId, choiceIndex, isCorrect) {
+  if (exerciseAnswered) return;
+  exerciseAnswered = true;
+  const choices = document.querySelectorAll(`#choices-${moduleId} .choice`);
+  choices.forEach((c, i) => {
+    if (i === choiceIndex) c.classList.add(isCorrect ? 'selected-correct' : 'selected-wrong');
+    else if (MODULES[moduleId].exercise.choices[i].correct) c.classList.add('reveal-correct');
+  });
+  document.getElementById('feedback-correct-' + moduleId).classList.add('show');
+  if (!isCorrect) document.getElementById('feedback-wrong-' + moduleId).classList.add('show');
+  document.getElementById('btn-complete-' + moduleId).disabled = false;
+}
+
+function completeModule(id) {
+  completed.add(id);
+  saveProgress();
+  const btn = document.getElementById('btn-complete-' + id);
+  btn.textContent = '✓ Terminé';
+  btn.disabled = true;
+  document.getElementById('nav-m' + id).classList.add('completed');
+  if (id < MODULES.length - 1) setTimeout(() => showModule(id + 1), 400);
+  else setTimeout(() => showCompletion(), 400);
+}
+
+function showCompletion() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-module').classList.add('active');
+  document.getElementById('module-content').innerHTML = `
+    <div class="completion-screen">
+      <div class="completion-icon">🏆</div>
+      <div class="completion-title">Formation complétée !</div>
+      <p class="completion-desc">Vous savez maintenant utiliser, créer, partager et intégrer les Skills dans vos plugins Claude for Excel et Claude for PowerPoint. Moins de répétition, plus d'efficacité.</p>
+      <button class="btn btn-primary" onclick="showScreen('home')">Retour à l'accueil</button>
+    </div>
+  `;
+}
+
+function toggleSection(header) { header.parentElement.classList.toggle('open'); }
+
+function copyPrompt(card) {
+  const text = card.querySelector('.prompt-text').textContent;
+  navigator.clipboard.writeText(text).catch(() => {
+    card.querySelector && (card.querySelector('.copy-hint').textContent = '⚠ Copie manuelle');
+  });
+  card.classList.add('copied');
+  card.querySelector('.copy-hint').textContent = 'copié !';
+  setTimeout(() => { card.classList.remove('copied'); card.querySelector('.copy-hint').textContent = 'copier'; }, 1500);
+}
+
+function escHtml(str) {
+  if (!str) return '';
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+updateProgressBar();
