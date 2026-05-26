@@ -1,0 +1,138 @@
+/* Skills Catalog page */
+
+.catalog-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.catalog-search-wrap {
+  position: relative;
+  flex: 1;
+  max-width: 480px;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.75rem;
+  font-size: 0.9rem;
+  pointer-events: none;
+}
+
+.catalog-search {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 0.55rem 2.2rem 0.55rem 2.2rem;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.catalog-search:focus { border-color: var(--accent); }
+.catalog-search::placeholder { color: var(--muted); }
+
+.search-clear {
+  position: absolute;
+  right: 0.6rem;
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 0.2rem;
+  display: none;
+}
+.search-clear.visible { display: block; }
+
+.catalog-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+}
+
+.filter-btn {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 999px;
+  color: var(--muted);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  padding: 0.25rem 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.filter-btn:hover { color: var(--text); border-color: var(--accent); }
+.filter-btn.active { background: rgba(124,106,247,0.15); border-color: var(--accent); color: var(--accent2); }
+
+/* Table */
+.catalog-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.83rem;
+}
+
+.catalog-table thead th {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--border2);
+  text-align: left;
+  background: var(--surface);
+}
+
+.catalog-table thead th:first-child { border-radius: 10px 0 0 0; }
+.catalog-table thead th:last-child  { border-radius: 0 10px 0 0; }
+
+.catalog-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.1s;
+}
+.catalog-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+.catalog-table tbody tr.hidden { display: none; }
+
+.catalog-table tbody td {
+  padding: 0.65rem 1rem;
+  vertical-align: top;
+}
+
+.cat-badge {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.67rem;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(124,106,247,0.08);
+  border: 1px solid rgba(124,106,247,0.2);
+  color: var(--accent2);
+  white-space: nowrap;
+}
+
+.skill-desc-cell {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.catalog-empty {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.875rem;
+  padding: 3rem 0;
+}
