@@ -9,10 +9,15 @@ function toggleFaq(el) {
   el.closest('.faq-item').classList.toggle('open');
 }
 
+function toggleAcc(el) {
+  el.closest('.skill-acc').classList.toggle('open');
+}
+
 document.addEventListener('click', function (e) {
   const el = e.target.closest('[data-action]');
   if (!el) return;
   const action = el.dataset.action;
   if (action === 'switch-tab') switchTab(el.dataset.tab, el);
   else if (action === 'toggle-faq') toggleFaq(el);
+  else if (action === 'toggle-acc') toggleAcc(el);
 });

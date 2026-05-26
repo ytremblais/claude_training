@@ -351,6 +351,410 @@
       Pour aller plus loin : <a href="formation_agent_skills.html" style="color:var(--accent2);">Formation Skills Office</a> — 9 modules pour maîtriser la création, l'optimisation et le partage de Skills.
     </div>
 
+    <p class="section-label" style="margin-top:2.5rem">Catalogue des Skills disponibles</p>
+    <p style="font-size:0.83rem; color:var(--muted); margin-bottom:1.5rem; line-height:1.6;">Tapez <code style="font-family:'DM Mono',monospace; color:var(--blue); background:var(--surface2); padding:0.1rem 0.4rem; border-radius:4px;">/</code> dans le panneau Claude pour invoquer n'importe quelle Skill ci-dessous.</p>
+
+    <div class="skill-catalog">
+
+      <div class="skill-acc">
+        <div class="skill-acc-header" data-action="toggle-acc">
+          <span class="skill-acc-label">📊 Excel — Modélisation</span>
+          <span class="skill-acc-count">4</span>
+          <span class="skill-acc-toggle">&#9660;</span>
+        </div>
+        <div class="skill-acc-body">
+          <div class="skill-row"><span class="skill-id">dcf-model</span><span class="skill-desc">Création de modèle DCF réel (Discounted Cash Flow) pour la valorisation d'actions. Récupère les données financières des dépôts SEC, construit des projections de flux de trésorerie avec calcul du WACC, réalise des analyses de sensibilité et produit des modèles Excel professionnels.</span></div>
+          <div class="skill-row"><span class="skill-id">3-statement-model</span><span class="skill-desc">Compléter et remplir des templates de modèle financier à 3 états (Compte de résultat, Bilan, Tableau des flux de trésorerie). À utiliser pour remplir des templates de modèles, compléter des structures de modèles existantes ou lier des états financiers intégrés.</span></div>
+          <div class="skill-row"><span class="skill-id">lbo-model</span><span class="skill-desc">Compléter des templates de modèle LBO (Leveraged Buyout) dans Excel pour des transactions de private equity, des matériaux de deal ou des présentations en comité d'investissement. Remplit les formules, valide les calculs et assure la mise en forme professionnelle.</span></div>
+          <div class="skill-row"><span class="skill-id">comps-analysis</span><span class="skill-desc">Construire des analyses de sociétés comparables de niveau institutionnel avec métriques opérationnelles, multiples de valorisation et benchmarking statistique au format Excel.</span></div>
+        </div>
+      </div>
+
+      <div class="skill-acc">
+        <div class="skill-acc-header" data-action="toggle-acc">
+          <span class="skill-acc-label">🔧 Excel — Outils</span>
+          <span class="skill-acc-count">4</span>
+          <span class="skill-acc-toggle">&#9660;</span>
+        </div>
+        <div class="skill-acc-body">
+          <div class="skill-row"><span class="skill-id">audit-xls</span><span class="skill-desc">Auditer un tableur pour vérifier la précision des formules, les erreurs et les fautes courantes. Portée sur une plage sélectionnée, une seule feuille ou l'ensemble du modèle (incluant les contrôles d'intégrité : équilibre du bilan, réconciliation de la trésorerie et cohérence logique).</span></div>
+          <div class="skill-row"><span class="skill-id">clean-data-xls</span><span class="skill-desc">Nettoyer des données de tableur désordonnées — supprimer les espaces, corriger les casses incohérentes, convertir les nombres stockés en texte, standardiser les dates, supprimer les doublons et signaler les colonnes à types mixtes.</span></div>
+          <div class="skill-row"><span class="skill-id">skillify</span><span class="skill-desc">Transformer un workflow en Skill réutilisable. Parcourt ce que vous souhaitez automatiser, vérifie si une Skill existante couvre déjà le besoin et rédige un SKILL.md pour votre révision.</span></div>
+          <div class="skill-row"><span class="skill-id">skill-creator</span><span class="skill-desc">Créer de nouvelles Skills, modifier et améliorer des Skills existantes, et mesurer leurs performances. À utiliser pour créer une Skill from scratch, éditer ou optimiser une Skill existante, exécuter des évaluations, analyser la performance avec analyse de variance, ou optimiser la description d'une Skill pour une meilleure précision de déclenchement.</span></div>
+        </div>
+      </div>
+
+      <div class="skill-acc">
+        <div class="skill-acc-header" data-action="toggle-acc">
+          <span class="skill-acc-label">📑 PowerPoint</span>
+          <span class="skill-acc-count">2</span>
+          <span class="skill-acc-toggle">&#9660;</span>
+        </div>
+        <div class="skill-acc-body">
+          <div class="skill-row"><span class="skill-id">gr-ppt-template</span><span class="skill-desc">Appliquer le template de marque Groupe Rocher lors de la création ou de la modification de présentations PowerPoint. Toujours utiliser cette Skill pour les fichiers .pptx afin d'assurer la cohérence de la marque.</span></div>
+          <div class="skill-row"><span class="skill-id">slide-compressor</span><span class="skill-desc">Réduire le nombre de slides et la densité visuelle d'un deck PowerPoint sans perdre de contenu ni casser la mise en forme. Audite, fusionne, condense les bullets et déplace les narrations dans les notes du présentateur.</span></div>
+        </div>
+      </div>
+
+      <div class="skill-acc">
+        <div class="skill-acc-header" data-action="toggle-acc">
+          <span class="skill-acc-label">💰 Finance / Comptabilité</span>
+          <span class="skill-acc-count">8</span>
+          <span class="skill-acc-toggle">&#9660;</span>
+        </div>
+        <div class="skill-acc-body">
+          <div class="skill-row"><span class="skill-id">finance/financial-statements</span><span class="skill-desc">Générer des états financiers (compte de résultat, bilan, flux de trésorerie) avec comparaison période sur période et analyse des écarts.</span></div>
+          <div class="skill-row"><span class="skill-id">finance/journal-entry</span><span class="skill-desc">Préparer des écritures comptables avec débits, crédits et justificatifs appropriés. À utiliser pour comptabiliser des charges à payer de fin de mois, enregistrer des amortissements, passer des ajustements de reconnaissance de revenus ou documenter une écriture pour révision d'audit.</span></div>
+          <div class="skill-row"><span class="skill-id">finance/journal-entry-prep</span><span class="skill-desc">Préparer des écritures comptables avec débits, crédits et documentation justificative pour la clôture mensuelle. À utiliser pour les charges à payer, les amortissements de charges constatées d'avance, les amortissements d'immobilisations, les entrées de paie, la reconnaissance de revenus ou toute écriture manuelle.</span></div>
+          <div class="skill-row"><span class="skill-id">finance/reconciliation</span><span class="skill-desc">Rapprocher les comptes en comparant les soldes GL avec les grands livres auxiliaires, les relevés bancaires ou les données tiers. Pour les rapprochements bancaires, GL-sous-grand livre, rapprochements interentreprises ou identification des éléments de réconciliation.</span></div>
+          <div class="skill-row"><span class="skill-id">finance/variance-analysis</span><span class="skill-desc">Décomposer les écarts financiers en facteurs explicatifs avec narratives et analyse en cascade. À utiliser pour analyser budget vs réel, les variations période sur période, les écarts de revenus ou de charges.</span></div>
+          <div class="skill-row"><span class="skill-id">finance/close-management</span><span class="skill-desc">Gérer le processus de clôture mensuelle avec séquençage des tâches, dépendances et suivi des statuts. À utiliser pour planifier le calendrier de clôture, suivre la progression, identifier les blocages ou séquencer les activités par jour.</span></div>
+          <div class="skill-row"><span class="skill-id">finance/audit-support</span><span class="skill-desc">Soutenir la conformité SOX 404 avec méthodologie de test des contrôles, sélection d'échantillons et standards de documentation. À utiliser pour générer des dossiers de travail, sélectionner des échantillons d'audit, classer les déficiences de contrôle.</span></div>
+          <div class="skill-row"><span class="skill-id">finance/sox-testing</span><span class="skill-desc">Générer des sélections d'échantillons SOX, des dossiers de travail de test et des évaluations de contrôles. À utiliser pour planifier les tests SOX 404 trimestriels ou annuels, prélever un échantillon pour un contrôle, créer un template de dossier de travail ou évaluer une déficience de contrôle.</span></div>
+        </div>
+      </div>
+
+      <div class="skill-acc">
+        <div class="skill-acc-header" data-action="toggle-acc">
+          <span class="skill-acc-label">📊 Data &amp; Analytics</span>
+          <span class="skill-acc-count">10</span>
+          <span class="skill-acc-toggle">&#9660;</span>
+        </div>
+        <div class="skill-acc-body">
+          <div class="skill-row"><span class="skill-id">data/analyze</span><span class="skill-desc">Répondre aux questions sur les données — des recherches rapides aux analyses complètes. À utiliser pour rechercher une métrique, analyser les facteurs d'une tendance, comparer des segments dans le temps ou préparer un rapport de données formel.</span></div>
+          <div class="skill-row"><span class="skill-id">data/build-dashboard</span><span class="skill-desc">Construire un tableau de bord HTML interactif avec graphiques, filtres et tableaux. À utiliser pour créer une vue d'ensemble exécutive avec indicateurs clés, ou transformer des résultats de requêtes en rapport autonome partageable.</span></div>
+          <div class="skill-row"><span class="skill-id">data/create-viz</span><span class="skill-desc">Créer des visualisations de qualité publication avec Python. À utiliser pour transformer des résultats de requêtes ou un DataFrame en graphique, ou sélectionner le bon type de graphique pour une tendance ou une comparaison.</span></div>
+          <div class="skill-row"><span class="skill-id">data/data-visualization</span><span class="skill-desc">Créer des visualisations de données efficaces avec Python (matplotlib, seaborn, plotly). À utiliser pour construire des graphiques, choisir le bon type de représentation, créer des figures de qualité publication, ou appliquer les principes d'accessibilité et de théorie des couleurs.</span></div>
+          <div class="skill-row"><span class="skill-id">data/explore-data</span><span class="skill-desc">Profiler et explorer un jeu de données pour comprendre sa structure, sa qualité et ses patterns. À utiliser lors de la découverte d'une nouvelle table, pour vérifier les taux de valeurs nulles et les distributions de colonnes, ou repérer des problèmes de qualité des données.</span></div>
+          <div class="skill-row"><span class="skill-id">data/sql-queries</span><span class="skill-desc">Écrire des requêtes SQL correctes et performantes pour tous les principaux dialectes de data warehouse (Snowflake, BigQuery, Databricks, PostgreSQL, etc.). À utiliser pour écrire, optimiser ou traduire du SQL.</span></div>
+          <div class="skill-row"><span class="skill-id">data/write-query</span><span class="skill-desc">Écrire des requêtes SQL optimisées pour votre dialecte avec les bonnes pratiques. À utiliser pour traduire un besoin en langage naturel en SQL, construire des requêtes multi-CTE ou obtenir une syntaxe spécifique au dialecte.</span></div>
+          <div class="skill-row"><span class="skill-id">data/statistical-analysis</span><span class="skill-desc">Appliquer des méthodes statistiques incluant statistiques descriptives, analyse de tendances, détection de valeurs aberrantes et tests d'hypothèses. À utiliser pour analyser des distributions, tester la significativité, détecter des anomalies.</span></div>
+          <div class="skill-row"><span class="skill-id">data/validate-data</span><span class="skill-desc">Contrôler qualité une analyse avant de la partager — méthodologie, précision et biais. À utiliser avant une présentation aux parties prenantes, pour vérifier ponctuellement les calculs et la logique d'agrégation.</span></div>
+          <div class="skill-row"><span class="skill-id">data/data-context-extractor</span><span class="skill-desc-empty">—</span></div>
+        </div>
+      </div>
+
+      <div class="skill-acc">
+        <div class="skill-acc-header" data-action="toggle-acc">
+          <span class="skill-acc-label">💼 Ventes (Sales)</span>
+          <span class="skill-acc-count">9</span>
+          <span class="skill-acc-toggle">&#9660;</span>
+        </div>
+        <div class="skill-acc-body">
+          <div class="skill-row"><span class="skill-id">sales/account-research</span><span class="skill-desc">Rechercher une entreprise ou une personne et obtenir des informations de vente exploitables. Fonctionne seul avec la recherche web, optimisé avec des outils d'enrichissement ou votre CRM.</span></div>
+          <div class="skill-row"><span class="skill-id">sales/call-prep</span><span class="skill-desc">Se préparer à un appel commercial avec le contexte du compte, la recherche sur les participants et un agenda suggéré. Fonctionne seul avec les inputs utilisateur et la recherche web, optimisé avec CRM, email, chat.</span></div>
+          <div class="skill-row"><span class="skill-id">sales/call-summary</span><span class="skill-desc">Traiter des notes d'appel ou une transcription — extraire les actions à mener, rédiger l'email de suivi, générer un résumé interne.</span></div>
+          <div class="skill-row"><span class="skill-id">sales/competitive-intelligence</span><span class="skill-desc">Rechercher vos concurrents et construire une battlecard interactive. Produit un artefact HTML avec des fiches concurrentes cliquables et une matrice de comparaison.</span></div>
+          <div class="skill-row"><span class="skill-id">sales/create-an-asset</span><span class="skill-desc">Générer des supports de vente personnalisés (landing pages, decks, one-pagers, démonstrations de workflows) à partir du contexte de votre deal.</span></div>
+          <div class="skill-row"><span class="skill-id">sales/daily-briefing</span><span class="skill-desc">Démarrer la journée avec un briefing de vente priorisé. Fonctionne seul quand vous communiquez vos réunions et priorités, optimisé avec calendrier, CRM et email.</span></div>
+          <div class="skill-row"><span class="skill-id">sales/draft-outreach</span><span class="skill-desc">Rechercher un prospect puis rédiger un message de prospection personnalisé. Utilise la recherche web par défaut, optimisé avec enrichissement et CRM.</span></div>
+          <div class="skill-row"><span class="skill-id">sales/forecast</span><span class="skill-desc">Générer une prévision de ventes pondérée avec scénarios optimiste/probable/pessimiste, décomposition engagement vs upside et analyse des écarts.</span></div>
+          <div class="skill-row"><span class="skill-id">sales/pipeline-review</span><span class="skill-desc">Analyser la santé du pipeline — prioriser les deals, signaler les risques, obtenir un plan d'action hebdomadaire.</span></div>
+        </div>
+      </div>
+
+      <div class="skill-acc">
+        <div class="skill-acc-header" data-action="toggle-acc">
+          <span class="skill-acc-label">📣 Marketing</span>
+          <span class="skill-acc-count">8</span>
+          <span class="skill-acc-toggle">&#9660;</span>
+        </div>
+        <div class="skill-acc-body">
+          <div class="skill-row"><span class="skill-id">marketing/brand-review</span><span class="skill-desc">Réviser un contenu par rapport à votre voix de marque, votre charte éditoriale et vos piliers de messages, en signalant les écarts par niveau de sévérité avec des corrections avant/après spécifiques.</span></div>
+          <div class="skill-row"><span class="skill-id">marketing/campaign-plan</span><span class="skill-desc">Générer un brief de campagne complet avec objectifs, audience, messages, stratégie de canaux, calendrier éditorial et métriques de succès.</span></div>
+          <div class="skill-row"><span class="skill-id">marketing/competitive-brief</span><span class="skill-desc">Rechercher les concurrents et générer une comparaison de positionnement et de messages avec les lacunes de contenu, opportunités et menaces.</span></div>
+          <div class="skill-row"><span class="skill-id">marketing/content-creation</span><span class="skill-desc">Rédiger du contenu marketing sur tous les canaux — articles de blog, réseaux sociaux, newsletters email, landing pages, communiqués de presse et études de cas.</span></div>
+          <div class="skill-row"><span class="skill-id">marketing/draft-content</span><span class="skill-desc">Rédiger articles de blog, réseaux sociaux, newsletters email, landing pages, communiqués de presse et études de cas avec mise en forme spécifique au canal et recommandations SEO.</span></div>
+          <div class="skill-row"><span class="skill-id">marketing/email-sequence</span><span class="skill-desc">Concevoir et rédiger des séquences d'emails multi-envois avec le texte complet, le timing, la logique de ramification, les conditions de sortie et les benchmarks de performance.</span></div>
+          <div class="skill-row"><span class="skill-id">marketing/performance-report</span><span class="skill-desc">Construire un rapport de performance marketing avec métriques clés, analyse de tendances, victoires et manques, et recommandations d'optimisation priorisées.</span></div>
+          <div class="skill-row"><span class="skill-id">marketing/seo-audit</span><span class="skill-desc">Réaliser un audit SEO complet — recherche de mots-clés, analyse on-page, lacunes de contenu, contrôles techniques et comparaison concurrentielle.</span></div>
+        </div>
+      </div>
+
+      <div class="skill-acc">
+        <div class="skill-acc-header" data-action="toggle-acc">
+          <span class="skill-acc-label">⚙️ Opérations</span>
+          <span class="skill-acc-count">9</span>
+          <span class="skill-acc-toggle">&#9660;</span>
+        </div>
+        <div class="skill-acc-body">
+          <div class="skill-row"><span class="skill-id">operations/capacity-plan</span><span class="skill-desc">Planifier la capacité des ressources — analyse de la charge de travail et prévision du taux d'utilisation. À utiliser lors de la planification trimestrielle ou pour décider d'embaucher ou de déprioritiser.</span></div>
+          <div class="skill-row"><span class="skill-id">operations/change-request</span><span class="skill-desc">Créer une demande de gestion du changement avec analyse d'impact et plan de retour arrière. À utiliser pour proposer un changement de système ou de processus nécessitant une approbation.</span></div>
+          <div class="skill-row"><span class="skill-id">operations/compliance-tracking</span><span class="skill-desc">Suivre les exigences de conformité et la préparation aux audits. Pour SOC 2, ISO 27001, RGPD ou le suivi et la documentation des activités de conformité.</span></div>
+          <div class="skill-row"><span class="skill-id">operations/process-doc</span><span class="skill-desc">Documenter un processus métier — organigrammes, RACI et procédures opérationnelles standard. À utiliser pour formaliser un processus qui existe uniquement dans la tête de quelqu'un.</span></div>
+          <div class="skill-row"><span class="skill-id">operations/process-optimization</span><span class="skill-desc">Analyser et améliorer les processus métier. À utiliser quand un processus est lent, comporte trop d'étapes ou présente un goulot d'étranglement à corriger.</span></div>
+          <div class="skill-row"><span class="skill-id">operations/risk-assessment</span><span class="skill-desc">Identifier, évaluer et atténuer les risques opérationnels. Pour les registres de risques, l'évaluation des risques associés à un projet, un fournisseur, un processus ou une décision.</span></div>
+          <div class="skill-row"><span class="skill-id">operations/runbook</span><span class="skill-desc">Créer ou mettre à jour un runbook opérationnel pour une tâche ou procédure récurrente. À utiliser pour documenter une tâche que les équipes ops doivent exécuter de façon répétable.</span></div>
+          <div class="skill-row"><span class="skill-id">operations/status-report</span><span class="skill-desc">Générer un rapport de statut avec KPIs, risques et actions à mener. À utiliser pour rédiger une mise à jour hebdomadaire ou mensuelle pour la direction.</span></div>
+          <div class="skill-row"><span class="skill-id">operations/vendor-review</span><span class="skill-desc">Évaluer un fournisseur — analyse des coûts, évaluation des risques et recommandation. À utiliser pour examiner une nouvelle proposition fournisseur ou décider de renouveler un contrat.</span></div>
+        </div>
+      </div>
+
+      <div class="skill-acc">
+        <div class="skill-acc-header" data-action="toggle-acc">
+          <span class="skill-acc-label">🛠️ Ingénierie</span>
+          <span class="skill-acc-count">10</span>
+          <span class="skill-acc-toggle">&#9660;</span>
+        </div>
+        <div class="skill-acc-body">
+          <div class="skill-row"><span class="skill-id">engineering/architecture</span><span class="skill-desc">Créer ou évaluer un Architecture Decision Record (ADR). À utiliser pour choisir entre des technologies, documenter une décision de conception avec ses compromis et conséquences.</span></div>
+          <div class="skill-row"><span class="skill-id">engineering/code-review</span><span class="skill-desc">Réviser des modifications de code pour la sécurité, la performance et la correction. Déclencher avec une URL de PR ou un diff.</span></div>
+          <div class="skill-row"><span class="skill-id">engineering/debug</span><span class="skill-desc">Session de débogage structurée — reproduire, isoler, diagnostiquer et corriger. Déclencher avec un message d'erreur ou une stack trace.</span></div>
+          <div class="skill-row"><span class="skill-id">engineering/deploy-checklist</span><span class="skill-desc">Checklist de vérification avant déploiement. À utiliser avant de livrer une release, déployer un changement avec migrations de base de données ou feature flags.</span></div>
+          <div class="skill-row"><span class="skill-id">engineering/documentation</span><span class="skill-desc">Écrire et maintenir de la documentation technique. Déclencher avec 'écrire la doc de', 'créer un README', 'écrire un runbook'.</span></div>
+          <div class="skill-row"><span class="skill-id">engineering/incident-response</span><span class="skill-desc">Gérer un workflow de réponse aux incidents — triage, communication et rédaction du post-mortem. Déclencher avec 'nous avons un incident', 'la production est en panne'.</span></div>
+          <div class="skill-row"><span class="skill-id">engineering/standup</span><span class="skill-desc">Générer une mise à jour de standup à partir de l'activité récente. À utiliser pour préparer le standup quotidien, résumer les commits et PRs de la veille.</span></div>
+          <div class="skill-row"><span class="skill-id">engineering/system-design</span><span class="skill-desc">Concevoir des systèmes, services et architectures. Déclencher avec 'concevoir un système pour', 'comment architecturer'.</span></div>
+          <div class="skill-row"><span class="skill-id">engineering/tech-debt</span><span class="skill-desc">Identifier, catégoriser et prioriser la dette technique. Déclencher avec 'dette technique', 'que devrait-on refactoriser', 'santé du code'.</span></div>
+          <div class="skill-row"><span class="skill-id">engineering/testing-strategy</span><span class="skill-desc">Concevoir des stratégies de test et des plans de test. Déclencher avec 'comment tester', 'stratégie de test pour', 'écrire les tests de'.</span></div>
+        </div>
+      </div>
+
+      <div class="skill-acc">
+        <div class="skill-acc-header" data-action="toggle-acc">
+          <span class="skill-acc-label">⚖️ Juridique</span>
+          <span class="skill-acc-count">9</span>
+          <span class="skill-acc-toggle">&#9660;</span>
+        </div>
+        <div class="skill-acc-body">
+          <div class="skill-row"><span class="skill-id">legal/brief</span><span class="skill-desc">Générer des briefings contextuels pour le travail juridique — résumé quotidien, recherche thématique ou réponse à un incident.</span></div>
+          <div class="skill-row"><span class="skill-id">legal/compliance-check</span><span class="skill-desc">Réaliser un contrôle de conformité sur une action proposée, une fonctionnalité produit ou une initiative commerciale, en identifiant les réglementations applicables et les zones de risque.</span></div>
+          <div class="skill-row"><span class="skill-id">legal/legal-response</span><span class="skill-desc">Générer une réponse à une demande juridique courante en utilisant des templates configurés, avec vérification intégrée d'escalade.</span></div>
+          <div class="skill-row"><span class="skill-id">legal/legal-risk-assessment</span><span class="skill-desc">Évaluer et classer les risques juridiques selon un cadre sévérité/probabilité avec critères d'escalade.</span></div>
+          <div class="skill-row"><span class="skill-id">legal/meeting-briefing</span><span class="skill-desc">Préparer des briefings structurés pour les réunions à enjeu juridique et suivre les actions qui en découlent.</span></div>
+          <div class="skill-row"><span class="skill-id">legal/review-contract</span><span class="skill-desc">Réviser un contrat par rapport au playbook de négociation de votre organisation — signaler les écarts, générer des rédlines, fournir une analyse d'impact commercial.</span></div>
+          <div class="skill-row"><span class="skill-id">legal/signature-request</span><span class="skill-desc">Préparer et acheminer un document pour signature électronique — exécuter une checklist pré-signature, configurer l'ordre de signature et envoyer pour exécution.</span></div>
+          <div class="skill-row"><span class="skill-id">legal/triage-nda</span><span class="skill-desc">Trier rapidement un NDA entrant et le classer VERT (standard), JAUNE (révision juridique) ou ROUGE (révision juridique complète).</span></div>
+          <div class="skill-row"><span class="skill-id">legal/vendor-check</span><span class="skill-desc">Vérifier le statut des accords existants avec un fournisseur dans tous les systèmes connectés — CLM, CRM, email et stockage de documents.</span></div>
+        </div>
+      </div>
+
+      <div class="skill-acc">
+        <div class="skill-acc-header" data-action="toggle-acc">
+          <span class="skill-acc-label">👥 Ressources Humaines</span>
+          <span class="skill-acc-count">9</span>
+          <span class="skill-acc-toggle">&#9660;</span>
+        </div>
+        <div class="skill-acc-body">
+          <div class="skill-row"><span class="skill-id">human-resources/comp-analysis</span><span class="skill-desc">Analyser la rémunération — benchmarking, positionnement dans la grille et modélisation de l'équité.</span></div>
+          <div class="skill-row"><span class="skill-id">human-resources/draft-offer</span><span class="skill-desc">Rédiger une lettre d'offre avec les détails de rémunération et les conditions. À utiliser quand un candidat est prêt pour une offre, pour assembler un package de rémunération total.</span></div>
+          <div class="skill-row"><span class="skill-id">human-resources/interview-prep</span><span class="skill-desc">Créer des plans d'entretien structurés avec des questions basées sur les compétences et des fiches d'évaluation.</span></div>
+          <div class="skill-row"><span class="skill-id">human-resources/onboarding</span><span class="skill-desc">Générer une checklist d'intégration et un plan de première semaine pour un nouvel employé.</span></div>
+          <div class="skill-row"><span class="skill-id">human-resources/org-planning</span><span class="skill-desc">Planification des effectifs, conception organisationnelle et optimisation de la structure d'équipe.</span></div>
+          <div class="skill-row"><span class="skill-id">human-resources/people-report</span><span class="skill-desc">Générer des rapports sur les effectifs, l'attrition, la diversité ou la santé organisationnelle.</span></div>
+          <div class="skill-row"><span class="skill-id">human-resources/performance-review</span><span class="skill-desc">Structurer une évaluation de performance avec auto-évaluation, template manager et préparation à la calibration.</span></div>
+          <div class="skill-row"><span class="skill-id">human-resources/policy-lookup</span><span class="skill-desc">Trouver et expliquer les politiques d'entreprise en langage clair. Déclencher avec 'quelle est notre politique de congés', 'puis-je travailler à distance'.</span></div>
+          <div class="skill-row"><span class="skill-id">human-resources/recruiting-pipeline</span><span class="skill-desc">Suivre et gérer les étapes du pipeline de recrutement. Déclencher avec 'mise à jour du recrutement', 'pipeline de candidats', 'combien de candidats'.</span></div>
+        </div>
+      </div>
+
+      <div class="skill-acc">
+        <div class="skill-acc-header" data-action="toggle-acc">
+          <span class="skill-acc-label">🎨 Design</span>
+          <span class="skill-acc-count">7</span>
+          <span class="skill-acc-toggle">&#9660;</span>
+        </div>
+        <div class="skill-acc-body">
+          <div class="skill-row"><span class="skill-id">design/accessibility-review</span><span class="skill-desc">Réaliser un audit d'accessibilité WCAG 2.1 AA sur un design ou une page. Vérifier le contraste des couleurs, la navigation au clavier, la taille des zones tactiles, le comportement des lecteurs d'écran.</span></div>
+          <div class="skill-row"><span class="skill-id">design/design-critique</span><span class="skill-desc">Obtenir un retour structuré sur le design en termes d'utilisabilité, de hiérarchie et de cohérence.</span></div>
+          <div class="skill-row"><span class="skill-id">design/design-handoff</span><span class="skill-desc">Générer des spécifications de handoff développeur à partir d'un design. Couvre la mise en page, les tokens de design, les props de composants, les états d'interaction et les points de rupture responsive.</span></div>
+          <div class="skill-row"><span class="skill-id">design/design-system</span><span class="skill-desc">Auditer, documenter ou étendre votre système de design. Vérifier les incohérences de nommage, rédiger la documentation des composants, concevoir de nouveaux patterns.</span></div>
+          <div class="skill-row"><span class="skill-id">design/research-synthesis</span><span class="skill-desc">Synthétiser la recherche utilisateur en thèmes, insights et recommandations à partir d'entretiens, sondages, tests d'utilisabilité, tickets de support ou réponses NPS.</span></div>
+          <div class="skill-row"><span class="skill-id">design/user-research</span><span class="skill-desc">Planifier, conduire et synthétiser la recherche utilisateur. Déclencher avec 'plan de recherche utilisateur', 'guide d'entretien', 'test d'utilisabilité'.</span></div>
+          <div class="skill-row"><span class="skill-id">design/ux-copy</span><span class="skill-desc">Écrire ou réviser le contenu UX — microcopy, messages d'erreur, états vides, CTAs.</span></div>
+        </div>
+      </div>
+
+      <div class="skill-acc">
+        <div class="skill-acc-header" data-action="toggle-acc">
+          <span class="skill-acc-label">📦 Produit</span>
+          <span class="skill-acc-count">8</span>
+          <span class="skill-acc-toggle">&#9660;</span>
+        </div>
+        <div class="skill-acc-body">
+          <div class="skill-row"><span class="skill-id">product-management/competitive-brief</span><span class="skill-desc">Créer un brief d'analyse concurrentielle pour un ou plusieurs concurrents ou une zone fonctionnelle.</span></div>
+          <div class="skill-row"><span class="skill-id">product-management/metrics-review</span><span class="skill-desc">Réviser et analyser les métriques produit avec analyse de tendances et insights exploitables.</span></div>
+          <div class="skill-row"><span class="skill-id">product-management/product-brainstorming</span><span class="skill-desc">Brainstormer des idées produit, explorer des espaces problème et challenger les hypothèses en tant que partenaire de réflexion.</span></div>
+          <div class="skill-row"><span class="skill-id">product-management/roadmap-update</span><span class="skill-desc">Mettre à jour, créer ou reprioriser votre roadmap produit.</span></div>
+          <div class="skill-row"><span class="skill-id">product-management/sprint-planning</span><span class="skill-desc">Planifier un sprint — cadrer le travail, estimer la capacité, fixer les objectifs et rédiger un plan de sprint.</span></div>
+          <div class="skill-row"><span class="skill-id">product-management/stakeholder-update</span><span class="skill-desc">Générer une mise à jour des parties prenantes adaptée à l'audience et à la cadence.</span></div>
+          <div class="skill-row"><span class="skill-id">product-management/synthesize-research</span><span class="skill-desc">Synthétiser la recherche utilisateur issue d'entretiens, sondages et retours en insights structurés.</span></div>
+          <div class="skill-row"><span class="skill-id">product-management/write-spec</span><span class="skill-desc">Rédiger un spec de fonctionnalité ou un PRD à partir d'un énoncé de problème ou d'une idée de fonctionnalité.</span></div>
+        </div>
+      </div>
+
+      <div class="skill-acc">
+        <div class="skill-acc-header" data-action="toggle-acc">
+          <span class="skill-acc-label">🔍 SEO (SearchFit)</span>
+          <span class="skill-acc-count">11</span>
+          <span class="skill-acc-toggle">&#9660;</span>
+        </div>
+        <div class="skill-acc-body">
+          <div class="skill-row"><span class="skill-id">searchfit-seo/ai-visibility</span><span class="skill-desc">Analyser et améliorer la façon dont une marque apparaît dans les réponses générées par IA (ChatGPT, Claude, Gemini, Perplexity).</span></div>
+          <div class="skill-row"><span class="skill-id">searchfit-seo/broken-links</span><span class="skill-desc">Trouver et corriger les liens brisés sur un site web ou dans un codebase.</span></div>
+          <div class="skill-row"><span class="skill-id">searchfit-seo/content-brief</span><span class="skill-desc">Générer un brief de contenu détaillé pour un article ou une page spécifique.</span></div>
+          <div class="skill-row"><span class="skill-id">searchfit-seo/content-strategy</span><span class="skill-desc">Développer une stratégie de contenu pour le SEO et la croissance organique.</span></div>
+          <div class="skill-row"><span class="skill-id">searchfit-seo/content-translation</span><span class="skill-desc">Traduire et localiser le contenu d'un site web pour le SEO international.</span></div>
+          <div class="skill-row"><span class="skill-id">searchfit-seo/internal-linking</span><span class="skill-desc">Analyser et améliorer la stratégie de maillage interne d'un site web.</span></div>
+          <div class="skill-row"><span class="skill-id">searchfit-seo/keyword-clustering</span><span class="skill-desc">Regrouper et organiser les mots-clés en groupes thématiques pour le SEO.</span></div>
+          <div class="skill-row"><span class="skill-id">searchfit-seo/on-page-seo</span><span class="skill-desc">Optimiser une page spécifique pour le SEO on-page.</span></div>
+          <div class="skill-row"><span class="skill-id">searchfit-seo/schema-markup</span><span class="skill-desc">Générer des données structurées JSON-LD / balises schema pour des pages web.</span></div>
+          <div class="skill-row"><span class="skill-id">searchfit-seo/seo-audit</span><span class="skill-desc">Réaliser un audit SEO complet d'un site web ou d'un codebase.</span></div>
+          <div class="skill-row"><span class="skill-id">searchfit-seo/technical-seo</span><span class="skill-desc">Effectuer un audit SEO technique d'un site web ou d'un codebase.</span></div>
+        </div>
+      </div>
+
+      <div class="skill-acc">
+        <div class="skill-acc-header" data-action="toggle-acc">
+          <span class="skill-acc-label">🌐 Bright Data</span>
+          <span class="skill-acc-count">10</span>
+          <span class="skill-acc-toggle">&#9660;</span>
+        </div>
+        <div class="skill-acc-body">
+          <div class="skill-row"><span class="skill-id">brightdata-plugin/scrape</span><span class="skill-desc">Scraper du contenu web en markdown/HTML/JSON propre via le CLI Bright Data.</span></div>
+          <div class="skill-row"><span class="skill-id">brightdata-plugin/search</span><span class="skill-desc">Rechercher sur le web via le CLI Bright Data — SERP Google/Bing/Yandex ou découverte sémantique du web.</span></div>
+          <div class="skill-row"><span class="skill-id">brightdata-plugin/data-feeds</span><span class="skill-desc">Extraire des données structurées depuis 40+ plateformes supportées (Amazon, LinkedIn, Instagram, TikTok, YouTube, Reddit, etc.).</span></div>
+          <div class="skill-row"><span class="skill-id">brightdata-plugin/scraper-builder</span><span class="skill-desc">Construire des scrapers web prêts pour la production pour n'importe quel site web en utilisant l'infrastructure Bright Data.</span></div>
+          <div class="skill-row"><span class="skill-id">brightdata-plugin/scraper-studio</span><span class="skill-desc">Construire et exécuter des scrapers Bright Data générés par IA depuis le terminal.</span></div>
+          <div class="skill-row"><span class="skill-id">brightdata-plugin/brightdata-cli</span><span class="skill-desc">Guide d'utilisation du CLI Bright Data pour scraper, rechercher, extraire des données structurées, gérer des zones de proxy et vérifier le budget du compte.</span></div>
+          <div class="skill-row"><span class="skill-id">brightdata-plugin/bright-data-best-practices</span><span class="skill-desc">Construire des intégrations Bright Data prêtes pour la production avec les meilleures pratiques pour Web Unlocker, SERP API, Web Scraper API et Browser API.</span></div>
+          <div class="skill-row"><span class="skill-id">brightdata-plugin/brd-browser-debug</span><span class="skill-desc">Déboguer des sessions Bright Data Scraping Browser à l'aide de l'API Browser Sessions.</span></div>
+          <div class="skill-row"><span class="skill-id">brightdata-plugin/design-mirror</span><span class="skill-desc">Répliquer le style visuel d'un site web et l'appliquer à votre codebase existant.</span></div>
+          <div class="skill-row"><span class="skill-id">brightdata-plugin/seo-audit</span><span class="skill-desc">Auditer le SEO en utilisant des données web en temps réel via le CLI Bright Data pour une détection précise des schémas injectés par JS, hreflang, canoniques et vérifications SERP.</span></div>
+        </div>
+      </div>
+
+      <div class="skill-acc">
+        <div class="skill-acc-header" data-action="toggle-acc">
+          <span class="skill-acc-label">🎯 Support Client</span>
+          <span class="skill-acc-count">5</span>
+          <span class="skill-acc-toggle">&#9660;</span>
+        </div>
+        <div class="skill-acc-body">
+          <div class="skill-row"><span class="skill-id">customer-support/ticket-triage</span><span class="skill-desc">Trier et prioriser un ticket de support ou un problème client.</span></div>
+          <div class="skill-row"><span class="skill-id">customer-support/draft-response</span><span class="skill-desc">Rédiger une réponse professionnelle orientée client adaptée à la situation et à la relation.</span></div>
+          <div class="skill-row"><span class="skill-id">customer-support/customer-escalation</span><span class="skill-desc">Préparer une escalade pour l'ingénierie, le produit ou la direction avec tout le contexte nécessaire.</span></div>
+          <div class="skill-row"><span class="skill-id">customer-support/customer-research</span><span class="skill-desc">Recherche multi-sources sur une question ou un sujet client avec attribution des sources.</span></div>
+          <div class="skill-row"><span class="skill-id">customer-support/kb-article</span><span class="skill-desc">Rédiger un article de base de connaissances à partir d'un problème résolu ou d'une question courante.</span></div>
+        </div>
+      </div>
+
+      <div class="skill-acc">
+        <div class="skill-acc-header" data-action="toggle-acc">
+          <span class="skill-acc-label">🔗 Common Room</span>
+          <span class="skill-acc-count">6</span>
+          <span class="skill-acc-toggle">&#9660;</span>
+        </div>
+        <div class="skill-acc-body">
+          <div class="skill-row"><span class="skill-id">common-room/account-research</span><span class="skill-desc">Rechercher une entreprise en utilisant les données Common Room.</span></div>
+          <div class="skill-row"><span class="skill-id">common-room/call-prep</span><span class="skill-desc">Préparer un appel client ou prospect en utilisant les signaux Common Room.</span></div>
+          <div class="skill-row"><span class="skill-id">common-room/compose-outreach</span><span class="skill-desc">Générer des messages de prospection personnalisés en utilisant les signaux Common Room.</span></div>
+          <div class="skill-row"><span class="skill-id">common-room/contact-research</span><span class="skill-desc">Rechercher une personne spécifique en utilisant les données Common Room.</span></div>
+          <div class="skill-row"><span class="skill-id">common-room/prospect</span><span class="skill-desc">Construire des listes de comptes ou de contacts ciblés avec le Prospector de Common Room.</span></div>
+          <div class="skill-row"><span class="skill-id">common-room/weekly-prep-brief</span><span class="skill-desc">Générer un briefing hebdomadaire complet pour tous les appels externes des 7 prochains jours.</span></div>
+        </div>
+      </div>
+
+      <div class="skill-acc">
+        <div class="skill-acc-header" data-action="toggle-acc">
+          <span class="skill-acc-label">🔎 Recherche Entreprise</span>
+          <span class="skill-acc-count">5</span>
+          <span class="skill-acc-toggle">&#9660;</span>
+        </div>
+        <div class="skill-acc-body">
+          <div class="skill-row"><span class="skill-id">enterprise-search/search</span><span class="skill-desc">Rechercher dans toutes les sources connectées en une seule requête. Trouver des décisions, documents ou discussions dans le chat, l'email, le stockage cloud, les outils de gestion de projet.</span></div>
+          <div class="skill-row"><span class="skill-id">enterprise-search/digest</span><span class="skill-desc">Générer un digest quotidien ou hebdomadaire de l'activité dans toutes les sources connectées.</span></div>
+          <div class="skill-row"><span class="skill-id">enterprise-search/knowledge-synthesis</span><span class="skill-desc">Combine les résultats de recherche de plusieurs sources en réponses cohérentes et dédupliquées avec attribution des sources.</span></div>
+          <div class="skill-row"><span class="skill-id">enterprise-search/search-strategy</span><span class="skill-desc">Décomposition de requêtes et orchestration de recherche multi-sources. Décompose les questions en langage naturel en recherches ciblées par source.</span></div>
+          <div class="skill-row"><span class="skill-id">enterprise-search/source-management</span><span class="skill-desc">Gère les sources MCP connectées pour la recherche entreprise. Détecte les sources disponibles et guide les utilisateurs pour en connecter de nouvelles.</span></div>
+        </div>
+      </div>
+
+      <div class="skill-acc">
+        <div class="skill-acc-header" data-action="toggle-acc">
+          <span class="skill-acc-label">✅ Productivité</span>
+          <span class="skill-acc-count">4</span>
+          <span class="skill-acc-toggle">&#9660;</span>
+        </div>
+        <div class="skill-acc-body">
+          <div class="skill-row"><span class="skill-id">productivity/start</span><span class="skill-desc">Initialiser le système de productivité et ouvrir le tableau de bord. À utiliser lors de la configuration initiale du plugin.</span></div>
+          <div class="skill-row"><span class="skill-id">productivity/task-management</span><span class="skill-desc">Gestion simple des tâches à l'aide d'un fichier TASKS.md partagé.</span></div>
+          <div class="skill-row"><span class="skill-id">productivity/memory-management</span><span class="skill-desc">Système de mémoire à deux niveaux qui fait de Claude un véritable collaborateur en milieu professionnel. Décode les abréviations, acronymes, surnoms et le langage interne.</span></div>
+          <div class="skill-row"><span class="skill-id">productivity/update</span><span class="skill-desc">Synchroniser les tâches et rafraîchir la mémoire à partir de votre activité actuelle.</span></div>
+        </div>
+      </div>
+
+      <div class="skill-acc">
+        <div class="skill-acc-header" data-action="toggle-acc">
+          <span class="skill-acc-label">☁️ Cloudinary</span>
+          <span class="skill-acc-count">2</span>
+          <span class="skill-acc-toggle">&#9660;</span>
+        </div>
+        <div class="skill-acc-body">
+          <div class="skill-row"><span class="skill-id">cloudinary/cloudinary-docs</span><span class="skill-desc">Recherche les détails d'implémentation dans la dernière documentation Cloudinary via llms.txt. Pour les uploads d'images/vidéos, l'optimisation, les transformations, les SDKs, les APIs.</span></div>
+          <div class="skill-row"><span class="skill-id">cloudinary/cloudinary-transformations</span><span class="skill-desc">Créer et déboguer des URLs de transformation Cloudinary à partir d'instructions en langage naturel.</span></div>
+        </div>
+      </div>
+
+      <div class="skill-acc">
+        <div class="skill-acc-header" data-action="toggle-acc">
+          <span class="skill-acc-label">🏪 Small Business</span>
+          <span class="skill-acc-count">15</span>
+          <span class="skill-acc-toggle">&#9660;</span>
+        </div>
+        <div class="skill-acc-body">
+          <div class="skill-row"><span class="skill-id">small-business/monday-brief</span><span class="skill-desc">Génère un briefing du lundi matin d'une page — trésorerie, ventes, pipeline, semaine à venir, top trois priorités.</span></div>
+          <div class="skill-row"><span class="skill-id">small-business/friday-brief</span><span class="skill-desc">Délivre le bilan de fin de semaine du vendredi — chiffre d'affaires vs semaine précédente, meilleurs vendeurs, victoires et points de vigilance.</span></div>
+          <div class="skill-row"><span class="skill-id">small-business/plan-payroll</span><span class="skill-desc">Prévoit la trésorerie, classe les factures en retard et planifie les relances pour que le dirigeant puisse lancer la paie en toute confiance.</span></div>
+          <div class="skill-row"><span class="skill-id">small-business/close-month</span><span class="skill-desc">Clôture le mois — rapproche QB avec les processeurs de paiement, signale les écarts, rédige la narration P&L, exporte le dossier de clôture.</span></div>
+          <div class="skill-row"><span class="skill-id">small-business/call-list</span><span class="skill-desc">Classe les 5 prospects les plus intéressants à appeler aujourd'hui, fournit les points de discussion et bloque le temps dans le calendrier.</span></div>
+          <div class="skill-row"><span class="skill-id">small-business/crm-cleanup</span><span class="skill-desc">Scanne HubSpot pour les deals périmés, contacts en doublon et champs manquants, puis corrige ce que le dirigeant approuve.</span></div>
+          <div class="skill-row"><span class="skill-id">small-business/customer-pulse-check</span><span class="skill-desc">Synthétise les thèmes issus des litiges, tickets et avis en liste des 3 problèmes les plus faciles à corriger avec des templates de réponse rédigés.</span></div>
+          <div class="skill-row"><span class="skill-id">small-business/sales-brief</span><span class="skill-desc">Fait remonter les meilleurs et moins bons vendeurs, identifie les patterns de saisonnalité et produit un brief de contenu sur 2 semaines.</span></div>
+          <div class="skill-row"><span class="skill-id">small-business/run-campaign</span><span class="skill-desc">Lance une campagne marketing de bout en bout — analyse des ventes, brief de contenu, assets Canva, envoi HubSpot.</span></div>
+          <div class="skill-row"><span class="skill-id">small-business/review-contract</span><span class="skill-desc">Révise un contrat en langage clair, identifie les points de risque avec niveaux de sévérité et produit des rédlines annotées.</span></div>
+          <div class="skill-row"><span class="skill-id">small-business/tax-prep</span><span class="skill-desc">Prépare les matériaux de la saison fiscale — calcul des acomptes provisionnels trimestriels ou préparation des 1099 annuels — et produit un dossier de passation pour le comptable.</span></div>
+          <div class="skill-row"><span class="skill-id">small-business/price-check</span><span class="skill-desc">Produit un tableau de marge par produit et trois vues de données par scénario de prix.</span></div>
+          <div class="skill-row"><span class="skill-id">small-business/quarterly-review</span><span class="skill-desc">Génère une narration QBR complète — tendance du chiffre d'affaires, tendance des marges, santé client, principales opportunités et risques.</span></div>
+          <div class="skill-row"><span class="skill-id">small-business/month-heads-up</span><span class="skill-desc">Fonctionne le 25 — affiche les prévisions de trésorerie des 30 prochains jours et signale tout ce qui nécessite une attention avant la fin du mois.</span></div>
+          <div class="skill-row"><span class="skill-id">small-business/handle-complaint</span><span class="skill-desc">Gère une réclamation client de bout en bout — récupère le contexte, rédige une réponse et suggère une correction opérationnelle.</span></div>
+        </div>
+      </div>
+
+      <div class="skill-acc">
+        <div class="skill-acc-header" data-action="toggle-acc">
+          <span class="skill-acc-label">🧬 Bio-Research</span>
+          <span class="skill-acc-count">6</span>
+          <span class="skill-acc-toggle">&#9660;</span>
+        </div>
+        <div class="skill-acc-body">
+          <div class="skill-row"><span class="skill-id">bio-research/start</span><span class="skill-desc">Configurer l'environnement bio-research et explorer les outils disponibles.</span></div>
+          <div class="skill-row"><span class="skill-id">bio-research/instrument-data-to-allotrope</span><span class="skill-desc">Convertir les fichiers de sortie d'instruments de laboratoire (PDF, CSV, Excel, TXT) au format JSON Allotrope Simple Model (ASM) ou CSV aplati.</span></div>
+          <div class="skill-row"><span class="skill-id">bio-research/nextflow-development</span><span class="skill-desc">Exécuter des pipelines bioinformatiques nf-core (rnaseq, sarek, atacseq) sur des données de séquençage.</span></div>
+          <div class="skill-row"><span class="skill-id">bio-research/scientific-problem-selection</span><span class="skill-desc">Aider à la sélection de problèmes de recherche, l'idéation de projets, le déblocage de projets bloqués ou les décisions scientifiques stratégiques.</span></div>
+          <div class="skill-row"><span class="skill-id">bio-research/scvi-tools</span><span class="skill-desc">Deep learning pour l'analyse de cellules uniques avec scvi-tools. Intégration de données, correction des effets de lot, ATAC-seq, CITE-seq, transcriptomique spatiale.</span></div>
+          <div class="skill-row"><span class="skill-id">bio-research/single-cell-rna-qc</span><span class="skill-desc">Effectue le contrôle qualité sur des données RNA-seq à cellule unique (fichiers .h5ad ou .h5) en utilisant les meilleures pratiques scverse avec filtrage basé sur la MAD.</span></div>
+        </div>
+      </div>
+
+      <div class="skill-acc">
+        <div class="skill-acc-header" data-action="toggle-acc">
+          <span class="skill-acc-label">🟠 Sanity</span>
+          <span class="skill-acc-count">6</span>
+          <span class="skill-acc-toggle">&#9660;</span>
+        </div>
+        <div class="skill-acc-body">
+          <div class="skill-row"><span class="skill-id">sanity-plugin/sanity-best-practices</span><span class="skill-desc">Meilleures pratiques de développement Sanity pour la conception de schémas, les requêtes GROQ, TypeGen, Visual Editing, les images, le Portable Text, le Studio, la localisation.</span></div>
+          <div class="skill-row"><span class="skill-id">sanity-plugin/content-modeling-best-practices</span><span class="skill-desc">Guide de modélisation de contenu structuré pour la conception de schémas, l'architecture de contenu, la réutilisation de contenu, les références vs objets intégrés.</span></div>
+          <div class="skill-row"><span class="skill-id">sanity-plugin/content-experimentation-best-practices</span><span class="skill-desc">Guide d'expérimentation de contenu et de tests A/B couvrant la conception d'expériences, les hypothèses, les métriques, la taille d'échantillon et les fondements statistiques.</span></div>
+          <div class="skill-row"><span class="skill-id">sanity-plugin/portable-text-conversion</span><span class="skill-desc">Convertir du contenu HTML et Markdown en blocs Portable Text pour Sanity.</span></div>
+          <div class="skill-row"><span class="skill-id">sanity-plugin/portable-text-serialization</span><span class="skill-desc">Rendre et sérialiser le Portable Text en React, Svelte, Vue, Astro, HTML, Markdown et texte brut.</span></div>
+          <div class="skill-row"><span class="skill-id">sanity-plugin/seo-aeo-best-practices</span><span class="skill-desc">Meilleures pratiques SEO et AEO pour les métadonnées, Open Graph, sitemaps, robots.txt, hreflang, données structurées JSON-LD, EEAT.</span></div>
+        </div>
+      </div>
+
+    </div>
+
   </div>
 
   <!-- TAB FORMATIONS CLAUDE -->
