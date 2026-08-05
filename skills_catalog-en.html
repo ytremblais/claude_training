@@ -23,7 +23,7 @@
   <div class="panel-hero">
     <div class="panel-eyebrow">// Skills available in Claude for Excel & PowerPoint</div>
     <h1 class="panel-title">Skills Catalog</h1>
-    <p class="panel-desc">Full list of 167 available Skills. Type <strong>/</strong> in the Claude panel to invoke any of them.</p>
+    <p class="panel-desc">Full list of 172 available Skills. Type <strong>/</strong> in the Claude panel to invoke any of them.</p>
   </div>
 
   <div class="catalog-toolbar">
@@ -32,7 +32,7 @@
       <input type="text" id="catalogSearch" class="catalog-search" placeholder="Search a skill or keyword…" autocomplete="off">
       <button class="search-clear" id="searchClear" aria-label="clear">✕</button>
     </div>
-    <span class="catalog-count" id="catalogCount">167 skills</span>
+    <span class="catalog-count" id="catalogCount">172 skills</span>
   </div>
 
   <div class="filter-bar" id="filterBar">
@@ -81,6 +81,11 @@
       <tr data-cat="🔧 Excel — Tools"><td><span class="cat-badge">🔧 Excel — Tools</span></td><td><span class="skill-id">skill-creator</span></td><td class="skill-desc-cell">Create new skills, modify and improve existing skills, and measure skill performance. Use when users want to create a skill from scratch, edit, or optimize an existing skill, run evals to test a skill, benchmark skill performance with variance analysis, or optimize a skill&#x27;s description for better triggering accuracy.</td></tr>
       <tr data-cat="📑 PowerPoint"><td><span class="cat-badge">📑 PowerPoint</span></td><td><span class="skill-id">gr-ppt-template</span></td><td class="skill-desc-cell">Apply the Groupe Rocher brand template when creating or editing PowerPoint presentations. Always use this skill when working with .pptx files to ensure brand consistency.</td></tr>
       <tr data-cat="📑 PowerPoint"><td><span class="cat-badge">📑 PowerPoint</span></td><td><span class="skill-id">slide-compressor</span></td><td class="skill-desc-cell">Reduce slide count and visual density of a PowerPoint deck without losing content or breaking formatting. Audits, merges, condenses bullets, and offloads narrative to speaker notes.</td></tr>
+      <tr data-cat="📑 PowerPoint"><td><span class="cat-badge">📑 PowerPoint</span></td><td><span class="skill-id">gr-arbonne-template</span></td><td class="skill-desc-cell">Apply the Arbonne brand template (forest green/cream/sage palette, Bahnschrift SemiBold Condensed + Avenir Next fonts, 10 layouts from the Arbonne Brand PPT master). Only use this skill if the user explicitly types the command /gr-arbonne-template.</td></tr>
+      <tr data-cat="📑 PowerPoint"><td><span class="cat-badge">📑 PowerPoint</span></td><td><span class="skill-id">gr-dpr-template</span></td><td class="skill-desc-cell">Apply the Dr Pierre Ricaud brand template (actual palette, Arsenal/Open Sans fonts, A/B/C/D layouts from the DPR_MASQUE-PPT-2025 master). Only use this skill if the user explicitly types the command /gr-dpr-template.</td></tr>
+      <tr data-cat="📑 PowerPoint"><td><span class="cat-badge">📑 PowerPoint</span></td><td><span class="skill-id">gr-sabon-template</span></td><td class="skill-desc-cell">Apply the SABON brand template (cream/gold/nude pink palette, Didot LT Std + Priori Sans OT fonts, layouts by master) when creating or editing PowerPoint slides for SABON. Only use this skill if the user explicitly types the command /gr-sabon-template.</td></tr>
+      <tr data-cat="📑 PowerPoint"><td><span class="cat-badge">📑 PowerPoint</span></td><td><span class="skill-id">gr-yr-template</span></td><td class="skill-desc-cell">Apply the Yves Rocher brand guidelines (palette, Arial font, typographic scale, master slide layouts) when creating or editing PowerPoint slides. Trigger when the user types /gr-yr-template.</td></tr>
+      <tr data-cat="📑 PowerPoint"><td><span class="cat-badge">📑 PowerPoint</span></td><td><span class="skill-id">gr-rocher-template</span></td><td class="skill-desc-cell">Apply the Groupe Rocher brand template (palette, Sora font, role-based sizes, chapter-based layouts). Only use this skill if the user explicitly types the command /gr-rocher-template.</td></tr>
       <tr data-cat="💰 Finance / Accounting"><td><span class="cat-badge">💰 Finance / Accounting</span></td><td><span class="skill-id">finance/financial-statements</span></td><td class="skill-desc-cell">Generate financial statements (income statement, balance sheet, cash flow) with period-over-period comparison and variance analysis.</td></tr>
       <tr data-cat="💰 Finance / Accounting"><td><span class="cat-badge">💰 Finance / Accounting</span></td><td><span class="skill-id">finance/journal-entry</span></td><td class="skill-desc-cell">Prepare journal entries with proper debits, credits, and supporting detail. Use when booking month-end accruals, recording depreciation or amortization, posting revenue recognition adjustments, or documenting an entry for audit review.</td></tr>
       <tr data-cat="💰 Finance / Accounting"><td><span class="cat-badge">💰 Finance / Accounting</span></td><td><span class="skill-id">finance/journal-entry-prep</span></td><td class="skill-desc-cell">Prepare journal entries with proper debits, credits, and supporting documentation for month-end close. Use when booking accruals, prepaid amortization, fixed asset depreciation, payroll entries, revenue recognition, or any manual journal entry.</td></tr>
