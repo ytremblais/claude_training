@@ -131,13 +131,53 @@
     <div class="res-concept">
       <div class="res-concept-num">1</div>
       <div class="res-concept-body">
+        <div class="res-concept-title">Fichier SKILL.md et frontmatter</div>
+        <div class="res-concept-text">
+          Chaque Skill repose sur un fichier <code>SKILL.md</code> structuré en deux parties :<br>
+          <strong>Le frontmatter</strong> (en-tête YAML entre <code>---</code>) : contient les métadonnées — <code>name</code>, <code>description</code>, <code>trigger</code> (quand la Skill se déclenche automatiquement) et <code>allowed-tools</code> (outils accessibles).<br>
+          <strong>Le corps</strong> : les instructions en langage naturel que Claude exécutera.<br>
+          Exemple de frontmatter :<br>
+          <code>---</code><br>
+          <code>name: audit-budget</code><br>
+          <code>description: Audits Excel budget files for hardcodes and formula errors. Use when working with .xlsx budget files.</code><br>
+          <code>trigger: when the user asks to audit a budget or mentions budget review</code><br>
+          <code>---</code>
+        </div>
+      </div>
+    </div>
+
+    <div class="res-concept">
+      <div class="res-concept-num">2</div>
+      <div class="res-concept-body">
+        <div class="res-concept-title">Triggers (déclenchement automatique)</div>
+        <div class="res-concept-text">
+          Le champ <code>trigger</code> du frontmatter permet à Claude de déclencher automatiquement la Skill quand certaines conditions sont remplies — sans que l'utilisateur tape <code>/</code>.<br>
+          Exemples : <em>"when the user mentions cleaning data"</em>, <em>"when an Excel file with sales data is opened"</em>.<br>
+          Un trigger bien rédigé réduit les frictions : les utilisateurs n'ont même pas besoin de connaître le nom de la Skill.
+        </div>
+      </div>
+    </div>
+
+    <div class="res-concept">
+      <div class="res-concept-num">3</div>
+      <div class="res-concept-body">
+        <div class="res-concept-title">Progressive disclosure</div>
+        <div class="res-concept-text">
+          La technique de <strong>progressive disclosure</strong> consiste à structurer les instructions de la Skill en couches : les instructions essentielles en premier, les détails avancés ensuite. Claude ne lit les couches profondes que lorsqu'elles deviennent pertinentes. Cela réduit le coût en tokens et évite de surcharger le contexte pour les cas simples.
+        </div>
+      </div>
+    </div>
+
+    <div class="res-concept">
+      <div class="res-concept-num">4</div>
+      <div class="res-concept-body">
         <div class="res-concept-title">Concision et budget tokens</div>
         <div class="res-concept-text">Le contexte est une ressource partagée. Anthropic recommande de garder le corps du fichier <code>SKILL.md</code> sous 500 lignes et de déporter les contenus longs (API, exemples, données de référence) dans des fichiers séparés chargés à la demande. Claude ne les lit que lorsqu'ils deviennent pertinents — zéro coût en tokens jusqu'à ce moment-là.</div>
       </div>
     </div>
 
     <div class="res-concept">
-      <div class="res-concept-num">2</div>
+      <div class="res-concept-num">5</div>
       <div class="res-concept-body">
         <div class="res-concept-title">Degrés de liberté selon la fragilité de la tâche</div>
         <div class="res-concept-text">
@@ -151,15 +191,15 @@
     </div>
 
     <div class="res-concept">
-      <div class="res-concept-num">3</div>
+      <div class="res-concept-num">6</div>
       <div class="res-concept-body">
         <div class="res-concept-title">Tester avec tous les modèles cibles</div>
-        <div class="res-concept-text">Une Skill efficace sur Claude Opus peut être insuffisante sur Haiku (qui a besoin de plus de contexte) et sur-explicative sur Opus (qui sait déjà). Tester systématiquement avec chaque modèle prévu en production avant de déployer.</div>
+        <div class="res-concept-text">Une Skill efficace sur un modèle puissant (Claude Opus ou Sonnet) peut être insuffisante sur un modèle plus léger (Haiku) qui a besoin de plus de contexte, et sur-explicative sur Opus qui sait déjà. Tester systématiquement avec chaque modèle prévu en production avant de déployer. Les derniers modèles sont la famille Claude 5 (Opus 5, Sonnet 5) et Haiku 4.5.</div>
       </div>
     </div>
 
     <div class="res-concept">
-      <div class="res-concept-num">4</div>
+      <div class="res-concept-num">7</div>
       <div class="res-concept-body">
         <div class="res-concept-title">Convention de nommage des Skills</div>
         <div class="res-concept-text">
@@ -171,7 +211,7 @@
     </div>
 
     <div class="res-concept">
-      <div class="res-concept-num">5</div>
+      <div class="res-concept-num">8</div>
       <div class="res-concept-body">
         <div class="res-concept-title">Description à la 3e personne (mécanisme de découverte)</div>
         <div class="res-concept-text">
@@ -184,7 +224,17 @@
     </div>
 
     <div class="res-concept">
-      <div class="res-concept-num">6</div>
+      <div class="res-concept-num">9</div>
+      <div class="res-concept-body">
+        <div class="res-concept-title">Partage via plugins</div>
+        <div class="res-concept-text">
+          Au-delà du partage manuel (copier-coller du prompt), Anthropic propose un mécanisme de <strong>plugins</strong> pour distribuer des Skills à grande échelle. Un plugin regroupe plusieurs Skills et peut être installé en un clic par les membres de l'équipe. En contexte Enterprise, les plugins sont déployables de façon centralisée via la console d'administration.
+        </div>
+      </div>
+    </div>
+
+    <div class="res-concept">
+      <div class="res-concept-num">10</div>
       <div class="res-concept-body">
         <div class="res-concept-title">Boucles de validation (feedback loops)</div>
         <div class="res-concept-text">Pour les opérations critiques ou en lot (remplir un formulaire, migrer des données, modifier en masse), prévoir un cycle <strong>faire → valider → corriger → répéter</strong>. Exemple : générer un plan JSON → le valider avec un script → appliquer les changements → vérifier le résultat. Ce pattern intercepte les erreurs avant qu'elles ne se propagent.</div>
@@ -192,7 +242,7 @@
     </div>
 
     <div class="res-concept">
-      <div class="res-concept-num">7</div>
+      <div class="res-concept-num">11</div>
       <div class="res-concept-body">
         <div class="res-concept-title">Développement itératif avec Claude A/B</div>
         <div class="res-concept-text">
@@ -209,6 +259,7 @@
       <div class="info-label">Qualité du contenu</div>
       <ul class="res-checklist">
         <li>La description précise ce que fait la Skill ET quand l'invoquer</li>
+        <li>Le frontmatter contient name, description et trigger</li>
         <li>Le corps de SKILL.md fait moins de 500 lignes</li>
         <li>Les détails longs sont dans des fichiers séparés référencés à un seul niveau de profondeur</li>
         <li>Aucune information périmable (dates, versions) dans les instructions principales</li>
@@ -220,7 +271,7 @@
       <div class="green-label">Tests</div>
       <ul class="res-checklist">
         <li>Au moins 3 scénarios de test rédigés avant d'itérer sur la Skill</li>
-        <li>Testée sur Haiku, Sonnet et Opus si ces modèles sont utilisés en production</li>
+        <li>Testée sur Haiku 4.5, Sonnet 5 et Opus 5 si ces modèles sont utilisés en production</li>
         <li>Testée sur des fichiers réels, pas uniquement le fichier de conception</li>
         <li>Feedback d'au moins un collègue intégré</li>
       </ul>

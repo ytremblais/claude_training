@@ -131,13 +131,53 @@
     <div class="res-concept">
       <div class="res-concept-num">1</div>
       <div class="res-concept-body">
+        <div class="res-concept-title">SKILL.md file and frontmatter</div>
+        <div class="res-concept-text">
+          Each Skill is built on a <code>SKILL.md</code> file structured in two parts:<br>
+          <strong>The frontmatter</strong> (YAML header between <code>---</code>): contains metadata — <code>name</code>, <code>description</code>, <code>trigger</code> (when the Skill fires automatically) and <code>allowed-tools</code> (accessible tools).<br>
+          <strong>The body</strong>: natural language instructions that Claude will execute.<br>
+          Frontmatter example:<br>
+          <code>---</code><br>
+          <code>name: audit-budget</code><br>
+          <code>description: Audits Excel budget files for hardcodes and formula errors. Use when working with .xlsx budget files.</code><br>
+          <code>trigger: when the user asks to audit a budget or mentions budget review</code><br>
+          <code>---</code>
+        </div>
+      </div>
+    </div>
+
+    <div class="res-concept">
+      <div class="res-concept-num">2</div>
+      <div class="res-concept-body">
+        <div class="res-concept-title">Triggers (automatic activation)</div>
+        <div class="res-concept-text">
+          The <code>trigger</code> field in the frontmatter allows Claude to automatically fire the Skill when certain conditions are met — without the user typing <code>/</code>.<br>
+          Examples: <em>"when the user mentions cleaning data"</em>, <em>"when an Excel file with sales data is opened"</em>.<br>
+          A well-written trigger reduces friction: users don't even need to know the Skill's name.
+        </div>
+      </div>
+    </div>
+
+    <div class="res-concept">
+      <div class="res-concept-num">3</div>
+      <div class="res-concept-body">
+        <div class="res-concept-title">Progressive disclosure</div>
+        <div class="res-concept-text">
+          The <strong>progressive disclosure</strong> technique structures Skill instructions in layers: essential instructions first, advanced details later. Claude only reads the deeper layers when they become relevant. This reduces token cost and avoids overloading the context for simple cases.
+        </div>
+      </div>
+    </div>
+
+    <div class="res-concept">
+      <div class="res-concept-num">4</div>
+      <div class="res-concept-body">
         <div class="res-concept-title">Conciseness and token budget</div>
         <div class="res-concept-text">Context is a shared resource. Anthropic recommends keeping the <code>SKILL.md</code> body under 500 lines and moving long content (APIs, examples, reference data) into separate files loaded on demand. Claude only reads them when they become relevant — zero token cost until then.</div>
       </div>
     </div>
 
     <div class="res-concept">
-      <div class="res-concept-num">2</div>
+      <div class="res-concept-num">5</div>
       <div class="res-concept-body">
         <div class="res-concept-title">Degrees of freedom based on task fragility</div>
         <div class="res-concept-text">
@@ -151,15 +191,15 @@
     </div>
 
     <div class="res-concept">
-      <div class="res-concept-num">3</div>
+      <div class="res-concept-num">6</div>
       <div class="res-concept-body">
         <div class="res-concept-title">Test with all target models</div>
-        <div class="res-concept-text">A Skill that works well on Claude Opus may be insufficient on Haiku (which needs more context) and over-explained for Opus (which already knows). Systematically test with each model intended for production before deploying.</div>
+        <div class="res-concept-text">A Skill that works well on a powerful model (Claude Opus or Sonnet) may be insufficient on a lighter model (Haiku) which needs more context, and over-explained for Opus which already knows. Systematically test with each model intended for production before deploying. The latest models are the Claude 5 family (Opus 5, Sonnet 5) and Haiku 4.5.</div>
       </div>
     </div>
 
     <div class="res-concept">
-      <div class="res-concept-num">4</div>
+      <div class="res-concept-num">7</div>
       <div class="res-concept-body">
         <div class="res-concept-title">Skill naming conventions</div>
         <div class="res-concept-text">
@@ -171,7 +211,7 @@
     </div>
 
     <div class="res-concept">
-      <div class="res-concept-num">5</div>
+      <div class="res-concept-num">8</div>
       <div class="res-concept-body">
         <div class="res-concept-title">Description in third person (discovery mechanism)</div>
         <div class="res-concept-text">
@@ -184,7 +224,17 @@
     </div>
 
     <div class="res-concept">
-      <div class="res-concept-num">6</div>
+      <div class="res-concept-num">9</div>
+      <div class="res-concept-body">
+        <div class="res-concept-title">Sharing via plugins</div>
+        <div class="res-concept-text">
+          Beyond manual sharing (copy-pasting the prompt), Anthropic offers a <strong>plugin</strong> mechanism to distribute Skills at scale. A plugin bundles multiple Skills and can be installed with one click by team members. In Enterprise contexts, plugins can be deployed centrally via the admin console.
+        </div>
+      </div>
+    </div>
+
+    <div class="res-concept">
+      <div class="res-concept-num">10</div>
       <div class="res-concept-body">
         <div class="res-concept-title">Validation feedback loops</div>
         <div class="res-concept-text">For critical or batch operations (form filling, data migration, bulk edits), plan a <strong>do → validate → fix → repeat</strong> cycle. Example: generate a JSON plan → validate with a script → apply changes → verify the output. This pattern catches errors before they propagate.</div>
@@ -192,7 +242,7 @@
     </div>
 
     <div class="res-concept">
-      <div class="res-concept-num">7</div>
+      <div class="res-concept-num">11</div>
       <div class="res-concept-body">
         <div class="res-concept-title">Iterative development with Claude A/B</div>
         <div class="res-concept-text">
@@ -209,6 +259,7 @@
       <div class="info-label">Content quality</div>
       <ul class="res-checklist">
         <li>Description specifies both what the Skill does AND when to invoke it</li>
+        <li>Frontmatter contains name, description and trigger</li>
         <li>SKILL.md body is under 500 lines</li>
         <li>Long details are in separate files, referenced no more than one level deep</li>
         <li>No time-sensitive information (dates, versions) in main instructions</li>
@@ -220,7 +271,7 @@
       <div class="green-label">Testing</div>
       <ul class="res-checklist">
         <li>At least 3 test scenarios written before iterating on the Skill</li>
-        <li>Tested on Haiku, Sonnet and Opus if those models are used in production</li>
+        <li>Tested on Haiku 4.5, Sonnet 5 and Opus 5 if those models are used in production</li>
         <li>Tested on real files, not just the file used during design</li>
         <li>Feedback from at least one colleague incorporated</li>
       </ul>

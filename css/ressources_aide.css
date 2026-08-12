@@ -355,6 +355,7 @@ body::before {
 .resource-card-tag.tag-free { background: rgba(34,211,160,0.08); border-color: rgba(34,211,160,0.3); color: var(--green); }
 .resource-card-tag.tag-official { background: rgba(124,106,247,0.08); border-color: rgba(124,106,247,0.3); color: var(--accent2); }
 .resource-card-tag.tag-video { background: rgba(79,172,254,0.08); border-color: rgba(79,172,254,0.3); color: var(--blue); }
+.resource-card-tag.tag-new { background: rgba(255,170,50,0.10); border-color: rgba(255,170,50,0.4); color: #e8950a; }
 
 /* Capability cards (no link) */
 .capability-grid {
