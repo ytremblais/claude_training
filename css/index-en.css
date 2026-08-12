@@ -121,3 +121,16 @@ h1 {
   z-index: 10;
 }
 .lang-btn:hover { color: #a594fa; border-color: #a594fa; }
+.version-link {
+  display: inline-block;
+  margin-top: 1rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-decoration: none;
+  border: 1px solid var(--border2);
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  transition: color 0.15s, border-color 0.15s;
+}
+.version-link:hover { color: var(--accent2); border-color: var(--accent2); }
