@@ -1,0 +1,23 @@
+/* Prompt best practices page (complements ressources_aide.css) */
+.pp-section-title { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text); margin: 2.2rem 0 1rem; }
+.pp-concept { display: flex; gap: 14px; margin-bottom: 1.4rem; align-items: flex-start; }
+.pp-num { width: 28px; height: 28px; border-radius: 8px; background: rgba(124,106,247,0.12); color: var(--accent2); font-family: 'DM Mono', monospace; font-size: 11px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.pp-body { flex: 1; min-width: 0; }
+.pp-title { font-size: 0.95rem; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.pp-text { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+.pp-text strong { color: var(--text); }
+.pp-text code { font-family: 'DM Mono', monospace; font-size: 0.75rem; background: rgba(255,255,255,0.06); padding: 1px 5px; border-radius: 4px; color: var(--accent2); }
+.pp-example { margin-top: 10px; display: grid; gap: 8px; }
+.pp-ex { font-size: 0.83rem; line-height: 1.55; border-radius: 10px; padding: 10px 14px; border: 1px solid var(--border2); color: var(--muted); }
+.pp-ex.good { background: rgba(34,211,160,0.07); border-color: rgba(34,211,160,0.25); }
+.pp-ex.bad { background: rgba(244,91,105,0.06); border-color: rgba(244,91,105,0.22); }
+.pp-ex-label { font-family: 'DM Mono', monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+.pp-ex.good .pp-ex-label { color: var(--green); }
+.pp-ex.bad .pp-ex-label { color: var(--red); }
+.pp-source { font-size: 0.75rem; margin-top: 8px; color: var(--muted); }
+.pp-source a, .pp-links a { color: var(--accent2); text-decoration: none; }
+.pp-source a:hover, .pp-links a:hover { text-decoration: underline; }
+.pp-links { list-style: none; display: flex; flex-direction: column; gap: 8px; padding: 0; font-size: 0.88rem; color: var(--muted); }
+.pp-note { margin-top: 2rem; }
+.pp-text a.pp-link { color: var(--accent2); text-decoration: none; }
+.pp-text a.pp-link:hover { text-decoration: underline; }
