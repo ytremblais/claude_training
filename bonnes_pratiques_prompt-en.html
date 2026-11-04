@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script src="js/sharepoint-nav.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompt Best Practices – Claude Plugin Office</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/ressources_aide-en.css">
+<link rel="stylesheet" href="css/bonnes_pratiques_prompt.css">
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index-en.html" class="back-link">← Home</a>
+  <span class="topbar-sep">/</span>
+  <a href="ressources_aide-en.html" class="back-link">Resources &amp; Help</a>
+  <span class="topbar-sep">/</span>
+  <span class="topbar-title">Prompt best practices</span>
+  <a href="bonnes_pratiques_prompt.html" class="lang-toggle" style="margin-left:auto">🇫🇷 FR</a>
+</div>
+
+<div class="content">
+
+  <div class="panel-hero">
+    <div class="panel-eyebrow">// Getting better results with Claude</div>
+    <h1 class="panel-title">Prompt best practices</h1>
+    <p class="panel-desc">Nine simple habits to phrase your requests, structure your context with Projects, and get results you can use right away.</p>
+  </div>
+
+  <div class="info-box">
+    <div class="info-label">The basic principle</div>
+    Think of Claude as a <strong>brilliant but new colleague</strong>: it knows nothing about your habits, your standards or your context. The more precisely you explain what you want, the better the result. Simple test: show your request to a colleague who doesn't know the topic — if they would be lost, Claude will be too.
+    <div class="pp-source">Source: <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices" target="_blank" rel="noopener noreferrer">Prompting best practices (Anthropic)</a></div>
+  </div>
+
+  <div class="pp-section-title">Phrasing your request</div>
+
+  <div class="pp-concept">
+    <div class="pp-num">1</div>
+    <div class="pp-body">
+      <div class="pp-title">Brief Claude in five lines</div>
+      <div class="pp-text">
+        State the <strong>goal</strong>, the <strong>context</strong>, the <strong>expected effort</strong> and a <strong>success criterion</strong> ("It's done when…"). The success criterion tells Claude when to stop and gives you a way to check the result.
+        <div class="pp-example">
+          <div class="pp-ex bad"><div class="pp-ex-label">Less effective</div>Summarize this budget for me.</div>
+          <div class="pp-ex good"><div class="pp-ex-label">More effective</div>Summarize this budget for Thursday's leadership committee. I don't know the variance details well. Keep it to one page. It's done when the three biggest variances are quantified and explained in one sentence each.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pp-concept">
+    <div class="pp-num">2</div>
+    <div class="pp-body">
+      <div class="pp-title">Explain the why, not just the prohibition</div>
+      <div class="pp-text">
+        An instruction with its reason is applied better, because Claude generalizes from the explanation. Also say what to do rather than what to avoid.
+        <div class="pp-example">
+          <div class="pp-ex bad"><div class="pp-ex-label">Less effective</div>Never use ellipses.</div>
+          <div class="pp-ex good"><div class="pp-ex-label">More effective</div>Your response will be read aloud by a text-to-speech engine, so don't use ellipses — it wouldn't know how to pronounce them.</div>
+        </div>
+        <div class="pp-source">Source: <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices" target="_blank" rel="noopener noreferrer">Prompting best practices</a>, "Add context to improve performance" section.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pp-concept">
+    <div class="pp-num">3</div>
+    <div class="pp-body">
+      <div class="pp-title">Ask for the action or the deliverable, not just advice</div>
+      <div class="pp-text">
+        If you want Claude to change or produce something, say so explicitly. A question like "do you have suggestions?" gets suggestions; an instruction gets the change.
+        <div class="pp-example">
+          <div class="pp-ex bad"><div class="pp-ex-label">Claude will only suggest</div>Can you suggest improvements to this table?</div>
+          <div class="pp-ex good"><div class="pp-ex-label">Claude will make the changes</div>Turn this analysis into a 10-slide presentation, with one key message per slide.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pp-section-title">Making the result reliable</div>
+
+  <div class="pp-concept">
+    <div class="pp-num">4</div>
+    <div class="pp-body">
+      <div class="pp-title">Have Claude verify its work</div>
+      <div class="pp-text">
+        Add a check instruction with precise criteria: <code>Before you finish, verify your answer against [criteria].</code> This step reliably catches errors, especially for calculations and code. You can also ask Claude to list the assumptions it made — a practical tip that makes your review easier.
+        <div class="pp-source">Source: <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices" target="_blank" rel="noopener noreferrer">Prompting best practices</a>, "Ask Claude to self-check". The assumptions request comes from the article cited at the bottom of this page.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pp-concept">
+    <div class="pp-num">5</div>
+    <div class="pp-body">
+      <div class="pp-title">Asking questions: when it helps</div>
+      <div class="pp-text">
+        By default, Claude looks for the most likely action and proceeds. Invite it to ask you questions before starting only when <strong>the request is ambiguous</strong> or the action is <strong>hard to undo</strong> (sending, deleting, bulk changes). Example: <code>Before you start, ask me whatever questions you need to get this right.</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="pp-section-title">Structuring your context with Projects</div>
+
+  <div class="pp-concept">
+    <div class="pp-num">6</div>
+    <div class="pp-body">
+      <div class="pp-title">A Project for recurring work</div>
+      <div class="pp-text">
+        A Project is a <strong>workspace</strong> with its own chat history and knowledge base. You upload your reference files (templates, style guides, data) and define <strong>project instructions</strong> that apply to every conversation in the project. Projects provide <strong>persistent</strong> context, loaded in every conversation. For a procedure that should only trigger when relevant, use a <a href="formation_agent_skills-en.html" class="pp-link">Skill</a> instead.
+        <div class="pp-source">Source: <a href="https://support.claude.com/en/articles/9517075-what-are-projects" target="_blank" rel="noopener noreferrer">What are projects? (Claude Help Center)</a>. Project instructions are available on a paid plan.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pp-concept">
+    <div class="pp-num">7</div>
+    <div class="pp-body">
+      <div class="pp-title">Example project instructions</div>
+      <div class="pp-text">
+        <div class="pp-example">
+          <div class="pp-ex good"><div class="pp-ex-label">Project instructions — monthly reporting</div>You help me prepare the finance team's monthly reporting. Readers are non-specialist directors: write short sentences and always quantify variances (amount and percentage). Use the presentation template uploaded in the project files. It's done when a reader understands the essentials in under two minutes.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pp-concept">
+    <div class="pp-num">8</div>
+    <div class="pp-body">
+      <div class="pp-title">Custom instructions: useful and motivated</div>
+      <div class="pp-text">
+        Your profile instructions apply to <strong>all</strong> your conversations (Settings → "Your Claude" → Instructions). Keep what is specific to you and that Claude can't guess (role, preferred format, vocabulary), and give the reason for each rule. Avoid repeating what Claude already does well by default. Keep task-specific guidance for project instructions.
+        <div class="pp-source">Source: <a href="https://support.claude.com/en/articles/10185728-understanding-claude-s-personalization-features" target="_blank" rel="noopener noreferrer">Understanding Claude's personalization features</a>. The tip "keep only what Claude can't guess" is a practical recommendation from the article cited at the bottom of this page.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pp-concept">
+    <div class="pp-num">9</div>
+    <div class="pp-body">
+      <div class="pp-title">Projects, instructions or Skills: which one?</div>
+      <div class="pp-text">
+        <strong>Custom instructions</strong>: your general preferences, everywhere. <strong>Project</strong>: the persistent context for a specific piece of work. <strong>Skill</strong>: a specialized procedure, loaded only when relevant. See the dedicated concept in the <a href="formation_agent_skills-en.html" class="pp-link">Skills training</a>.
+      </div>
+    </div>
+  </div>
+
+  <div class="pp-section-title">Going further</div>
+  <ul class="pp-links">
+    <li>📖 <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices" target="_blank" rel="noopener noreferrer">Prompting best practices</a> — official Anthropic guide</li>
+    <li>📁 <a href="https://support.claude.com/en/articles/9517075-what-are-projects" target="_blank" rel="noopener noreferrer">What are projects?</a> — Claude Help Center</li>
+    <li>⚡ <a href="https://support.claude.com/en/articles/12512176-what-are-skills" target="_blank" rel="noopener noreferrer">What are skills?</a> — Claude Help Center</li>
+    <li>🎓 <a href="https://anthropic.skilljar.com/claude-101" target="_blank" rel="noopener noreferrer">Claude 101</a> — free Anthropic course</li>
+  </ul>
+
+  <div class="info-box pp-note">
+    <div class="info-label">Source of inspiration</div>
+    Several of these tips are inspired by the article <a href="https://onurkarapinar.substack.com/p/comment-utiliser-claude-5-conseils" target="_blank" rel="noopener noreferrer" style="color:var(--accent2);">"Comment utiliser Claude : 5 conseils pour les débutants"</a> (in French) by Onur Karapinar ("Apprendre l'IA" newsletter, November 4, 2026). Points checked against the official documentation are sourced above; the others are the author's practical recommendations.
+  </div>
+
+</div>
+
+</body>
+</html>

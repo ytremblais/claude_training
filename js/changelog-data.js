@@ -1,6 +1,38 @@
 const VERSIONS = [
 
   {
+    version: "1.5.0",
+    date_fr: "4 novembre 2026",
+    date_en: "November 4, 2026",
+    sections: [
+      {
+        cat_fr: "Bonnes pratiques de prompt",
+        cat_en: "Prompt best practices",
+        items_fr: [
+          'Nouvelle page <a href="bonnes_pratiques_prompt.html" class="change-link">Bonnes pratiques de prompt</a> : brief en cinq lignes, expliquer le pourquoi, demander le livrable, faire vérifier le travail, Projects et instructions personnalisées, avec sources officielles',
+          'Accès depuis la page d\'accueil et la barre de <a href="ressources_aide.html" class="change-link">Ressources &amp; Aide</a>'
+        ],
+        items_en: [
+          'New <a href="bonnes_pratiques_prompt-en.html" class="change-link">Prompt best practices</a> page: five-line brief, explain the why, ask for the deliverable, have Claude verify its work, Projects and custom instructions, with official sources',
+          'Linked from the homepage and the <a href="ressources_aide-en.html" class="change-link">Resources &amp; Help</a> top bar'
+        ]
+      },
+      {
+        cat_fr: "Formation Skills",
+        cat_en: "Skills training",
+        items_fr: [
+          'Nouveau concept « Projects ou Skills : quel outil choisir ? » dans la <a href="formation_agent_skills.html" class="change-link">formation Skills</a> (11 &rarr; 12 concepts)',
+          'Mise à jour des modèles : famille Claude 5.5 (Opus 5.5, Sonnet 5.5 par défaut, Haiku 5.5)'
+        ],
+        items_en: [
+          'New concept "Projects or Skills: which tool to choose?" in the <a href="formation_agent_skills-en.html" class="change-link">Skills training</a> (11 &rarr; 12 concepts)',
+          'Updated models: Claude 5.5 family (Opus 5.5, Sonnet 5.5 as default, Haiku 5.5)'
+        ]
+      }
+    ]
+  },
+
+  {
     version: "1.4.0",
     date_fr: "12 août 2026",
     date_en: "August 12, 2026",

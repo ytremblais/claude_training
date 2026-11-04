@@ -194,7 +194,7 @@
       <div class="res-concept-num">6</div>
       <div class="res-concept-body">
         <div class="res-concept-title">Test with all target models</div>
-        <div class="res-concept-text">A Skill that works well on a powerful model (Claude Opus or Sonnet) may be insufficient on a lighter model (Haiku) which needs more context, and over-explained for Opus which already knows. Systematically test with each model intended for production before deploying. The latest models are the Claude 5 family (Opus 5, Sonnet 5) and Haiku 4.5.</div>
+        <div class="res-concept-text">A Skill that works well on a powerful model (Claude Opus or Sonnet) may be insufficient on a lighter model (Haiku) which needs more context, and over-explained for Opus which already knows. Systematically test with each model intended for production before deploying. The latest models are the Claude 5.5 family (Opus 5.5, Sonnet 5.5, Haiku 5.5), with Sonnet 5.5 as the default model.</div>
       </div>
     </div>
 
@@ -254,6 +254,19 @@
       </div>
     </div>
 
+    <div class="res-concept">
+      <div class="res-concept-num">12</div>
+      <div class="res-concept-body">
+        <div class="res-concept-title">Projects or Skills: which tool to choose?</div>
+        <div class="res-concept-text">
+          <strong>Projects</strong>: a workspace with files and instructions, loaded in every conversation of the project — ideal for the persistent context of a specific piece of work (project instructions are available on a paid plan).<br>
+          <strong>Skills</strong>: specialized procedures that Claude loads dynamically, only when relevant.<br>
+          Simple rule: persistent context → Project; reusable procedure → Skill. To write a good brief and success criterion for a Skill, see the <a href="bonnes_pratiques_prompt-en.html" style="color:var(--accent2);">prompt best practices</a>.<br>
+          Source: <a href="https://support.claude.com/en/articles/12512176-what-are-skills" target="_blank" rel="noopener noreferrer" style="color:var(--accent2);">What are skills?</a>
+        </div>
+      </div>
+    </div>
+
     <div class="res-section-title" style="margin-top:32px;">Official checklist before sharing a Skill</div>
     <div class="info-box">
       <div class="info-label">Content quality</div>
@@ -271,7 +284,7 @@
       <div class="green-label">Testing</div>
       <ul class="res-checklist">
         <li>At least 3 test scenarios written before iterating on the Skill</li>
-        <li>Tested on Haiku 4.5, Sonnet 5 and Opus 5 if those models are used in production</li>
+        <li>Tested on Haiku 5.5, Sonnet 5.5 (default model) and Opus 5.5 if those models are used in production</li>
         <li>Tested on real files, not just the file used during design</li>
         <li>Feedback from at least one colleague incorporated</li>
       </ul>
